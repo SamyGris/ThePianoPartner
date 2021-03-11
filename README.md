@@ -1,5 +1,5 @@
-# ThePianoPartner
-Melody generator for piano! (in French)
+# ThePianoPartner (in French)
+Melody generator for piano!
 
 Choose a musical scale, some chords and let the program improvise!
 In development by A.W.A Techs Limited.
