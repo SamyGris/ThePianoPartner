@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
   
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
   gtk_builder_connect_signals(builder, NULL);
-  gtk_widget_show((GtkWidget*)window);
+  gtk_widget_show_all((GtkWidget*)window);
   gtk_main();
 
   return 0;
