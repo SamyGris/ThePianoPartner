@@ -1,10 +1,10 @@
 # Makefile
 
-CC = gcc
+CC = gcc 
 CPPFLAGS =
 CFLAGS = -Wall -Wextra
-LDFLAGS = -pthread
-LDLIBS =
+LDFLAGS = -I./inc -L./lib
+LDLIBS = -lfmod -lfmodL
 
 EXE = main
 
@@ -15,6 +15,7 @@ main.o:main.c
 
 .PHONY: clean
 
-clean: main main.o
+clean:
+	${RM} $(EXE) *~ *# *.o
 
 # END

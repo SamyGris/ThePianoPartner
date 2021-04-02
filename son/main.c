@@ -1,6 +1,6 @@
-#include <fmodex/fmod.h>
+#include <fmod.h>
 #include <stdio.h>
-int maint()
+int main()
 {
-  
+  return 1;
 }
