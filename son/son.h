@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef SON_H
+#define SON_H
 
 void jouerduson(char *argv[]);
 
