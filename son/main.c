@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <fmod.h>
+#include "inc/fmod.h"
 
 int main()
 {   
@@ -14,7 +14,7 @@ int main()
   FMOD_System_Init(system, 1, FMOD_INIT_NORMAL, NULL);
   
   /* Chargement du son et vérification du chargement */
-  resultat = FMOD_System_CreateSound(system, "pan.wav", FMOD_CREATESAMPLE, 0, &tir);
+  resultat = FMOD_System_CreateSound(system, "notepiano48/1.mp3", FMOD_CREATESAMPLE, 0, &tir);
   if (resultat != FMOD_OK)
     {
       fprintf(stderr, "Impossible de lire pan.wav\n");
