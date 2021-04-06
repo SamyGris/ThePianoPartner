@@ -24,8 +24,7 @@ int main()
   FMOD_Sound_Release(tir);
   FMOD_System_Close(system);
   FMOD_System_Release(system);
-  return 1;
-  
+  return 1; 
 }
 
 
