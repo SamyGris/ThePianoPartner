@@ -11,7 +11,7 @@ EXE = main
 all: ${EXE}
 
 main:main.o
-main.o:main.c
+main.o:main.c son.h
 
 .PHONY: clean
 
