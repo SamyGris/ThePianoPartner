@@ -10,6 +10,8 @@ void jouerunenote(char *argv)
   FMOD_SOUND *tir;
   FMOD_RESULT resultat;
 
+  FMOD_CHANNELGROUP *channel ;
+  FMOD_CHANNEL * ch ; 
   FMOD_System_Create(&system);
   FMOD_System_Init(system, 1, FMOD_INIT_NORMAL, NULL);
 
@@ -20,7 +22,7 @@ void jouerunenote(char *argv)
       exit(EXIT_FAILURE);
     }
   
-  FMOD_System_PlaySound(system, NULL, tir, 0, NULL);
+  FMOD_System_PlaySound(system, channel, tir, 0, &ch);
   FMOD_Sound_Release(tir);
   FMOD_System_Close(system);
   FMOD_System_Release(system);
