@@ -4,7 +4,7 @@
 
 int main (int argc,char *argv[])
 {
-  jouerduson(argv[1]);
+  jouerunenote(argv[1]);
   printf("%s",argv[1]);
   return argc;
 }

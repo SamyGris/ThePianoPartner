@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "inc/fmod.h"
+#include "inc/fmod_common.h"
 #include "son.h"
 
 void jouerunenote(char *argv)
@@ -12,7 +13,7 @@ void jouerunenote(char *argv)
   FMOD_System_Create(&system);
   FMOD_System_Init(system, 1, FMOD_INIT_NORMAL, NULL);
 
-  resultat = FMOD_System_CreateSound(system, argv,FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM, 0, &tir);
+  resultat = FMOD_System_CreateSound(system, argv,FMOD_DEFAULT , 0, &tir);
   if (resultat != FMOD_OK)
     {
       fprintf(stderr, "Impossible de lire le son\n");
