@@ -1,29 +1,36 @@
-#include <stdlib.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 #include <stdio.h>
-#include "inc/fmod.h"
-#include "inc/fmod_common.h"
+#include <stdlib.h>
 #include "son.h"
 
 void jouerunenote(char *argv)
-{   
-  FMOD_SYSTEM *system;
-  FMOD_SOUND *tir = NULL;
-  FMOD_RESULT resultat;
-
-  FMOD_CHANNELGROUP *channel ;
-  FMOD_CHANNEL * ch ; 
-  FMOD_System_Create(&system);
-  FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
-
-  resultat = FMOD_System_CreateSound(system, argv,FMOD_CREATESAMPLE , 0, &tir);
-  if (resultat != FMOD_OK)
-    {
-      fprintf(stderr, "Impossible de lire le son\n");
-      exit(EXIT_FAILURE);
-    }
-  
-  FMOD_System_PlaySound(system, channel, tir, 0, &ch);
-  FMOD_Sound_Release(tir);
-  FMOD_System_Close(system);
-  FMOD_System_Release(system);
+{
+   int continuer = 1;
+   SDL_Init(SDL_INIT_VIDEO);
+   SDL_Surface *ecran = NULL;
+   ecran = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+   SDL_Event event;
+   SDL_WM_SetCaption("SDL_Mixer", NULL);
+   SDL_Flip(ecran);
+   if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
+   {
+      printf("%s", Mix_GetError());
+   }
+   Mix_Music *musique; //Création du pointeur de type Mix_Music
+   musique = Mix_LoadMUS(argv); //Chargement de la musique
+   Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
+   while(continuer)
+   {
+       SDL_WaitEvent(&event);
+       switch(event.type)
+       {
+       case SDL_QUIT:
+           continuer = 0;
+           break;
+       }
+   }
+   Mix_FreeMusic(musique); //Libération de la musique
+   Mix_CloseAudio(); //Fermeture de l'API
+   SDL_Quit();
 }
