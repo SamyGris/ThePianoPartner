@@ -7,15 +7,15 @@
 void jouerunenote(char *argv)
 {   
   FMOD_SYSTEM *system;
-  FMOD_SOUND *tir;
+  FMOD_SOUND *tir = NULL;
   FMOD_RESULT resultat;
 
   FMOD_CHANNELGROUP *channel ;
   FMOD_CHANNEL * ch ; 
   FMOD_System_Create(&system);
-  FMOD_System_Init(system, 1, FMOD_INIT_NORMAL, NULL);
+  FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
 
-  resultat = FMOD_System_CreateSound(system, argv,FMOD_DEFAULT , 0, &tir);
+  resultat = FMOD_System_CreateSound(system, argv,FMOD_CREATESAMPLE , 0, &tir);
   if (resultat != FMOD_OK)
     {
       fprintf(stderr, "Impossible de lire le son\n");
