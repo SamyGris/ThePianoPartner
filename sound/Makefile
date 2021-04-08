@@ -10,9 +10,9 @@ EXE = main
 
 all: ${EXE}
 
-main	:	main.o son.o
+main	:	main.o sound.o
 main.o	:	main.c
-son.o	:	son.c son.h
+son.o	:	sound.c sound.h
 
 .PHONY: clean
 
