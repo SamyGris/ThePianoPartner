@@ -1,7 +1,7 @@
 #include <gtk/gtk.h>
+#include "constantes.h"
 
 
-//#include "constantes.h"
 void ajouterGamme(GtkComboBox* container); 
 
 int main(int argc, char *argv[])
@@ -23,8 +23,6 @@ int main(int argc, char *argv[])
 
   return 0;
 }
-
-
 
 void ajouterGamme(GtkComboBox* container)
 {
@@ -110,4 +108,9 @@ void ajouterGamme(GtkComboBox* container)
   gtk_tree_store_append(store, &iter, NULL); 
   gtk_tree_store_set(store, &iter, 0, 27, 1, "Si Dièse Mineur", -1); 
 
+}
+
+void ajouterAccords(GtkGrid* container)
+{
+  // 
 }
