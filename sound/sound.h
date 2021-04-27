@@ -1,6 +1,6 @@
 #ifndef SOUND_H
 #define SOUND_H
 
-void playNote(char *argv);
+void playNote(char **argv,int nb);
 
 #endif
