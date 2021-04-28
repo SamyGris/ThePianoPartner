@@ -81,7 +81,7 @@ void on_DemarrerButton_clicked(GtkButton* b)
   }
 }
 
-void * changeTile()
+void* changeTile()
 {
   GtkWidget* left = gtk_image_new_from_file("assets/tiles/left.png");
   gtk_widget_show(left); 
@@ -91,7 +91,7 @@ void * changeTile()
 }
 
 void ajouterGamme(GtkComboBox* container)
-{
+{changeTile
   enum
   { 
     GAMME_ID,

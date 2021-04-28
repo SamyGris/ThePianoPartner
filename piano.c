@@ -1,5 +1,6 @@
 #include "constantes.h"
 #include "sound/sound.h"
+#include <stdlib.h>
 
 void init()
 {
@@ -260,25 +261,43 @@ void init()
   chords[SIMI][2] = FAD2;
 }
 
-void play(int chords[], int repet[], int* stopped, int bpm)
+void playChords(int usrChords[], int repet[], int* stopped, int bpm)
 {
-  int inter = bpm/100;
+  int inter = 60000/bpm * 4;
   while (!*stopped)
   {
     for (int i = 0; i < 8; i++)
     {
-      for (int j = 0; j < repet[i]; j++)
+      if (usrChords[i] != NULL)
       {
-        playChord(chords[i]);
-        sleep(inter);
+        for (int j = 0; j < repet[i]; j++)
+        {
+          playChord(usrChords[i], inter);
+          usleep(inter);
+        }
       }
     }
   }
 }
 
-void playChord(int chord)
+void playChord(int chord, int inter)
 {
   playNote(chords[chord][0]);
+  displayNote(chords[chord][0], inter);
   playNote(chords[chord][0]);
+  displayNote(chords[chord][0], inter);
   playNote(chords[chord][0]);
+  displayNote(chords[chord][0], inter);
+}
+
+int main()
+{
+  int* stopped = malloc(sizeof(int));
+  *stopped = 0;
+  int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, NULL, NULL, NULL, NULL};
+  int repet[8] = {2, 2, 2, 2, 0, 0, 0, 0};
+  
+  playChords(myChords, repet, stopped, 100);
+
+  return 0;
 }
