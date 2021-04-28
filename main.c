@@ -1,30 +1,94 @@
 #include <gtk/gtk.h>
+#include <stdlib.h>
+#include <stdio.h>
 
+GtkWidget* window; 
+GtkWidget* GlobalBox; 
+GtkWidget* BandeauBox; 
+GtkWidget* ImagePiano; 
+GtkWidget* AttributsBox; 
+GtkWidget* DemarerButton;
+GtkWidget* StopButton; 
+GtkWidget* AproposButton;
+GtkWidget* bpmGammeBox; 
+GtkWidget* bpmBox; 
+GtkWidget* bpmLabel; 
+GtkWidget* bpmEntry;
+GtkWidget* GammeBox;
+GtkWidget* GammeLabel;
+GtkWidget* GammeComboBox;
+GtkWidget* GridAccordRepetitions;
+GtkWidget* PianoFixed; 
 
 //#include "constantes.h"
 void ajouterGamme(GtkComboBox* container); 
+void * changeTile(); 
+
+//Callbacks functions
+void on_DemarrerButton_clicked(GtkButton* b); 
+void on_StopButton_clicked(GtkButton* b); 
+void on_AproposButton_clicked(GtkButton* b); 
+
+
 
 int main(int argc, char *argv[])
 {
   // Initialisation de GTK et ouverture de l'interface
   gtk_init(NULL, NULL);
   GtkBuilder* builder = gtk_builder_new_from_file("interface.glade");
-  GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "interface"));
-  GtkComboBox* gamme = GTK_COMBO_BOX(gtk_builder_get_object(builder, "gamme")); 
-  
-  ajouterGamme(gamme); 
-  gtk_window_set_title(window, "The Piano Partner");
-  gtk_window_set_icon_from_file(window, "icon.png", NULL);
+
+  // Initialisation de tous les widgets de glade
+  window = GTK_WIDGET(gtk_builder_get_object(builder, "interface"));
+  GlobalBox = GTK_WIDGET(gtk_builder_get_object(builder, "GlobalBox"));
+  BandeauBox = GTK_WIDGET(gtk_builder_get_object(builder, "BandeauBox"));
+  ImagePiano = GTK_WIDGET(gtk_builder_get_object(builder, "ImagePiano"));
+  AttributsBox = GTK_WIDGET(gtk_builder_get_object(builder, "AttributsBox"));
+  DemarerButton = GTK_WIDGET(gtk_builder_get_object(builder, "DemarerButton"));
+  StopButton = GTK_WIDGET(gtk_builder_get_object(builder, "StopButton"));
+  AproposButton = GTK_WIDGET(gtk_builder_get_object(builder, "AproposButton"));
+  bpmGammeBox = GTK_WIDGET(gtk_builder_get_object(builder, "bpmGammeBox"));
+  bpmBox = GTK_WIDGET(gtk_builder_get_object(builder, "bpmBox"));
+  bpmLabel = GTK_WIDGET(gtk_builder_get_object(builder, "bpmLabel"));
+  bpmEntry = GTK_WIDGET(gtk_builder_get_object(builder, "bpmEntry"));
+  GammeBox = GTK_WIDGET(gtk_builder_get_object(builder, "GammeBox"));
+  GammeLabel = GTK_WIDGET(gtk_builder_get_object(builder, "GammeLabel"));
+  GammeComboBox = GTK_WIDGET(gtk_builder_get_object(builder, "GammeComboBox"));
+  GridAccordRepetitions = GTK_WIDGET(gtk_builder_get_object(builder, "GridAccordRepetitions"));
+  PianoFixed = GTK_WIDGET(gtk_builder_get_object(builder, "PianoFixed")); 
+
+
+  //ajouterGamme(gamme); 
+
+  // Personnalisation de la fenêtre
+  gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
+  gtk_window_set_icon_from_file(GTK_WINDOW(window), "icon.png", NULL);
 
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
   gtk_builder_connect_signals(builder, NULL);
   gtk_widget_show_all((GtkWidget*)window);
   gtk_main();
 
-  return 0;
+  return 0; 
 }
 
+void on_DemarrerButton_clicked(GtkButton* b)
+{
+  pthread_t thr; 
+  int err = pthread_create(&thr, NULL, changeTile, NULL); 
+  if(err != 0)
+  {
+    printf("error"); 
+  }
+}
 
+void * changeTile()
+{
+  GtkWidget* left = gtk_image_new_from_file("assets/tiles/left.png");
+  gtk_widget_show(left); 
+  gtk_container_add(GTK_CONTAINER(PianoFixed), left); 
+  gtk_fixed_move(GTK_FIXED(PianoFixed), left, 11, 1);
+  sleep(5); 
+}
 
 void ajouterGamme(GtkComboBox* container)
 {

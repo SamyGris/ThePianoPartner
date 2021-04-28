@@ -22,22 +22,23 @@
     <property name="resizable">False</property>
     <property name="icon">icon.png</property>
     <child>
-      <object class="GtkBox">
+      <object class="GtkBox" id="GlobalBox">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkBox">
+          <object class="GtkBox" id="BandeauBox">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="DemarrerButton">
                 <property name="label" translatable="yes">Démarrer</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <property name="image">start-icon</property>
                 <property name="always-show-image">True</property>
+                <signal name="clicked" handler="on_DemarrerButton_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -46,7 +47,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="StopButton">
                 <property name="label" translatable="yes">Stop</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
@@ -61,7 +62,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="AproposButton">
                 <property name="label" translatable="yes">À propos</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
@@ -84,10 +85,21 @@
           </packing>
         </child>
         <child>
-          <object class="GtkImage">
+          <object class="GtkFixed" id="PianoFixed">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="pixbuf">piano.jpg</property>
+            <child>
+              <object class="GtkImage">
+                <property name="width-request">100</property>
+                <property name="height-request">80</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="pixbuf">piano.jpg</property>
+              </object>
+              <packing>
+                <property name="x">10</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -96,20 +108,20 @@
           </packing>
         </child>
         <child>
-          <object class="GtkBox">
+          <object class="GtkBox" id="AttributsBox">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <child>
-              <object class="GtkBox">
+              <object class="GtkBox" id="bpmGammeBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkBox" id="bpmBox">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="bpmLabel">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">BPM</property>
@@ -121,7 +133,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="bpm">
+                      <object class="GtkEntry" id="bpmEntry">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                       </object>
@@ -139,13 +151,13 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkBox" id="GammeBox">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
                     <property name="spacing">50</property>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="GammeLabel">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Gamme</property>
@@ -184,7 +196,7 @@
             </child>
             <child>
               <!-- n-columns=3 n-rows=9 -->
-              <object class="GtkGrid">
+              <object class="GtkGrid" id="GridAccordRepetitions">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="row-homogeneous">True</property>
