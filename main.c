@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "constantes.h"
 
 GtkWidget* window; 
 GtkWidget* GlobalBox; 
@@ -20,7 +21,6 @@ GtkWidget* GammeComboBox;
 GtkWidget* GridAccordRepetitions;
 GtkWidget* PianoFixed; 
 
-//#include "constantes.h"
 void ajouterGamme(GtkComboBox* container); 
 void * changeTile(); 
 
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 
   //ajouterGamme(gamme); 
 
-  // Personnalisation de la fenêtre
+  // Personnalisation de la fenêtrDisplayNote
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
   gtk_window_set_icon_from_file(GTK_WINDOW(window), "icon.png", NULL);
 
@@ -174,4 +174,9 @@ void ajouterGamme(GtkComboBox* container)
   gtk_tree_store_append(store, &iter, NULL); 
   gtk_tree_store_set(store, &iter, 0, 27, 1, "Si Dièse Mineur", -1); 
 
+}
+
+void ajouterAccords(GtkGrid* container)
+{
+  // 
 }
