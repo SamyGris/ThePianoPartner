@@ -11,6 +11,12 @@
 
 void* fn_thread(void* arg);
 
+struct Noteparametre
+{
+   int place;
+   char *notename;
+}Noteparametre;
+
 int playNote(int nbnote ,char **tabnote)
 {
   if (nbnote < 1)
@@ -22,15 +28,36 @@ int playNote(int nbnote ,char **tabnote)
     {
       printf("%s", Mix_GetError());
     }
-  printf("JE commence:!!!");
+  printf("Je commence:!!!");
   Mix_AllocateChannels(15);
+  Mix_Volume(0, MIX_MAX_VOLUME/2);
+  Mix_Volume(1, MIX_MAX_VOLUME/2);
+  Mix_Volume(2, MIX_MAX_VOLUME/2);
+  Mix_Volume(3, MIX_MAX_VOLUME/2);
+  Mix_Volume(4, MIX_MAX_VOLUME/2);
+  Mix_Volume(5, MIX_MAX_VOLUME/2);
+  Mix_Volume(6, MIX_MAX_VOLUME/2);
+  Mix_Volume(7, MIX_MAX_VOLUME/2);
+  Mix_Volume(8, MIX_MAX_VOLUME/2);
+  Mix_Volume(9, MIX_MAX_VOLUME/2);
+  Mix_Volume(10, MIX_MAX_VOLUME/2);
+  Mix_Volume(11, MIX_MAX_VOLUME/2);
+  Mix_Volume(12, MIX_MAX_VOLUME/2);
+  Mix_Volume(13, MIX_MAX_VOLUME/2);
+  Mix_Volume(14, MIX_MAX_VOLUME/2);
   if (nbnote==1)
     {
+      char *stra=tabnote[0];
+      char *strb=".wav";
+      char *resa;
+      resa=(char *)malloc((strlen(stra)+strlen(strb))*sizeof(char));
+      strcpy(resa,stra);
+      strcat(resa,strb);
       Mix_Chunk *note; //Structure Mix_Music correspondante à la note
-      note = Mix_LoadWAV(tabnote[0]); //Chargement de la note
+      note = Mix_LoadWAV(resa); //Chargement de la note
       Mix_PlayChannel(1, note, 0); //Jouer la note
       Mix_FreeChunk(note);
-       printf("JE JOUEE:!!!");
+      printf("JE JOUEE %s",resa);
       return EXIT_SUCCESS;
     }
   else
@@ -41,8 +68,12 @@ int playNote(int nbnote ,char **tabnote)
 	 {
 	   pthread_t resa;
 	   char *note=tabnote[index];
-	   index+=1;
-	   int sred = pthread_create(&resa,NULL,fn_thread,(void*)note);
+	   struct Noteparametre manote;
+	   manote.place=index;
+	   manote.notename=note;
+	   
+	   int sred = pthread_create(&resa,NULL,fn_thread,(void*)&manote);
+	   
 	   if (pthread_join(resa, NULL)!=0)
 	     {
 	       errx(3,"Error during join");
@@ -52,6 +83,7 @@ int playNote(int nbnote ,char **tabnote)
 	       errno=sred;
 	       errx(EXIT_FAILURE,"pthread_create()");
 	     }
+	   index+=1;
 	   nbnote-=1;
 	 }  
        pthread_exit(NULL);
@@ -63,18 +95,21 @@ int playNote(int nbnote ,char **tabnote)
 
 void* fn_thread(void* arg)
 {
-    char *str1=(char*)arg;
-    char *str2=".wav";
-    Mix_Chunk *note;
-    char *res;
-    res=(char *)malloc((strlen(str1)+strlen(str2))*sizeof(char));
-    strcpy(res,str1);
-    strcat(res,str2);
-    note = Mix_LoadWAV(res);
-    Mix_PlayChannel(-1,note, 0);
-    printf("JE JOUEE:!!!");
-    Mix_FreeChunk(note);
-    return NULL;
+  struct Noteparametre *Notee= (struct Noteparametre*)arg;
+  char *str1=Notee->notename;
+  char *str2=".wav";
+  char *res;
+  res=(char *)malloc((strlen(str1)+strlen(str2))*sizeof(char));
+  strcpy(res,str1);
+  strcat(res,str2);
+
+  Mix_Chunk *note;
+  note = Mix_LoadWAV(res);
+  Mix_VolumeChunk(note, MIX_MAX_VOLUME/2);
+  Mix_PlayChannel(Notee->place,note, 0);
+  Mix_FreeChunk(note);
+  printf("JE JOUEE:!!!");
+  return EXIT_SUCCESS;
 }
 /*
 int main(int argc, char *argv[])

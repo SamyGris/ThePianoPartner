@@ -12,8 +12,8 @@ int main(int argc,char *argv[])
     }
   char *tep1="DO";
   char *tep2="RE";
-  char *tep3="MI";
-  char *resa[]={tep1,tep2,tep3};
+  //char *tep3="MI";
+  char *resa[]={tep1,tep2};
   char **res=resa;
   int nbb= atoi(argv[1]);
   playNote(nbb,res);
