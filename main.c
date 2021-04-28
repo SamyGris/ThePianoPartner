@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "constantes.h"
 
+
+
 GtkWidget* window; 
 GtkWidget* GlobalBox; 
 GtkWidget* BandeauBox; 
@@ -81,14 +83,6 @@ void on_DemarrerButton_clicked(GtkButton* b)
   }
 }
 
-void * changeTile()
-{
-  GtkWidget* left = gtk_image_new_from_file("assets/tiles/left.png");
-  gtk_widget_show(left); 
-  gtk_container_add(GTK_CONTAINER(PianoFixed), left); 
-  gtk_fixed_move(GTK_FIXED(PianoFixed), left, 11, 1);
-  sleep(5); 
-}
 
 void ajouterGamme(GtkComboBox* container)
 {
