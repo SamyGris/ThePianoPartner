@@ -41,7 +41,7 @@
                 <property name="receives_default">True</property>
                 <property name="image">start-icon</property>
                 <property name="always_show_image">True</property>
-                <signal name="clicked" handler="on_DemarrerButton_clicked" swapped="no"/>
+                <signal name="clicked" handler="startButtonClicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -57,6 +57,7 @@
                 <property name="receives_default">True</property>
                 <property name="image">stop-icon</property>
                 <property name="always_show_image">True</property>
+                <signal name="clicked" handler="stopButtonClicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -72,6 +73,7 @@
                 <property name="receives_default">True</property>
                 <property name="image">about-icon</property>
                 <property name="always_show_image">True</property>
+                <signal name="clicked" handler="aboutButtonClicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>

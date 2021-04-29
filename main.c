@@ -3,26 +3,24 @@
 #include <stdio.h>
 #include "constantes.h"
 
-GtkWidget* window;
-GtkWidget* startButton;
-GtkWidget* stopButton; 
-GtkWidget* aboutButton;
-GtkWidget* bpmEntry;
-GtkWidget* scaleComboBox;
-GtkWidget* piano;
-
 void addScale(GtkComboBox* container); 
 void* changeTile(); 
 
 //Callbacks functions
-void on_DemarrerButton_clicked(GtkButton* b); 
-void on_StopButton_clicked(GtkButton* b); 
-void on_AproposButton_clicked(GtkButton* b); 
-
-
+void startButtonClicked(GtkButton* b); 
+void stopButtonClicked(GtkButton* b); 
+void aboutButtonClicked(GtkButton* b); 
 
 int main(int argc, char *argv[])
 {
+  GtkWidget* window;
+  GtkWidget* startButton;
+  GtkWidget* stopButton; 
+  GtkWidget* aboutButton;
+  GtkWidget* bpmEntry;
+  GtkWidget* scaleComboBox;
+  GtkWidget* piano;
+
   // Initialisation de GTK et ouverture de l'interface
   gtk_init(NULL, NULL);
   GtkBuilder* builder = gtk_builder_new_from_file("interface.glade");
@@ -36,7 +34,7 @@ int main(int argc, char *argv[])
   scaleComboBox = GTK_WIDGET(gtk_builder_get_object(builder, "scaleComboBox"));
   piano = GTK_WIDGET(gtk_builder_get_object(builder, "piano")); 
 
-  //addScale(gamme); 
+  addScale(scaleComboBox); 
 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
@@ -50,7 +48,7 @@ int main(int argc, char *argv[])
   return 0; 
 }
 
-void on_DemarrerButton_clicked(GtkButton* b)
+void startButtonClicked()
 {
   pthread_t thr; 
   int err = pthread_create(&thr, NULL, changeTile, NULL); 
@@ -73,10 +71,11 @@ void addScale(GtkComboBox* container)
 {
   enum
   { 
-    GAMME_ID,
-    GAMME_NAME,
+    SCALE_ID,
+    SCALE_NAME,
     N_COLUMNS
   };
+
   GtkTreeIter iter; 
   GtkTreeStore* store;
   GtkWidget* tree; 
@@ -151,6 +150,7 @@ void addScale(GtkComboBox* container)
   gtk_tree_store_append(store, &iter, NULL); 
   gtk_tree_store_set(store, &iter, 0, 27, 1, "Si Dièse Mineur", -1); 
 
+  gtk_combo_box_set_active(container, 0)
 }
 
 void addChords()
