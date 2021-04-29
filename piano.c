@@ -1,6 +1,7 @@
 #include "constantes.h"
 #include "sound/sound.h"
 #include <stdlib.h>
+#include <gtk/gtk.h>
 
 void init()
 {
@@ -259,7 +260,67 @@ void init()
   chords[SIMI][0] = SI1;
   chords[SIMI][1] = RE2;
   chords[SIMI][2] = FAD2;
-}
+
+  coordonesX[DO1] = 11; 
+  coordonesX[DO2] = 139; 
+  coordonesX[DO3] = 266; 
+  coordonesX[DO4] = 393; 
+
+  coordonesX[RE1] = 31; 
+  coordonesX[RE2] = 158; 
+  coordonesX[RE3] = 286; 
+  coordonesX[RE4] = 413; 
+
+  coordonesX[MI1] = 47; 
+  coordonesX[MI2] = 175; 
+  coordonesX[MI3] = 303; 
+  coordonesX[MI4] = 430; 
+
+  coordonesX[FA1] = 65; 
+  coordonesX[FA2] = 193; 
+  coordonesX[FA3] = 321;
+  coordonesX[FA4] = 448;
+
+  coordonesX[SOL1] = 85; 
+  coordonesX[SOL2] = 213; 
+  coordonesX[SOL3] = 340; 
+  coordonesX[SOL4] = 467; 
+
+  coordonesX[LA1] = 104; 
+  coordonesX[LA2] = 231; 
+  coordonesX[LA3] = 358; 
+  coordonesX[LA4] = 485; 
+
+  coordonesX[SI1] = 121; 
+  coordonesX[SI2] = 248
+  coordonesX[SI3] = 375;
+  coordonesX[SI4] = 501; 
+
+  coordonesX[DOD1] = 26; 
+  coordonesX[DOD2] = 153; 
+  coordonesX[DOD3] = 280; 
+  coordonesX[DOD4] = 408; 
+
+  coordonesX[RED1] = 44; 
+  coordonesX[RED2] = 171; 
+  coordonesX[RED3] = 298; 
+  coordonesX[RED4] = 426; 
+
+  coordonesX[FAD1] = 80; 
+  coordonesX[FAD2] = 207; 
+  coordonesX[FAD3] = 335; 
+  coordonesX[FAD4] = 462; 
+
+  coordonesX[SOLD1] = 98; 
+  coordonesX[SOLD2] = 225; 
+  coordonesX[SOLD3] = 353;
+  coordonesX[SOLD4] = 480; 
+
+  coordonesX[LAD1] = 116; 
+  coordonesX[LAD2] = 243; 
+  coordonesX[LAD3] = 371; 
+  coordonesX[LAD4] = 498; 
+} 
 
 void playChords(int usrChords[], int repet[], int* stopped, int bpm)
 {
@@ -290,7 +351,7 @@ void playChord(int chord, int inter)
   displayNote(chords[chord][0], inter);
 }
 
-int main()
+void test()
 {
   int* stopped = malloc(sizeof(int));
   *stopped = 0;
@@ -298,6 +359,36 @@ int main()
   int repet[8] = {2, 2, 2, 2, 0, 0, 0, 0};
   
   playChords(myChords, repet, stopped, 100);
+}
 
-  return 0;
+void* changeTile2(int tile, int bpm)
+{
+  GtkWidget* hilight; 
+  int x = container[tile];
+  int y = 1;
+  if(tile == DO1 || tile == DO2 || tile == DO3 || tile == DO4 || 
+  tile == FA1 || tile == FA2 || tile == FA3 || tile == FA4)
+  {
+    hilight = gtk_image_new_from_file("assets/tiles/left.png");
+  }
+  if(tile == MI1 || tile == MI2 || tile == MI3 || tile == MI4 ||
+  tile == SI1 || tile == SI2 || tile == SI3 || tile == SI4)
+  {
+    hilight = gtk_image_new_from_file("assets/tiles/right.png");
+  }
+  if(tile == RE1 || tile == RE2 || tile == RE3 || tile == RE4 ||
+  tile == SOL1 || tile == SOL2 || tile == SOL3 || tile == SOL4 ||
+  tile == LA1 || tile == LA2 || tile == LA3 || tile == LA4)
+  {
+    y = 2; 
+    hilight = gtk_image_new_from_file("assets/tiles/center.png");
+  }
+  else
+  {
+    hilight = gtk_image_new_from_file("assets/tiles/black.png");
+  }
+  gtk_widget_show(hilight); 
+  gtk_container_add(GTK_CONTAINER(PianoFixed),  hilight); 
+  gtk_fixed_move(GTK_FIXED(PianoFixed),  hilight, x, y);
+  sleep(5); 
 }

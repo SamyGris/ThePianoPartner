@@ -22,7 +22,7 @@ GtkWidget* GridAccordRepetitions;
 GtkWidget* PianoFixed; 
 
 void ajouterGamme(GtkComboBox* container); 
-void * changeTile(); 
+void* changeTile(); 
 
 //Callbacks functions
 void on_DemarrerButton_clicked(GtkButton* b); 
@@ -91,7 +91,7 @@ void* changeTile()
 }
 
 void ajouterGamme(GtkComboBox* container)
-{changeTile
+{
   enum
   { 
     GAMME_ID,

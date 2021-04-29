@@ -21,4 +21,8 @@ int scaleNotes[24][7];
 
 int chords[24][3];
 
+// Coordonnees
+
+int coordonesX[48];
+
 #endif
