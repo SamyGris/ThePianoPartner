@@ -1,163 +1,191 @@
-#include <SDL/SDL.h>
-#include <SDL/SDL_mixer.h>
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <errno.h>
+#include <stdio.h>
+#include "SDL/SDL.h" 
+#include "SDL/SDL_mixer.h"
 #include <pthread.h>
+#include "err.h"
 #include <unistd.h>
-#include <err.h>
+#include <string.h>
+#include <math.h>
 #include "sound.h"
 
-void* fn_thread(void* arg);
-
-struct Noteparametre
+void playNote(float frequency,char file)
 {
-   int place;
-   char *notename;
-}Noteparametre;
+   //Initialisation de l'API Mixer
+   if(Mix_OpenAudio(frequency, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048) == -1)
+   {
+      printf("%s", Mix_GetError());
+   }
+   
+  Mix_Music *note; //Structure Mix_Music correspondante à la note
 
-int playNoteSound(int nbnote ,char **tabnote)
-{
-  if (nbnote < 1)
-    errx(EXIT_FAILURE, "The number of note is unplayable.");
-  else if (nbnote > 10)
-    errx(EXIT_FAILURE, "You can't play more than 10 notes");
+  switch (file)
+  {
+  case 1:
+    note = Mix_LoadMUS("notes/DO1.wav");
+
+    break;
+  case 2 : 
+    note = Mix_LoadMUS("notes/DO2.wav");
+
+    break;
+  case 3:
+    note = Mix_LoadMUS("notes/DO3.wav");
+
+    break;
   
-  if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
-    {
-      printf("%s", Mix_GetError());
-    }
-  printf("Je commence:!!!");
-  Mix_AllocateChannels(15);
-  Mix_Volume(0, MIX_MAX_VOLUME/2);
-  Mix_Volume(1, MIX_MAX_VOLUME/2);
-  Mix_Volume(2, MIX_MAX_VOLUME/2);
-  Mix_Volume(3, MIX_MAX_VOLUME/2);
-  Mix_Volume(4, MIX_MAX_VOLUME/2);
-  Mix_Volume(5, MIX_MAX_VOLUME/2);
-  Mix_Volume(6, MIX_MAX_VOLUME/2);
-  Mix_Volume(7, MIX_MAX_VOLUME/2);
-  Mix_Volume(8, MIX_MAX_VOLUME/2);
-  Mix_Volume(9, MIX_MAX_VOLUME/2);
-  Mix_Volume(10, MIX_MAX_VOLUME/2);
-  Mix_Volume(11, MIX_MAX_VOLUME/2);
-  Mix_Volume(12, MIX_MAX_VOLUME/2);
-  Mix_Volume(13, MIX_MAX_VOLUME/2);
-  Mix_Volume(14, MIX_MAX_VOLUME/2);
-  if (nbnote==1)
-    {
-      char *stra=tabnote[0];
-      char *strb=".wav";
-      char *resa;
-      resa=(char *)malloc((strlen(stra)+strlen(strb))*sizeof(char));
-      strcpy(resa,stra);
-      strcat(resa,strb);
-      Mix_Chunk *note; //Structure Mix_Music correspondante à la note
-      note = Mix_LoadWAV(resa); //Chargement de la note
-      Mix_PlayChannel(1, note, 0); //Jouer la note
-      Mix_FreeChunk(note);
-      printf("JE JOUEE %s",resa);
-      return EXIT_SUCCESS;
-    }
-  else
-     {
-       printf("JE commence:!!!");
-       int index=0;
-       while (nbnote!=0)
-	 {
-	   pthread_t resa;
-	   char *note=tabnote[index];
-	   struct Noteparametre manote;
-	   manote.place=index;
-	   manote.notename=note;
-	   
-	   int sred = pthread_create(&resa,NULL,fn_thread,(void*)&manote);
-	   
-	   if (pthread_join(resa, NULL)!=0)
-	     {
-	       errx(3,"Error during join");
-	     }
-	   if(sred!=0)
-	     {
-	       errno=sred;
-	       errx(EXIT_FAILURE,"pthread_create()");
-	     }
-	   index+=1;
-	   nbnote-=1;
-	 }  
-       pthread_exit(NULL);
-     }
-  Mix_CloseAudio();
-  SDL_Quit();
-  return EXIT_SUCCESS;
+  default:
+    note = Mix_LoadMUS("notes/DO4.wav");
+    break;
+  }
+  
+  Mix_PlayMusic(note, 1);//Jouer la note
+   
+   SDL_Delay(3000);
+   Mix_FreeMusic(note);
+   Mix_CloseAudio();
+   
 }
 
-void* fn_thread(void* arg)
-{
-  struct Noteparametre *Notee= (struct Noteparametre*)arg;
-  char *str1=Notee->notename;
-  char *str2=".wav";
-  char *res;
-  res=(char *)malloc((strlen(str1)+strlen(str2))*sizeof(char));
-  strcpy(res,str1);
-  strcat(res,str2);
 
-  Mix_Chunk *note;
-  note = Mix_LoadWAV(res);
-  Mix_VolumeChunk(note, MIX_MAX_VOLUME/2);
-  Mix_PlayChannel(Notee->place,note, 0);
-  Mix_FreeChunk(note);
-  printf("JE JOUEE:!!!");
-  return EXIT_SUCCESS;
-}
-/*
-int main(int argc, char *argv[])
+void* worker(void *arg)
 {
-   int continuer = 1;
-   SDL_Init(SDL_INIT_VIDEO);
-   SDL_Surface *ecran = NULL;
-   ecran = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
-   SDL_Event event;
-   SDL_WM_SetCaption("SDL_Mixer", NULL);
-   SDL_Flip(ecran);
-   if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
-   {
-      printf("%s", Mix_GetError());
-   }
-   Mix_AllocateChannels(32); //Allouer 32 canaux
-   Mix_Volume(1, MIX_MAX_VOLUME/2); //Mettre à mi-volume le post 1
-   Mix_Chunk *son;//Créer un pointeur pour stocker un .WAV
-   Mix_Chunk *son2;
-   son = Mix_LoadWAV("son.wav"); //Charger un wav dans un pointeur
-   son2 = Mix_LoadWAV("son2.wav");
-   Mix_VolumeChunk(son, MIX_MAX_VOLUME/2); //Mettre un volume pour ce wav
-   Mix_VolumeChunk(son2, MIX_MAX_VOLUME);
-   while(continuer)
-   {
-      SDL_WaitEvent(&amp;event);
-      switch(event.type)
-      {
-         case SDL_QUIT:
-            continuer = 0;
-            break;
-         case SDL_KEYDOWN:
-            switch (event.key.keysym.sym)
-            {
-               case SDLK_a:
-                  Mix_PlayChannel(1, son, 0);//Joue le son 1 sur le canal 1 ; le joue une fois (0 + 1)
-                  break;
-               case SDLK_s:
-                  Mix_PlayChannel(2, son2, 2);//Joue le son 2 sur le canal 2 ; le joue 3 fois (2 + 1)
-                  break;
-            }
-            break;
-      }
-   }
-   Mix_FreeChunk(son);//Libération du son 1
-   Mix_FreeChunk(son2);
-   Mix_CloseAudio(); //Fermeture de l'API
-   SDL_Quit();
-   return EXIT_SUCCESS;
+
+  float coeff = 1.05946 ;  
+  char* input = (char *)arg ; 
+
+  if (strlen(input) < 3)
+  {
+    errx(1,"Please Check your arguments ! Keep in mind that you have to call the funtion with the note and the number of the octave example : DO2 \n") ; 
+  }
+  char n = input[2] ; 
+  char nb = atol(&n) ; 
+  
+
+  
+  
+   static int frequency ; 
+  if (input[0] == 'D' && input[1] == 'O') 
+  {
+
+        frequency = 44000 ;
+        
+      playNote(frequency,nb);
+    
+  } 
+
+  else  if (input[0] == 'D' && input[1] == 'Z') 
+  {
+    frequency = (44000 * pow(coeff,1)) ;
+    
+    printf("Frequency = %d \n ",frequency) ; 
+    playNote(frequency,nb);
+  } 
+
+else  if (input[0] == 'R' && input[1] == 'E') 
+  {
+    frequency = (44000 * pow(coeff,2)) ;
+    printf("Frequence de RÉ : %d \n", frequency) ; 
+   //frequency *= pow(2,nb) ;
+    printf("Frequency = %d",frequency) ; 
+    playNote(frequency,nb);
+  } 
+
+  else  if (input[0] == 'R' && input[1] == 'Z') 
+  {
+   
+   frequency = (44000 * pow(coeff,3)) ;
+
+    printf("Frequency = %d",frequency) ; 
+    playNote(frequency,nb);
+  } 
+
+  else  if (input[0] == 'M' && input[1] == 'I') 
+  {
+    frequency = (44000 * pow(coeff,4)) ;
+
+    printf("Frequency = %d",frequency) ; 
+    playNote(frequency,nb);
+  } 
+
+  else  if (input[0] == 'F' && input[1] == 'A') 
+  {
+    frequency = (44000 * pow(coeff,5)) ;
+
+    printf("Frequency = %d",frequency) ; 
+    playNote(frequency,nb);
+  } 
+
+  else  if (input[0] == 'F' && input[1] == 'Z') 
+  {
+    frequency = (44000 * pow(coeff,6)) ;
+    
+    printf("Frequency = %d",frequency) ; 
+    playNote(frequency,nb);
+  } 
+
+  else  if (input[0] == 'S' && input[1] == 'O') 
+  {
+   frequency = (44000 * pow(coeff,7)) ;
+   
+    printf("Frequency = %d",frequency) ; 
+    playNote(frequency,nb);
+  } 
+
+  else  if (input[0] == 'S' && input[1] == 'Z') 
+  {
+   frequency = (44000 * pow(coeff,8)) ;
+  
+    printf("Frequency = %d",frequency) ; 
+    playNote(frequency,nb);
+  } 
+
+
+  else  if (input[0] == 'L' && input[1] == 'A') 
+  {
+    frequency = (44000 * pow(coeff,9)) ;
+   
+    playNote(frequency,nb);
+  } 
+
+
+  else  if (input[0] == 'L' && input[1] == 'Z') 
+  {
+    frequency = (44000 * pow(coeff,10)) ;
+    printf("Frequency = %d",frequency) ; 
+    playNote(frequency,nb);
+  } 
+
+  else  if (input[0] == 'S' && input[1] == 'I') 
+  {
+    printf("%f" , pow(coeff,11) ) ; 
+    frequency = (44000 * pow(coeff,11)) ;
+    printf("Frequency = %d",frequency) ; 
+    playNote(frequency,nb);
+  } 
+
+  
+    return EXIT_SUCCESS;
 }
-*/
+
+
+void play_this(char* note) 
+{
+
+if (strlen(note) < 2)
+    errx(1,"Please check your arguments");
+
+  char second[15] = "";
+  strcat(second,note) ;
+
+    pthread_t handler;
+
+    
+   
+    pthread_create(&handler,NULL,worker,&second);
+    
+    pthread_join(handler,NULL) ;
+  
+
+
+}

@@ -1,23 +1,26 @@
+#include "sound.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <errno.h>
-#include <err.h>
-#include "sound.h"
+#include "SDL/SDL.h" 
+#include "SDL/SDL_mixer.h"
+#include <pthread.h>
+#include "err.h"
+#include <unistd.h>
+#include <string.h>
+#include <math.h> 
 
-int main(int argc,char *argv[])
+
+int main(int argc , char* argv[]) 
 {
-  if (argc>100)
-    {
-      errx(3,"t con");
-    }
-  char *tep1="DO";
-  char *tep2="RE";
-  //char *tep3="MI";
-  char *resa[]={tep1,tep2};
-  char **res=resa;
-  int nbb= atoi(argv[1]);
-  playNote(nbb,res);
-  
-  return 0;
-  }
 
+
+  if (argc < 2)
+    errx(1,"Please check your arguments");
+
+
+  play_this(argv[1]) ; 
+  
+
+
+  return 0;
+}
