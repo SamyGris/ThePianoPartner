@@ -1,7 +1,9 @@
 #include "constantes.h"
 #include "sound/sound.h"
+#include "piano.h"
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include <err.h> 
 
 void init()
 {
@@ -292,7 +294,7 @@ void init()
   position[LA4] = 485; 
 
   position[SI1] = 121; 
-  position[SI2] = 248
+  position[SI2] = 248;
   position[SI3] = 375;
   position[SI4] = 501; 
 
@@ -330,7 +332,7 @@ void playChords(int usrChords[], int repet[], int* stopped, int bpm)
   {
     for (int i = 0; i < 8; i++)
     {
-      if (usrChords[i] != NULL)
+      if (usrChords[i] != -1)
       {
         for (int j = 0; j < repet[i]; j++)
         {
@@ -347,8 +349,7 @@ void playChord(int chord, int inter)
 {
   for (int i = 0; i < 3; i++)
   {
-    if (chord != NULL)
-      playNote(chords[chord][i], inter);
+    playNote(chords[chord][i], inter);
   }
 }
 
@@ -358,14 +359,15 @@ void playNote(int note, int inter)
   struct noteData args;
   args.note = note;
   args.inter = inter;
+  pthread_t thr;
 
-  int e = pthread_create(NULL, NULL, playNoteSound, (void*)&args);
+  int e = pthread_create(&thr, NULL, &playNoteSound, (void*)&args);
   if (e)
   {
     errx(1, "Failed to play note");
   }
 
-  e = pthread_create(NULL, NULL, displayNote, (void*)&args);
+  e = pthread_create(&thr, NULL, &displayNote, (void*)&args);
   if (e)
   {
     errx(1, "Failed to display note");
@@ -377,7 +379,7 @@ void test()
 {
   int* stopped = malloc(sizeof(int));
   *stopped = 0;
-  int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, NULL, NULL, NULL, NULL};
+  int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
   int repet[8] = {2, 2, 2, 2, 0, 0, 0, 0};
   
   playChords(myChords, repet, stopped, 100);

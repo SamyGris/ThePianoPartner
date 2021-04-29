@@ -2,61 +2,43 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "constantes.h"
-
-void addScale(GtkComboBox* container); 
-void* changeTile(); 
+#include "piano.h"
 
 //Callbacks functions
-void startButtonClicked(GtkButton* b); 
-void stopButtonClicked(GtkButton* b); 
-void aboutButtonClicked(GtkButton* b); 
-
-int main(int argc, char *argv[])
-{
-  GtkWidget* window;
-  GtkWidget* startButton;
-  GtkWidget* stopButton; 
-  GtkWidget* aboutButton;
-  GtkWidget* bpmEntry;
-  GtkWidget* scaleComboBox;
-  GtkWidget* piano;
-
-  // Initialisation de GTK et ouverture de l'interface
-  gtk_init(NULL, NULL);
-  GtkBuilder* builder = gtk_builder_new_from_file("interface.glade");
-
-  // Initialisation de tous les widgets de glade
-  window = GTK_WIDGET(gtk_builder_get_object(builder, "interface"));
-  startButton = GTK_WIDGET(gtk_builder_get_object(builder, "startButton"));
-  stopButton = GTK_WIDGET(gtk_builder_get_object(builder, "stopButton"));
-  aboutButton = GTK_WIDGET(gtk_builder_get_object(builder, "aboutButton"));
-  bpmEntry = GTK_WIDGET(gtk_builder_get_object(builder, "bpmEntry"));
-  scaleComboBox = GTK_WIDGET(gtk_builder_get_object(builder, "scaleComboBox"));
-  piano = GTK_WIDGET(gtk_builder_get_object(builder, "piano")); 
-
-  addScale(scaleComboBox); 
-
-  // Personnalisation de la fenêtre
-  gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
-  gtk_window_set_icon_from_file(GTK_WINDOW(window), "icon.png", NULL);
-
-  g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-  gtk_builder_connect_signals(builder, NULL);
-  gtk_widget_show_all((GtkWidget*)window);
-  gtk_main();
-
-  return 0; 
-}
-
 void startButtonClicked()
 {
+  // TEST DISPLAY
+  /*
   pthread_t thr; 
-  int err = pthread_create(&thr, NULL, changeTile, NULL); 
+  int err = pthread_create(&thr, NULL, testDisplay, NULL); 
   if(err != 0)
   {
     printf("error"); 
-  }
+  }*/
+  
+
+  // LANCEMENT MAIN GAUCHE
+  /*
+  int bpm = getBpm();
+  int scale = getScale();
+  int[] chords = getChords();
+  int[] repets = getRepets();
+  stopped = 0;
+
+  playChords(chords, repets, &stopped, bpm);
+  */
+
+   //TEST ACCORDS
+  test();
+  
 }
+
+void stopButtonClicked()
+{
+  stopped = 1;
+}
+
+void aboutButtonClicked(); 
 
 void* testDisplay()
 {
@@ -67,7 +49,7 @@ void* testDisplay()
   sleep(5); 
 }
 
-void addScale(GtkComboBox* container)
+void addScale()
 {
   enum
   { 
@@ -83,15 +65,15 @@ void addScale(GtkComboBox* container)
   GtkTreeViewColumn* column; 
   
   store = gtk_tree_store_new(N_COLUMNS, G_TYPE_INT, G_TYPE_STRING); 
-  gtk_combo_box_set_model(container, GTK_TREE_MODEL(store)); 
+  gtk_combo_box_set_model(scaleComboBox, GTK_TREE_MODEL(store)); 
 
   renderer = gtk_cell_renderer_text_new();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (container), renderer, FALSE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (container), renderer,"text", 0, NULL);
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (scaleComboBox), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (scaleComboBox), renderer,"text", 0, NULL);
 
   renderer = gtk_cell_renderer_text_new();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (container), renderer, FALSE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (container), renderer, "text", 1, NULL);
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (scaleComboBox), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (scaleComboBox), renderer, "text", 1, NULL);
   
   gtk_tree_store_append(store, &iter, NULL); 
   gtk_tree_store_set(store, &iter, 0, 0, 1, "Do Majeur", -1);
@@ -150,10 +132,39 @@ void addScale(GtkComboBox* container)
   gtk_tree_store_append(store, &iter, NULL); 
   gtk_tree_store_set(store, &iter, 0, 27, 1, "Si Dièse Mineur", -1); 
 
-  gtk_combo_box_set_active(container, 0)
+  gtk_combo_box_set_active(scaleComboBox, 0);
 }
 
 void addChords()
 {
   
+}
+
+int main(int argc, char *argv[])
+{
+  // Initialisation de GTK et ouverture de l'interface
+  gtk_init(NULL, NULL);
+  GtkBuilder* builder = gtk_builder_new_from_file("interface.glade");
+
+  // Initialisation de tous les widgets de glade
+  window = GTK_WIDGET(gtk_builder_get_object(builder, "interface"));
+  startButton = GTK_BUTTON(gtk_builder_get_object(builder, "startButton"));
+  stopButton = GTK_BUTTON(gtk_builder_get_object(builder, "stopButton"));
+  aboutButton = GTK_BUTTON(gtk_builder_get_object(builder, "aboutButton"));
+  bpmEntry = GTK_ENTRY(gtk_builder_get_object(builder, "bpmEntry"));
+  scaleComboBox = GTK_COMBO_BOX(gtk_builder_get_object(builder, "scaleComboBox"));
+  piano = GTK_WIDGET(gtk_builder_get_object(builder, "piano")); 
+
+  addScale(scaleComboBox); 
+
+  // Personnalisation de la fenêtre
+  gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
+  gtk_window_set_icon_from_file(GTK_WINDOW(window), "icon.png", NULL);
+
+  g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+  gtk_builder_connect_signals(builder, NULL);
+  gtk_widget_show_all((GtkWidget*)window);
+  gtk_main();
+
+  return 0; 
 }

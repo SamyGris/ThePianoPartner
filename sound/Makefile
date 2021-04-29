@@ -12,7 +12,7 @@ all: ${EXE}
 
 main	:	main.o sound.o
 main.o	:	main.c
-son.o	:	sound.c sound.h
+sound.o	:	sound.c sound.h
 
 .PHONY: clean
 
