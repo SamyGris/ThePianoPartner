@@ -6,7 +6,7 @@ struct noteData
 {
       int note;
       int inter;
-}
+};
 
 // Définition des notes
 

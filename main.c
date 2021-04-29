@@ -3,25 +3,15 @@
 #include <stdio.h>
 #include "constantes.h"
 
-GtkWidget* window; 
-GtkWidget* GlobalBox; 
-GtkWidget* BandeauBox; 
-GtkWidget* ImagePiano; 
-GtkWidget* AttributsBox; 
-GtkWidget* DemarerButton;
-GtkWidget* StopButton; 
-GtkWidget* AproposButton;
-GtkWidget* bpmGammeBox; 
-GtkWidget* bpmBox; 
-GtkWidget* bpmLabel; 
+GtkWidget* window;
+GtkWidget* startButton;
+GtkWidget* stopButton; 
+GtkWidget* aboutButton;
 GtkWidget* bpmEntry;
-GtkWidget* GammeBox;
-GtkWidget* GammeLabel;
-GtkWidget* GammeComboBox;
-GtkWidget* GridAccordRepetitions;
-GtkWidget* PianoFixed; 
+GtkWidget* scaleComboBox;
+GtkWidget* piano;
 
-void ajouterGamme(GtkComboBox* container); 
+void addScale(GtkComboBox* container); 
 void* changeTile(); 
 
 //Callbacks functions
@@ -39,25 +29,14 @@ int main(int argc, char *argv[])
 
   // Initialisation de tous les widgets de glade
   window = GTK_WIDGET(gtk_builder_get_object(builder, "interface"));
-  GlobalBox = GTK_WIDGET(gtk_builder_get_object(builder, "GlobalBox"));
-  BandeauBox = GTK_WIDGET(gtk_builder_get_object(builder, "BandeauBox"));
-  ImagePiano = GTK_WIDGET(gtk_builder_get_object(builder, "ImagePiano"));
-  AttributsBox = GTK_WIDGET(gtk_builder_get_object(builder, "AttributsBox"));
-  DemarerButton = GTK_WIDGET(gtk_builder_get_object(builder, "DemarerButton"));
-  StopButton = GTK_WIDGET(gtk_builder_get_object(builder, "StopButton"));
-  AproposButton = GTK_WIDGET(gtk_builder_get_object(builder, "AproposButton"));
-  bpmGammeBox = GTK_WIDGET(gtk_builder_get_object(builder, "bpmGammeBox"));
-  bpmBox = GTK_WIDGET(gtk_builder_get_object(builder, "bpmBox"));
-  bpmLabel = GTK_WIDGET(gtk_builder_get_object(builder, "bpmLabel"));
+  startButton = GTK_WIDGET(gtk_builder_get_object(builder, "startButton"));
+  stopButton = GTK_WIDGET(gtk_builder_get_object(builder, "stopButton"));
+  aboutButton = GTK_WIDGET(gtk_builder_get_object(builder, "aboutButton"));
   bpmEntry = GTK_WIDGET(gtk_builder_get_object(builder, "bpmEntry"));
-  GammeBox = GTK_WIDGET(gtk_builder_get_object(builder, "GammeBox"));
-  GammeLabel = GTK_WIDGET(gtk_builder_get_object(builder, "GammeLabel"));
-  GammeComboBox = GTK_WIDGET(gtk_builder_get_object(builder, "GammeComboBox"));
-  GridAccordRepetitions = GTK_WIDGET(gtk_builder_get_object(builder, "GridAccordRepetitions"));
-  PianoFixed = GTK_WIDGET(gtk_builder_get_object(builder, "PianoFixed")); 
+  scaleComboBox = GTK_WIDGET(gtk_builder_get_object(builder, "scaleComboBox"));
+  piano = GTK_WIDGET(gtk_builder_get_object(builder, "piano")); 
 
-
-  //ajouterGamme(gamme); 
+  //addScale(gamme); 
 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
@@ -81,16 +60,16 @@ void on_DemarrerButton_clicked(GtkButton* b)
   }
 }
 
-void* changeTile()
+void* testDisplay()
 {
   GtkWidget* left = gtk_image_new_from_file("assets/tiles/left.png");
   gtk_widget_show(left); 
-  gtk_container_add(GTK_CONTAINER(PianoFixed), left); 
-  gtk_fixed_move(GTK_FIXED(PianoFixed), left, 11, 1);
+  gtk_container_add(GTK_CONTAINER(piano), left); 
+  gtk_fixed_move(GTK_FIXED(piano), left, 11, 1);
   sleep(5); 
 }
 
-void ajouterGamme(GtkComboBox* container)
+void addScale(GtkComboBox* container)
 {
   enum
   { 
@@ -114,8 +93,6 @@ void ajouterGamme(GtkComboBox* container)
   renderer = gtk_cell_renderer_text_new();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (container), renderer, FALSE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (container), renderer, "text", 1, NULL);
-
-  
   
   gtk_tree_store_append(store, &iter, NULL); 
   gtk_tree_store_set(store, &iter, 0, 0, 1, "Do Majeur", -1);
@@ -176,7 +153,7 @@ void ajouterGamme(GtkComboBox* container)
 
 }
 
-void ajouterAccords(GtkGrid* container)
+void addChords()
 {
-  // 
+  
 }

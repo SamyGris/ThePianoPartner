@@ -389,33 +389,35 @@ void* displayNote(void* arguments)
   int note = args->note;
   int inter = args->inter;
 
-  GtkWidget* hilight; 
+  GtkWidget* highlighter; 
   int x = position[note];
   int y = 1;
-  if(note == DO1 || note == DO2 || note == DO3 || note == DO4 || 
+
+  if (note == DO1 || note == DO2 || note == DO3 || note == DO4 || 
   note == FA1 || note == FA2 || note == FA3 || note == FA4)
   {
-    hilight = gtk_image_new_from_file("assets/tiles/left.png");
+    highlighter = gtk_image_new_from_file("assets/tiles/left.png");
   }
-  if(note == MI1 || note == MI2 || note == MI3 || note == MI4 ||
+  else if (note == MI1 || note == MI2 || note == MI3 || note == MI4 ||
   note == SI1 || note == SI2 || note == SI3 || note == SI4)
   {
-    hilight = gtk_image_new_from_file("assets/tiles/right.png");
+    highlighter = gtk_image_new_from_file("assets/tiles/right.png");
   }
-  if(note == RE1 || note == RE2 || note == RE3 || note == RE4 ||
+  else if (note == RE1 || note == RE2 || note == RE3 || note == RE4 ||
   note == SOL1 || note == SOL2 || note == SOL3 || note == SOL4 ||
   note == LA1 || note == LA2 || note == LA3 || note == LA4)
   {
     y = 2; 
-    hilight = gtk_image_new_from_file("assets/tiles/center.png");
+    highlighter = gtk_image_new_from_file("assets/tiles/center.png");
   }
   else
   {
-    hilight = gtk_image_new_from_file("assets/tiles/black.png");
+    highlighter = gtk_image_new_from_file("assets/tiles/black.png");
   }
-  gtk_widget_show(hilight); 
-  gtk_container_add(GTK_CONTAINER(PianoFixed),  hilight); 
-  gtk_fixed_move(GTK_FIXED(PianoFixed),  hilight, x, y);
+
+  gtk_widget_show(highlighter); 
+  gtk_container_add(GTK_CONTAINER(piano), highlighter); 
+  gtk_fixed_move(GTK_FIXED(piano), highlighter, x, y);
   sleep(inter); 
 
   pthread_exit(NULL);
