@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 
   //ajouterGamme(gamme); 
 
-  // Personnalisation de la fenêtrDisplayNote
+  // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
   gtk_window_set_icon_from_file(GTK_WINDOW(window), "icon.png", NULL);
 

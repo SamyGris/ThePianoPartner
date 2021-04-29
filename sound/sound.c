@@ -17,7 +17,7 @@ struct Noteparametre
    char *notename;
 }Noteparametre;
 
-int playNote(int nbnote ,char **tabnote)
+int playNoteSound(int nbnote ,char **tabnote)
 {
   if (nbnote < 1)
     errx(EXIT_FAILURE, "The number of note is unplayable.");

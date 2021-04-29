@@ -1,6 +1,13 @@
 #ifndef DEF_CONSTANTES
 #define DEF_CONSTANTES
 
+// Structure définissant une note
+struct noteData
+{
+      int note;
+      int inter;
+}
+
 // Définition des notes
 
 enum {DO1, DOD1, RE1, RED1, MI1, FA1, FAD1, SOL1, SOLD1, LA1, LAD1, SI1,
@@ -21,8 +28,8 @@ int scaleNotes[24][7];
 
 int chords[24][3];
 
-// Coordonnees
+// Positions des touches
 
-int coordonesX[48];
+int position[48];
 
 #endif

@@ -261,67 +261,68 @@ void init()
   chords[SIMI][1] = RE2;
   chords[SIMI][2] = FAD2;
 
-  coordonesX[DO1] = 11; 
-  coordonesX[DO2] = 139; 
-  coordonesX[DO3] = 266; 
-  coordonesX[DO4] = 393; 
+  position[DO1] = 11; 
+  position[DO2] = 139; 
+  position[DO3] = 266; 
+  position[DO4] = 393; 
 
-  coordonesX[RE1] = 31; 
-  coordonesX[RE2] = 158; 
-  coordonesX[RE3] = 286; 
-  coordonesX[RE4] = 413; 
+  position[RE1] = 31; 
+  position[RE2] = 158; 
+  position[RE3] = 286; 
+  position[RE4] = 413; 
 
-  coordonesX[MI1] = 47; 
-  coordonesX[MI2] = 175; 
-  coordonesX[MI3] = 303; 
-  coordonesX[MI4] = 430; 
+  position[MI1] = 47; 
+  position[MI2] = 175; 
+  position[MI3] = 303; 
+  position[MI4] = 430; 
 
-  coordonesX[FA1] = 65; 
-  coordonesX[FA2] = 193; 
-  coordonesX[FA3] = 321;
-  coordonesX[FA4] = 448;
+  position[FA1] = 65; 
+  position[FA2] = 193; 
+  position[FA3] = 321;
+  position[FA4] = 448;
 
-  coordonesX[SOL1] = 85; 
-  coordonesX[SOL2] = 213; 
-  coordonesX[SOL3] = 340; 
-  coordonesX[SOL4] = 467; 
+  position[SOL1] = 85; 
+  position[SOL2] = 213; 
+  position[SOL3] = 340; 
+  position[SOL4] = 467; 
 
-  coordonesX[LA1] = 104; 
-  coordonesX[LA2] = 231; 
-  coordonesX[LA3] = 358; 
-  coordonesX[LA4] = 485; 
+  position[LA1] = 104; 
+  position[LA2] = 231; 
+  position[LA3] = 358; 
+  position[LA4] = 485; 
 
-  coordonesX[SI1] = 121; 
-  coordonesX[SI2] = 248
-  coordonesX[SI3] = 375;
-  coordonesX[SI4] = 501; 
+  position[SI1] = 121; 
+  position[SI2] = 248
+  position[SI3] = 375;
+  position[SI4] = 501; 
 
-  coordonesX[DOD1] = 26; 
-  coordonesX[DOD2] = 153; 
-  coordonesX[DOD3] = 280; 
-  coordonesX[DOD4] = 408; 
+  position[DOD1] = 26; 
+  position[DOD2] = 153; 
+  position[DOD3] = 280; 
+  position[DOD4] = 408; 
 
-  coordonesX[RED1] = 44; 
-  coordonesX[RED2] = 171; 
-  coordonesX[RED3] = 298; 
-  coordonesX[RED4] = 426; 
+  position[RED1] = 44; 
+  position[RED2] = 171; 
+  position[RED3] = 298; 
+  position[RED4] = 426; 
 
-  coordonesX[FAD1] = 80; 
-  coordonesX[FAD2] = 207; 
-  coordonesX[FAD3] = 335; 
-  coordonesX[FAD4] = 462; 
+  position[FAD1] = 80; 
+  position[FAD2] = 207; 
+  position[FAD3] = 335; 
+  position[FAD4] = 462; 
 
-  coordonesX[SOLD1] = 98; 
-  coordonesX[SOLD2] = 225; 
-  coordonesX[SOLD3] = 353;
-  coordonesX[SOLD4] = 480; 
+  position[SOLD1] = 98; 
+  position[SOLD2] = 225; 
+  position[SOLD3] = 353;
+  position[SOLD4] = 480; 
 
-  coordonesX[LAD1] = 116; 
-  coordonesX[LAD2] = 243; 
-  coordonesX[LAD3] = 371; 
-  coordonesX[LAD4] = 498; 
+  position[LAD1] = 116; 
+  position[LAD2] = 243; 
+  position[LAD3] = 371; 
+  position[LAD4] = 498; 
 } 
 
+// Fonction qui orchestre la main gauche
 void playChords(int usrChords[], int repet[], int* stopped, int bpm)
 {
   int inter = 60000/bpm * 4;
@@ -341,16 +342,37 @@ void playChords(int usrChords[], int repet[], int* stopped, int bpm)
   }
 }
 
+// Fonction qui joue un accord
 void playChord(int chord, int inter)
 {
-  playNote(chords[chord][0]);
-  displayNote(chords[chord][0], inter);
-  playNote(chords[chord][0]);
-  displayNote(chords[chord][0], inter);
-  playNote(chords[chord][0]);
-  displayNote(chords[chord][0], inter);
+  for (int i = 0; i < 3; i++)
+  {
+    if (chord != NULL)
+      playNote(chords[chord][i], inter);
+  }
 }
 
+// Fonction qui joue une note
+void playNote(int note, int inter)
+{
+  struct noteData args;
+  args.note = note;
+  args.inter = inter;
+
+  int e = pthread_create(NULL, NULL, playNoteSound, (void*)&args);
+  if (e)
+  {
+    errx(1, "Failed to play note");
+  }
+
+  e = pthread_create(NULL, NULL, displayNote, (void*)&args);
+  if (e)
+  {
+    errx(1, "Failed to display note");
+  }
+}
+
+// Fonction qui teste les accords de Greensleeves
 void test()
 {
   int* stopped = malloc(sizeof(int));
@@ -361,24 +383,28 @@ void test()
   playChords(myChords, repet, stopped, 100);
 }
 
-void* changeTile2(int tile, int bpm)
+void* displayNote(void* arguments)
 {
+  struct noteData *args = arguments;
+  int note = args->note;
+  int inter = args->inter;
+
   GtkWidget* hilight; 
-  int x = container[tile];
+  int x = position[note];
   int y = 1;
-  if(tile == DO1 || tile == DO2 || tile == DO3 || tile == DO4 || 
-  tile == FA1 || tile == FA2 || tile == FA3 || tile == FA4)
+  if(note == DO1 || note == DO2 || note == DO3 || note == DO4 || 
+  note == FA1 || note == FA2 || note == FA3 || note == FA4)
   {
     hilight = gtk_image_new_from_file("assets/tiles/left.png");
   }
-  if(tile == MI1 || tile == MI2 || tile == MI3 || tile == MI4 ||
-  tile == SI1 || tile == SI2 || tile == SI3 || tile == SI4)
+  if(note == MI1 || note == MI2 || note == MI3 || note == MI4 ||
+  note == SI1 || note == SI2 || note == SI3 || note == SI4)
   {
     hilight = gtk_image_new_from_file("assets/tiles/right.png");
   }
-  if(tile == RE1 || tile == RE2 || tile == RE3 || tile == RE4 ||
-  tile == SOL1 || tile == SOL2 || tile == SOL3 || tile == SOL4 ||
-  tile == LA1 || tile == LA2 || tile == LA3 || tile == LA4)
+  if(note == RE1 || note == RE2 || note == RE3 || note == RE4 ||
+  note == SOL1 || note == SOL2 || note == SOL3 || note == SOL4 ||
+  note == LA1 || note == LA2 || note == LA3 || note == LA4)
   {
     y = 2; 
     hilight = gtk_image_new_from_file("assets/tiles/center.png");
@@ -390,5 +416,8 @@ void* changeTile2(int tile, int bpm)
   gtk_widget_show(hilight); 
   gtk_container_add(GTK_CONTAINER(PianoFixed),  hilight); 
   gtk_fixed_move(GTK_FIXED(PianoFixed),  hilight, x, y);
-  sleep(5); 
+  sleep(inter); 
+
+  pthread_exit(NULL);
+  return NULL;
 }
