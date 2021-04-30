@@ -1,8 +1,6 @@
 #ifndef DEF_CONSTANTES
 #define DEF_CONSTANTES
 
-#include <gtk/gtk.h>
-
 // Structure définissant une note
 struct noteData
 {
@@ -33,16 +31,5 @@ int chords[24][3];
 // Positions des touches
 
 int position[48];
-
-// Widgets
-
-GtkWidget* window;
-GtkButton* startButton;
-GtkButton* stopButton; 
-GtkButton* aboutButton;
-GtkEntry* bpmEntry;
-GtkComboBox* scaleComboBox;
-GtkWidget* piano;
-int stopped;
 
 #endif

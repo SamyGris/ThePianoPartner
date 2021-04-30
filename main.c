@@ -1,8 +1,8 @@
-#include <gtk/gtk.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "constantes.h"
 #include "piano.h"
+#include "widgets.h"
 
 //Callbacks functions
 void startButtonClicked()
@@ -46,7 +46,10 @@ void* testDisplay()
   gtk_widget_show(left); 
   gtk_container_add(GTK_CONTAINER(piano), left); 
   gtk_fixed_move(GTK_FIXED(piano), left, 11, 1);
-  sleep(5); 
+  sleep(5);
+
+  pthread_exit(NULL);
+  return NULL;
 }
 
 void addScale()
@@ -60,9 +63,7 @@ void addScale()
 
   GtkTreeIter iter; 
   GtkTreeStore* store;
-  GtkWidget* tree; 
   GtkCellRenderer* renderer; 
-  GtkTreeViewColumn* column; 
   
   store = gtk_tree_store_new(N_COLUMNS, G_TYPE_INT, G_TYPE_STRING); 
   gtk_combo_box_set_model(scaleComboBox, GTK_TREE_MODEL(store)); 
@@ -140,7 +141,7 @@ void addChords()
   
 }
 
-int main(int argc, char *argv[])
+int main()
 {
   // Initialisation de GTK et ouverture de l'interface
   gtk_init(NULL, NULL);

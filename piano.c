@@ -1,9 +1,9 @@
-#include "constantes.h"
-#include "sound/sound.h"
-#include "piano.h"
 #include <stdlib.h>
-#include <gtk/gtk.h>
-#include <err.h> 
+#include <err.h>
+#include "piano.h"
+#include "constantes.h"
+#include "sound.h"
+#include "widgets.h"
 
 void init()
 {
