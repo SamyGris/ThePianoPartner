@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "constantes.h"
@@ -33,7 +34,7 @@ void startButtonClicked()
 
   struct noteData *args=malloc(sizeof(struct noteData));
   args->note=FA3;
-  args->inter=5;
+  args->inter=100000;
   pthread_t thr; 
   int e = pthread_create(&thr, NULL, &displayNote, (void*)args);
   if (e)
@@ -50,17 +51,6 @@ void stopButtonClicked()
 
 void aboutButtonClicked(); 
 
-void* testDisplay()
-{
-  GtkWidget* left = gtk_image_new_from_file("assets/tiles/left.png");
-  gtk_widget_show(left); 
-  gtk_container_add(GTK_CONTAINER(piano), left); 
-  gtk_fixed_move(GTK_FIXED(piano), left, 11, 1);
-  sleep(5);
-
-  pthread_exit(NULL);
-  return NULL;
-}
 
 void addScale()
 {
@@ -167,7 +157,7 @@ int main()
 
   // Initialisation de GTK et ouverture de l'interface
   gtk_init(NULL, NULL);
-  GtkBuilder* builder = gtk_builder_new_from_file("interface.glade");
+  GtkBuilder* builder = gtk_builder_new_from_file("assets/interface.glade");
 
   // Initialisation de tous les widgets de glade
   window = GTK_WIDGET(gtk_builder_get_object(builder, "interface"));
@@ -182,7 +172,7 @@ int main()
 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
-  gtk_window_set_icon_from_file(GTK_WINDOW(window), "icon.png", NULL);
+  gtk_window_set_icon_from_file(GTK_WINDOW(window), "assets/icon.png", NULL);
  
   init();
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
