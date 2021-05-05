@@ -32,7 +32,6 @@ void startButtonClicked()
 
   //TEST ACCORDS
   test(); 
-  
 }
 
 void stopButtonClicked()
@@ -130,6 +129,21 @@ void addScale()
 void addChords()
 {
   
+}
+
+int getBpm()
+{
+  char *endptr;
+  char *entry = gtk_entry_get_text(bpmEntry);
+  errno = 0;
+  int bpm = (int)strtol(entry, &endptr, 10);
+
+  if (entry == endptr || '\0' != *endptr || 
+      ERANGE == errno || bpm < 50 || bpm > 150) ||
+      (errno != 0 && bpm == 0))
+    bpm = 100;
+  
+  return bpm;
 }
 
 int main()
