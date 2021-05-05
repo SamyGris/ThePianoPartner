@@ -10,6 +10,7 @@ void getFrequency(int note, float* frequency, int* octave)
 
 void* playNoteSound(void* arguments)
 {
+  printf("In sound playnotesound \n") ; 
   struct noteData *args = arguments;
   int note = args->note;
   int inter = args->inter;
@@ -44,6 +45,7 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Signal analyse : couldn't create a dsp ");
   }
 
+  /*pour changer la frequence : */
   if (FMOD_DSP_SetParameterFloat(dsp_effect,0,frequency) != FMOD_OK)
   {
 	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
@@ -66,13 +68,17 @@ void* playNoteSound(void* arguments)
 
   msleep(inter);
 
+  printf(" Durée de note = %d \n",inter) ;
+    pthread_exit(NULL);
+  return NULL;
+
   if (FMOD_Sound_Release(son) != FMOD_OK)
   {
     errx(3, "Couldn't release the sound");
   }
 
-  pthread_exit(NULL);
-  return NULL;
+
+  printf("Out of PlayNoteSound \n") ;
 }
 
 void *playNoteSoundsec(void *arg,int sec)

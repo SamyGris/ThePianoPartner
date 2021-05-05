@@ -32,6 +32,8 @@ void startButtonClicked()
 
   //TEST ACCORDS
   test(); 
+
+  printf("Button CLicked \n ") ; 
 }
 
 void stopButtonClicked()
