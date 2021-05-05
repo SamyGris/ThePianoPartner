@@ -10,6 +10,7 @@
 #include <math.h>
 #include <fmod.h>
 #include "constantes.h"
+#include "toolbox.h"
 
 void getFrequency(int note, float* frequency, int* octave);
 void* playNoteSound(void* arguments);

@@ -12,6 +12,7 @@ void* playNoteSound(void* arguments)
 {
   struct noteData *args = arguments;
   int note = args->note;
+  int inter = args->inter;
   float frequency;
   int octave;
   FMOD_SOUND *son;
@@ -19,87 +20,56 @@ void* playNoteSound(void* arguments)
 
   son = samples[octave];  
 
+  FMOD_CHANNEL *channel;
   
-  FMOD_CHANNEL *reyane;
-  result=FMOD_System_PlaySound(systemSound,son,NULL,0,&reyane);
-  if (result!=FMOD_OK)
-      {
-	    errx(3,"Couldn't play the sound");
-      }
-  result=FMOD_Channel_SetVolume(reyane,7.5);
-  if (result!=FMOD_OK)
-      {
-	    errx(3,"Couldn't set the volume"); 
+  if (FMOD_System_PlaySound(systemSound,son,NULL,0,&channel) != FMOD_OK)
+  {
+	  errx(3,"Couldn't play the sound");
+  }
 
-      }
-  result=FMOD_Channel_SetFrequency(reyane,44100);
-  if (result!=FMOD_OK)
-      {
-	    errx(3,"Couldn't set the frequency");
-      }
-    FMOD_DSP *dsp_effect;
+  if (FMOD_Channel_SetVolume(channel,7.5) != FMOD_OK)
+  {
+	  errx(3,"Couldn't set the volume"); 
+  }
+  
+  if (FMOD_Channel_SetFrequency(channel,44100) != FMOD_OK)
+  {
+	  errx(3,"Couldn't set the frequency");
+  }
+    
+  FMOD_DSP *dsp_effect;
 
-    result=FMOD_System_CreateDSPByType(systemSound,FMOD_DSP_TYPE_PITCHSHIFT,&dsp_effect);
-    if (result!=FMOD_OK)
-      {
-	    errx(3,"Signal analyse : couldn't create a dsp ");
-      }
+  if (FMOD_System_CreateDSPByType(systemSound,FMOD_DSP_TYPE_PITCHSHIFT,&dsp_effect) != FMOD_OK)
+  {
+	  errx(3,"Signal analyse : couldn't create a dsp ");
+  }
 
-    result=FMOD_DSP_SetParameterFloat(dsp_effect,0,frequency);
+  if (FMOD_DSP_SetParameterFloat(dsp_effect,0,frequency) != FMOD_OK)
+  {
+	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
+  }
 
-    if (result!=FMOD_OK)
-      {
-	    errx(3,"Signal analyse : couldn't set the dsp float parametre");
-      }
+  if (FMOD_DSP_SetParameterInt(dsp_effect,1,4096) != FMOD_OK)
+  {
+	  errx(3,"Signal analyse : couldn't set the dsp int parametre");
+  }
 
-    /*result=FMOD_DSP_SetParameterInt(dsp_effect,1,4096);
+  if (FMOD_Channel_AddDSP(channel,0,dsp_effect) != FMOD_OK)
+  {
+	  errx(3,"Couldn't add the DSP to the channel");
+  }
 
-    if (result!=FMOD_OK)
-      {
-	    errx(3,"Signal analyse : couldn't set the dsp int parametre");
-      }*/
+  if (FMOD_Channel_SetDSPIndex(channel,dsp_effect,1) != FMOD_OK)
+  {
+	  errx(3,"Couldn't set the dsp index in the channel");
+  }
 
-    result=FMOD_Channel_AddDSP(reyane,0,dsp_effect);
-     if (result!=FMOD_OK)
-      {
-	    errx(3,"Couldn't add the DSP to the channel");
-      }
-    result=FMOD_Channel_SetDSPIndex(reyane,dsp_effect,1);
+  msleep(inter);
 
-     if (result!=FMOD_OK)
-      {
-	    errx(3,"Couldn't set the dsp index in the channel");
-      }
-  FMOD_BOOL vrai;
-  FMOD_Channel_IsPlaying(reyane,&vrai);
-
-  while(1)
-      {
-	      if(vrai==0)
-	      {
-	        result = FMOD_Sound_Release(son);
-          if (result!=FMOD_OK)
-      {
-	    errx(3,"Couldn't release the sound");
-      }
-	        break;
-	      }
-	      result =FMOD_Channel_IsPlaying(reyane,&vrai);
-        if (result!=FMOD_OK)
-      {
-	    errx(3,"Couldn't say if the channel is playing");
-      }
-      }
-    result=FMOD_System_Close(systemSound);
-    if (result!=FMOD_OK)
-      {
-	    errx(3,"Couldn't close the system");
-      }
-    FMOD_System_Release(systemSound);
-    if (result!=FMOD_OK)
-      {
-	    errx(3,"Couldn't release the system");
-      }
+  if (FMOD_Sound_Release(son) != FMOD_OK)
+  {
+    errx(3, "Couldn't release the sound");
+  }
 
   pthread_exit(NULL);
   return NULL;

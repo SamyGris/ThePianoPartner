@@ -30,9 +30,8 @@ void startButtonClicked()
   playChords(chords, repets, &stopped, bpm);
   */
 
-   //TEST ACCORDS
-
-  playNote(FA1, 2321); 
+  //TEST ACCORDS
+  test(); 
   
 }
 

@@ -1,7 +1,7 @@
 #include <errno.h>
 #include <time.h>
 
-int msleep(long tms)
+int msleep(int tms)
 {
     struct timespec ts;
     int ret;
