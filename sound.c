@@ -24,8 +24,6 @@ void getFrequency(int note, float* frequency, int* octave)
   *octave = note/12 + 1;
   note = note % 12;
   *frequency = powf(2,note*douze);
-
-  
 }
 
 void* playNoteSound(void* arguments)
@@ -97,15 +95,8 @@ void* playNoteSound(void* arguments)
   
   //Mix_PlayMusic(noteSound, 1);//Jouer la note
   
-  FMOD_CHANNELGROUP *channelgroup;
-
-  result=FMOD_System_GetMasterChannelGroup(system,&channelgroup);
-  if (result!=FMOD_OK)
-      {
-	    errx(3,"Erroe");
-      }
   FMOD_CHANNEL *reyane;
-  result=FMOD_System_PlaySound(system,son,channelgroup,0,&reyane);
+  result=FMOD_System_PlaySound(system,son,NULL,0,&reyane);
   if (result!=FMOD_OK)
       {
 	    errx(3,"Erroe");
