@@ -40,6 +40,7 @@ void startButtonClicked()
   {
     errx(1, "Failed to display note");
   }
+  test();
   
 }
 
