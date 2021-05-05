@@ -131,7 +131,7 @@ void addChords()
   
 }
 
-int getBpm()
+/*int getBpm()
 {
   char *endptr;
   char *entry = gtk_entry_get_text(bpmEntry);
@@ -144,7 +144,7 @@ int getBpm()
     bpm = 100;
   
   return bpm;
-}
+}*/
 
 int main()
 {

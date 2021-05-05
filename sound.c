@@ -49,10 +49,10 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
   }
 
-  if (FMOD_DSP_SetParameterInt(dsp_effect,1,4096) != FMOD_OK)
+  /*if (FMOD_DSP_SetParameterInt(dsp_effect,1,4096) != FMOD_OK)
   {
 	  errx(3,"Signal analyse : couldn't set the dsp int parametre");
-  }
+  }*/
 
   if (FMOD_Channel_AddDSP(channel,0,dsp_effect) != FMOD_OK)
   {
@@ -164,6 +164,4 @@ void initAudio()
     errx(3,"Couldn't create DO4.wav sound");
   }
   samples[3] = sound; 
-
-
 }

@@ -10,7 +10,7 @@
 // Fonction qui orchestre la main gauche
 void playChords(int usrChords[], int repet[], int* stopped, int bpm)
 {
-  int inter = 60000/bpm * 4;
+  int inter = 60000/bpm * 4 ;
   while (!*stopped)
   {
     for (int i = 0; i < 8; i++)
@@ -20,7 +20,7 @@ void playChords(int usrChords[], int repet[], int* stopped, int bpm)
         for (int j = 0; j < repet[i]; j++)
         {
           playChord(usrChords[i], inter);
-          printf("accord");
+          printf("accord\n");
           msleep(inter);
         }
       }
