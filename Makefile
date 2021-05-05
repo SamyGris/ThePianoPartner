@@ -1,10 +1,10 @@
 # Makefile
 
 CC = gcc
-CPPFLAGS = `pkg-config --cflags gtk+-3.0 sdl` -rdynamic -MMD
-CFLAGS = -Wall -Wextra -Werror -std=c99 -O3 -I /usr/local/include/
-LDFLAGS = -pthread
-LDLIBS = `pkg-config --libs gtk+-3.0 sdl` -L /usr/local/lib/ -lfmod -lm 
+CPPFLAGS = `pkg-config --cflags gtk+-3.0 sdl` -MMD
+CFLAGS = -Wall -Wextra -Werror -std=c99 -O3 -I /usr/local/include/ -rdynamic
+LDFLAGS = -pthread 
+LDLIBS = `pkg-config --libs gtk+-3.0 sdl` -L /usr/local/lib/ -lfmod -lm -fuse-ld=gold
 
 EXE = main
 

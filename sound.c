@@ -11,15 +11,6 @@
 
 void getFrequency(int note, float* frequency, int* octave)
 {
-  /*float coeff = 1.05946;
-
-  *octave = note/12 + 1;
-  note = note % 12;
-  *frequency = 44000;
-
-  for (int i = 0; i < note; i++)
-    *frequency *= coeff;*/
-
    float douze = 0.083333;
   *octave = note/12 + 1;
   note = note % 12;
@@ -30,7 +21,6 @@ void* playNoteSound(void* arguments)
 {
   struct noteData *args = arguments;
   int note = args->note;
-
   float frequency;
   int octave;
 
@@ -46,54 +36,43 @@ void* playNoteSound(void* arguments)
     {
       errx(3,"Erroe");
     }
-
-
+  FMOD_SOUND*son;
   getFrequency(note, &frequency, &octave);
-
-  /*if(Mix_OpenAudio(frequency, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048) == -1)
-  {
-    printf("%s", Mix_GetError());
-  }*/
-   
-  FMOD_SOUND *son=NULL;  //Structure FMOD_SOUND correspondante à la note
 
   switch (octave)
   {
     case 1:
-      //noteSound = Mix_LoadMUS("notes/DO1.wav");
-      result =FMOD_System_CreateSound(system,"DO1.wav",FMOD_CREATESAMPLE,0,&son);
+      result =FMOD_System_CreateSound(system,"notes/DO1.wav",FMOD_CREATESAMPLE,0,&son);
       if (result!=FMOD_OK)
       {
         errx(3,"Error");
       }
       break;
     case 2 : 
-      //noteSound = Mix_LoadMUS("notes/DO2.wav");
-      result =FMOD_System_CreateSound(system,"DO2.wav",FMOD_CREATESAMPLE,0,&son);
+      result =FMOD_System_CreateSound(system,"notes/DO2.wav",FMOD_CREATESAMPLE,0,&son);
       if (result!=FMOD_OK)
       {
         errx(3,"Error");
       }
       break;
+      
     case 3:
-      //noteSound = Mix_LoadMUS("notes/DO3.wav");
-      result =FMOD_System_CreateSound(system,"DO3.wav",FMOD_CREATESAMPLE,0,&son);
+      result =FMOD_System_CreateSound(system,"notes/DO3.wav",FMOD_CREATESAMPLE,0,&son);
       if (result!=FMOD_OK)
       {
         errx(3,"Error");
       }
       break;
     default:
-      //noteSound = Mix_LoadMUS("notes/DO4.wav");
-      result =FMOD_System_CreateSound(system,"DO4.wav",FMOD_CREATESAMPLE,0,&son);
+      
+      result =FMOD_System_CreateSound(system,"notes/DO4.wav",FMOD_CREATESAMPLE,0,&son);
       if (result!=FMOD_OK)
       {
         errx(3,"Error");
       }
       break;
   }
-  
-  //Mix_PlayMusic(noteSound, 1);//Jouer la note
+
   
   FMOD_CHANNEL *reyane;
   result=FMOD_System_PlaySound(system,son,NULL,0,&reyane);
@@ -157,9 +136,6 @@ void* playNoteSound(void* arguments)
       }
     FMOD_System_Close(system);
     FMOD_System_Release(system);
-  /*SDL_Delay(3000);
-  Mix_FreeMusic(noteSound);
-  Mix_CloseAudio();*/
 
   pthread_exit(NULL);
   return NULL;
@@ -195,7 +171,7 @@ void *playNoteSoundsec(void *arg,int sec)
   {
     case 1:
       //noteSound = Mix_LoadMUS("notes/DO1.wav");
-      result =FMOD_System_CreateSound(system,"DO1.wav",FMOD_CREATESAMPLE,0,&son);
+      result =FMOD_System_CreateSound(system,"notes/DO1.wav",FMOD_CREATESAMPLE,0,&son);
       if (result!=FMOD_OK)
       {
         errx(3,"Error");
@@ -203,7 +179,7 @@ void *playNoteSoundsec(void *arg,int sec)
       break;
     case 2 : 
       //noteSound = Mix_LoadMUS("notes/DO2.wav");
-      result =FMOD_System_CreateSound(system,"DO2.wav",FMOD_CREATESAMPLE,0,&son);
+      result =FMOD_System_CreateSound(system,"notes/DO2.wav",FMOD_CREATESAMPLE,0,&son);
       if (result!=FMOD_OK)
       {
         errx(3,"Error");
@@ -211,7 +187,7 @@ void *playNoteSoundsec(void *arg,int sec)
       break;
     case 3:
       //noteSound = Mix_LoadMUS("notes/DO3.wav");
-      result =FMOD_System_CreateSound(system,"DO3.wav",FMOD_CREATESAMPLE,0,&son);
+      result =FMOD_System_CreateSound(system,"notes/DO3.wav",FMOD_CREATESAMPLE,0,&son);
       if (result!=FMOD_OK)
       {
         errx(3,"Error");
@@ -219,7 +195,7 @@ void *playNoteSoundsec(void *arg,int sec)
       break;
     default:
       //noteSound = Mix_LoadMUS("notes/DO4.wav");
-      result =FMOD_System_CreateSound(system,"DO4.wav",FMOD_CREATESAMPLE,0,&son);
+      result =FMOD_System_CreateSound(system,"notes/DO4.wav",FMOD_CREATESAMPLE,0,&son);
       if (result!=FMOD_OK)
       {
         errx(3,"Error");
