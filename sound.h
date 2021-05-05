@@ -14,8 +14,11 @@
 void getFrequency(int note, float* frequency, int* octave);
 void* playNoteSound(void* arguments);
 void* playNoteSoundsec(void* arguments,int second);
+void initAudio(); 
 
 FMOD_RESULT result;
 FMOD_SYSTEM *systemSound;
+
+FMOD_SOUND *samples[4]; 
 
 #endif

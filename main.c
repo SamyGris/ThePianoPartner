@@ -32,7 +32,7 @@ void startButtonClicked()
 
    //TEST ACCORDS
 
-  playNote(FA1, 1000); 
+  playNote(FA1, 2321); 
   
 }
 
@@ -166,7 +166,9 @@ int main()
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
   gtk_window_set_icon_from_file(GTK_WINDOW(window), "assets/icon.png", NULL);
  
-  init();
+  initConst();
+  initAudio(); 
+
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
   gtk_builder_connect_signals(builder, NULL);
   gtk_widget_show_all((GtkWidget*)window);

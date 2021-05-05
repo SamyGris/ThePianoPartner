@@ -3,7 +3,7 @@
 void getFrequency(int note, float* frequency, int* octave)
 {
   float douze = 0.083333;
-  *octave = note/12 + 1;
+  *octave = note/12;
   note = note % 12;
   *frequency = powf(2,note*douze);
 }
@@ -17,39 +17,7 @@ void* playNoteSound(void* arguments)
   FMOD_SOUND *son;
   getFrequency(note, &frequency, &octave);
 
-  switch (octave)
-  {
-    case 1:
-      result =FMOD_System_CreateSound(systemSound,"notes/DO1.wav",FMOD_CREATESAMPLE,0,&son);
-      if (result!=FMOD_OK)
-      {
-        errx(3,"Couldn't create DO1.wav sound");
-      }
-      break;
-    case 2 : 
-      result =FMOD_System_CreateSound(systemSound,"notes/DO2.wav",FMOD_CREATESAMPLE,0,&son);
-      if (result!=FMOD_OK)
-      {
-        errx(3,"Couldn't create DO2.wav sound");
-      }
-      break;
-
-    case 3:
-      result =FMOD_System_CreateSound(systemSound,"notes/DO3.wav",FMOD_CREATESAMPLE,0,&son);
-      if (result!=FMOD_OK)
-      {
-        errx(3,"Couldn't create DO3.wav sound");
-      }
-      break;
-    default:
-      
-      result =FMOD_System_CreateSound(systemSound,"notes/DO4.wav",FMOD_CREATESAMPLE,0,&son);
-      if (result!=FMOD_OK)
-      {
-        errx(3,"Couldn't create DO4.wav sound");
-      }
-      break;
-  }
+  son = samples[octave]; 
 
   
   FMOD_CHANNEL *reyane;
@@ -61,7 +29,8 @@ void* playNoteSound(void* arguments)
   result=FMOD_Channel_SetVolume(reyane,7.5);
   if (result!=FMOD_OK)
       {
-	    errx(3,"Couldn't set the volume");
+	    errx(3,"Couldn't set the volume"); 
+
       }
   result=FMOD_Channel_SetFrequency(reyane,44100);
   if (result!=FMOD_OK)
@@ -96,6 +65,7 @@ void* playNoteSound(void* arguments)
 	    errx(3,"Couldn't add the DSP to the channel");
       }
     result=FMOD_Channel_SetDSPIndex(reyane,dsp_effect,1);
+
      if (result!=FMOD_OK)
       {
 	    errx(3,"Couldn't set the dsp index in the channel");
@@ -195,4 +165,35 @@ void *playNoteSoundsec(void *arg,int sec)
       break;
   }
   return NULL;
+}
+
+void initAudio()
+{
+  FMOD_SOUND *sound; 
+  result = FMOD_System_CreateSound(systemSound,"notes/DO1.wav",FMOD_CREATESAMPLE,0, &sound);
+  if (result != FMOD_OK)
+  {
+    errx(3,"Couldn't create DO1.wav sound");
+  }
+  samples[0] = sound; 
+  result = FMOD_System_CreateSound(systemSound,"notes/DO2.wav",FMOD_CREATESAMPLE,0,&sound);
+  if (result != FMOD_OK)
+  {
+    errx(3,"Couldn't create DO2.wav sound");
+  }
+  samples[1] = sound; 
+  result = FMOD_System_CreateSound(systemSound,"notes/DO3.wav",FMOD_CREATESAMPLE,0,&sound);
+  if (result != FMOD_OK)
+  {
+    errx(3,"Couldn't create DO3.wav sound");
+  }
+  samples[2] = sound; 
+  result = FMOD_System_CreateSound(systemSound,"notes/DO4.wav",FMOD_CREATESAMPLE,0,&sound);
+  if (result != FMOD_OK)
+  {
+    errx(3,"Couldn't create DO4.wav sound");
+  }
+  samples[3] = sound; 
+
+
 }

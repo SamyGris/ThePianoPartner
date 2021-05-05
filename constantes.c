@@ -1,6 +1,6 @@
 #include "constantes.h"
 
-void init()
+void initConst()
 {
   // Gammes majeures
 

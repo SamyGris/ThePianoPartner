@@ -32,4 +32,6 @@ int chords[24][3];
 
 int position[48];
 
+void initConst(); 
+
 #endif
