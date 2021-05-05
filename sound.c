@@ -9,16 +9,23 @@
 #include "sound.h"
 #include "constantes.h"
 
-void getFrequency(int note, int* frequency, int* octave)
+void getFrequency(int note, float* frequency, int* octave)
 {
-  float coeff = 1.05946;
+  /*float coeff = 1.05946;
 
   *octave = note/12 + 1;
   note = note % 12;
   *frequency = 44000;
 
   for (int i = 0; i < note; i++)
-    *frequency *= coeff;
+    *frequency *= coeff;*/
+
+   float douze = 0.083333;
+  *octave = note/12 + 1;
+  note = note % 12;
+  *frequency = powf(2,note*douze);
+
+  
 }
 
 void* playNoteSound(void* arguments)
@@ -26,7 +33,7 @@ void* playNoteSound(void* arguments)
   struct noteData *args = arguments;
   int note = args->note;
 
-  int frequency;
+  float frequency;
   int octave;
 
   FMOD_RESULT result;
@@ -103,7 +110,7 @@ void* playNoteSound(void* arguments)
       {
 	    errx(3,"Erroe");
       }
-  result=FMOD_Channel_SetVolume(reyane,2.0);
+  result=FMOD_Channel_SetVolume(reyane,7.5);
   if (result!=FMOD_OK)
       {
 	    errx(3,"Erroe");
@@ -118,7 +125,29 @@ void* playNoteSound(void* arguments)
       {
 	    errx(3,"Erroe");
       }
-   
+
+    FMOD_DSP *dsp_effect;
+
+    result=FMOD_System_CreateDSPByType(system,FMOD_DSP_TYPE_PITCHSHIFT,&dsp_effect);
+    if (result!=FMOD_OK)
+      {
+	    errx(3,"Erroe");
+      }
+
+    FMOD_DSP_SetParameterFloat(dsp_effect,0,frequency);
+
+    FMOD_DSP_SetParameterInt(dsp_effect,1,4096);
+
+    result=FMOD_Channel_AddDSP(reyane,0,dsp_effect);
+     if (result!=FMOD_OK)
+      {
+	    errx(3,"Erroe");
+      }
+    result=FMOD_Channel_SetDSPIndex(reyane,dsp_effect,1);
+     if (result!=FMOD_OK)
+      {
+	    errx(3,"Erroe");
+      }
   FMOD_BOOL vrai;
   FMOD_Channel_IsPlaying(reyane,&vrai);
 
