@@ -377,12 +377,21 @@ void playNote(int note, int inter)
 // Fonction qui teste les accords de Greensleeves
 void test()
 {
-  int* stopped = malloc(sizeof(int));
+  /*int* stopped = malloc(sizeof(int));
   *stopped = 0;
   int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
   int repet[8] = {2, 2, 2, 2, 0, 0, 0, 0};
   
-  playChords(myChords, repet, stopped, 100);
+  playChords(myChords, repet, stopped, 100);*/
+  /*struct noteData *samy=malloc(sizeof(struct noteData));
+  samy->note=SI4;
+  samy->inter=5;
+  playNoteSound(samy);*/
+  struct noteData *nail=malloc(sizeof(struct noteData));
+  nail->note=FA3;
+  nail->inter=5;
+  playNoteSound(nail);
+
 }
 
 void* displayNote(void* arguments)

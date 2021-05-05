@@ -3,7 +3,7 @@
 #include "constantes.h"
 #include "piano.h"
 #include "widgets.h"
-
+#include "sound.h"
 
 //Callbacks functions
 void startButtonClicked()
@@ -30,6 +30,7 @@ void startButtonClicked()
   */
 
    //TEST ACCORDS
+
   test();
   
 }
@@ -144,6 +145,18 @@ void addChords()
 
 int main()
 {
+  result = FMOD_System_Create(&systemSound); //Initialisation et création de notre systeme    
+  if (result != FMOD_OK)
+  {
+    errx(3,"Couldn't create a system");
+  }
+  
+  result=FMOD_System_Init(systemSound,32,FMOD_INIT_NORMAL,NULL); //initialisation du system ne mode lecture normal de son et a 32 channel
+  if (result!=FMOD_OK)
+  {
+    errx(3,"Couldn't init a system");
+  }
+
   // Initialisation de GTK et ouverture de l'interface
   gtk_init(NULL, NULL);
   GtkBuilder* builder = gtk_builder_new_from_file("interface.glade");
