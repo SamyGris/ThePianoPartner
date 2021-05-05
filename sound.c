@@ -120,12 +120,6 @@ void* playNoteSound(void* arguments)
       {
 	    errx(3,"Erroe");
       }
-  result=FMOD_Channel_SetPitch(reyane,0.5);
-  if (result!=FMOD_OK)
-      {
-	    errx(3,"Erroe");
-      }
-
     FMOD_DSP *dsp_effect;
 
     result=FMOD_System_CreateDSPByType(system,FMOD_DSP_TYPE_PITCHSHIFT,&dsp_effect);
@@ -134,9 +128,19 @@ void* playNoteSound(void* arguments)
 	    errx(3,"Erroe");
       }
 
-    FMOD_DSP_SetParameterFloat(dsp_effect,0,frequency);
+    result=FMOD_DSP_SetParameterFloat(dsp_effect,0,frequency);
 
-    FMOD_DSP_SetParameterInt(dsp_effect,1,4096);
+    if (result!=FMOD_OK)
+      {
+	    errx(3,"Erroe");
+      }
+
+    result=FMOD_DSP_SetParameterInt(dsp_effect,1,4096);
+
+    if (result!=FMOD_OK)
+      {
+	    errx(3,"Erroe");
+      }
 
     result=FMOD_Channel_AddDSP(reyane,0,dsp_effect);
      if (result!=FMOD_OK)
@@ -167,5 +171,69 @@ void* playNoteSound(void* arguments)
   Mix_CloseAudio();*/
 
   pthread_exit(NULL);
+  return NULL;
+}
+
+void *playNoteSoundsec(void *arg,int sec)
+{
+  struct noteData *args = arg;
+  int note = args->note;
+
+  float frequency;
+  int octave;
+
+  FMOD_RESULT result;
+  FMOD_SYSTEM *system =NULL;
+  result = FMOD_System_Create(&system); //Initialisation et création de notre systeme    
+  if (result!=FMOD_OK)
+    {
+      errx(3,"Eroor");
+    }
+    result=FMOD_System_Init(system,32,FMOD_INIT_NORMAL,NULL); //initialisation du system ne mode lecture normal de son et a 32 channel
+    if (result!=FMOD_OK)
+    {
+      errx(3,"Erroe");
+    }
+
+  printf("%d",sec); //anti warning
+  getFrequency(note, &frequency, &octave);
+
+  FMOD_SOUND *son=NULL;  //Structure FMOD_SOUND correspondante à la note
+
+  switch (octave)
+  {
+    case 1:
+      //noteSound = Mix_LoadMUS("notes/DO1.wav");
+      result =FMOD_System_CreateSound(system,"DO1.wav",FMOD_CREATESAMPLE,0,&son);
+      if (result!=FMOD_OK)
+      {
+        errx(3,"Error");
+      }
+      break;
+    case 2 : 
+      //noteSound = Mix_LoadMUS("notes/DO2.wav");
+      result =FMOD_System_CreateSound(system,"DO2.wav",FMOD_CREATESAMPLE,0,&son);
+      if (result!=FMOD_OK)
+      {
+        errx(3,"Error");
+      }
+      break;
+    case 3:
+      //noteSound = Mix_LoadMUS("notes/DO3.wav");
+      result =FMOD_System_CreateSound(system,"DO3.wav",FMOD_CREATESAMPLE,0,&son);
+      if (result!=FMOD_OK)
+      {
+        errx(3,"Error");
+      }
+      break;
+    default:
+      //noteSound = Mix_LoadMUS("notes/DO4.wav");
+      result =FMOD_System_CreateSound(system,"DO4.wav",FMOD_CREATESAMPLE,0,&son);
+      if (result!=FMOD_OK)
+      {
+        errx(3,"Error");
+      }
+      break;
+  }
   return NULL;
 }
