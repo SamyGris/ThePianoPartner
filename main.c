@@ -32,16 +32,7 @@ void startButtonClicked()
 
    //TEST ACCORDS
 
-  struct noteData *args=malloc(sizeof(struct noteData));
-  args->note=FA3;
-  args->inter=100000;
-  pthread_t thr; 
-  int e = pthread_create(&thr, NULL, &displayNote, (void*)args);
-  if (e)
-  {
-    errx(1, "Failed to display note");
-  }
-  test();
+  playNote(FA1, 1000); 
   
 }
 

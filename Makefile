@@ -10,10 +10,11 @@ EXE = main
 
 all: ${EXE}
 
-main	:	main.o sound.o piano.o
+main	:	main.o sound.o piano.o toolbox.o
 main.o	:	main.c widgets.h
 sound.o	:	sound.c sound.h
-piano.o : 	piano.c piano.h widgets.h
+piano.o : 	piano.c piano.h widgets.h toolbox.h
+toolbox.o:	toolbox.c toolbox.h
 
 .PHONY: clean
 

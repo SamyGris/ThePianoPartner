@@ -2,7 +2,7 @@
 
 void getFrequency(int note, float* frequency, int* octave)
 {
-   float douze = 0.083333;
+  float douze = 0.083333;
   *octave = note/12 + 1;
   note = note % 12;
   *frequency = powf(2,note*douze);
