@@ -17,7 +17,7 @@ void* playNoteSound(void* arguments)
   FMOD_SOUND *son;
   getFrequency(note, &frequency, &octave);
 
-  son = samples[octave]; 
+  son = samples[octave];  
 
   
   FMOD_CHANNEL *reyane;
