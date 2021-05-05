@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <err.h>
+#include <unistd.h>
 #include "piano.h"
 #include "constantes.h"
 #include "sound.h"
@@ -337,7 +338,7 @@ void playChords(int usrChords[], int repet[], int* stopped, int bpm)
         for (int j = 0; j < repet[i]; j++)
         {
           playChord(usrChords[i], inter);
-          usleep(inter);
+          sleep(inter);
         }
       }
     }
@@ -390,6 +391,7 @@ void test()
   struct noteData *nail=malloc(sizeof(struct noteData));
   nail->note=FA3;
   nail->inter=5;
+  displayNote(nail);
   playNoteSound(nail);
 
 }
@@ -400,9 +402,11 @@ void* displayNote(void* arguments)
   int note = args->note;
   int inter = args->inter;
 
+
   GtkWidget* highlighter; 
   int x = position[note];
   int y = 1;
+
 
   if (note == DO1 || note == DO2 || note == DO3 || note == DO4 || 
   note == FA1 || note == FA2 || note == FA3 || note == FA4)
@@ -427,9 +431,11 @@ void* displayNote(void* arguments)
   }
 
   gtk_widget_show(highlighter); 
+
   gtk_container_add(GTK_CONTAINER(piano), highlighter); 
   gtk_fixed_move(GTK_FIXED(piano), highlighter, x, y);
-  sleep(inter); 
+  usleep(inter); 
+  gtk_widget_hide(highlighter); 
 
   pthread_exit(NULL);
   return NULL;

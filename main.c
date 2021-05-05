@@ -31,7 +31,15 @@ void startButtonClicked()
 
    //TEST ACCORDS
 
-  test();
+  struct noteData *args=malloc(sizeof(struct noteData));
+  args->note=FA3;
+  args->inter=5;
+  pthread_t thr; 
+  int e = pthread_create(&thr, NULL, &displayNote, (void*)args);
+  if (e)
+  {
+    errx(1, "Failed to display note");
+  }
   
 }
 
@@ -175,7 +183,8 @@ int main()
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
   gtk_window_set_icon_from_file(GTK_WINDOW(window), "icon.png", NULL);
-
+ 
+  init();
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
   gtk_builder_connect_signals(builder, NULL);
   gtk_widget_show_all((GtkWidget*)window);
