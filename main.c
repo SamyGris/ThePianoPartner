@@ -9,16 +9,6 @@
 //Callbacks functions
 void startButtonClicked()
 {
-  // TEST DISPLAY
-  /*
-  pthread_t thr; 
-  int err = pthread_create(&thr, NULL, testDisplay, NULL); 
-  if(err != 0)
-  {
-    printf("error"); 
-  }*/
-  
-
   // LANCEMENT MAIN GAUCHE
   /*
   int bpm = getBpm();
@@ -31,18 +21,23 @@ void startButtonClicked()
   */
 
   //TEST ACCORDS
-  test(); 
 
-  printf("Button CLicked \n ") ; 
+  if (pthread_create(&left, NULL, &test, NULL))
+  {
+    errx(1, "Failed to launch left hand");
+  }
 }
 
 void stopButtonClicked()
 {
-  stopped = 1;
+  if (pthread_cancel(left))
+  {
+    errx(1, "Failed to close left hand");
+  }
 }
 
-void aboutButtonClicked(); 
-
+void aboutButtonClicked()
+{}
 
 void addScale()
 {
@@ -183,7 +178,7 @@ int main()
   gtk_window_set_icon_from_file(GTK_WINDOW(window), "assets/icon.png", NULL);
 
   initConst();
-  initAudio(); 
+  initAudio();
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
   gtk_builder_connect_signals(builder, NULL);
   gtk_widget_show_all((GtkWidget*)window);

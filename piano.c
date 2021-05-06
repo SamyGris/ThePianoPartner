@@ -7,15 +7,26 @@
 #include "sound.h"
 #include "widgets.h"
 
+// Fonction qui teste les accords de Greensleeves
+void* test()
+{
+  int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
+  int repet[8] = {2, 2, 2, 2, 0, 0, 0, 0};
+  
+  playChords(myChords, repet, 100);
+  
+  return NULL;
+}
+
 // Fonction qui orchestre la main gauche
-void playChords(int usrChords[], int repet[], int* stopped, int bpm)
+void playChords(int usrChords[], int repet[], int bpm)
 {
   int inter = 60000/bpm * 4 ;
-  while (!*stopped)
+  while (1)
   {
     for (int i = 0; i < 8; i++)
     {
-      if (usrChords[i] != -1)
+      if (usrChords[i] != -1 && repet[i] > 0)
       {
         for (int j = 0; j < repet[i]; j++)
         {
@@ -25,7 +36,6 @@ void playChords(int usrChords[], int repet[], int* stopped, int bpm)
         }
       }
     }
-    *stopped=1;
   }
 }
 // Fonction qui joue un accord
@@ -45,27 +55,16 @@ void playNote(int note, int inter)
   args->inter = inter;
   pthread_t thr;
 
-  int  e = pthread_create(&thr, NULL, &displayNote, (void*)args);
-  if (e)
+  if (pthread_create(&thr, NULL, &displayNote, (void*)args))
   {
     errx(1, "Failed to display note");
   }
-  e = pthread_create(&thr, NULL, &playNoteSound, (void*)args);
-  if (e)
+
+  if (pthread_create(&thr, NULL, &playNoteSound, (void*)args))
   {
     errx(1, "Failed to play note");
   }
-}
-
-// Fonction qui teste les accords de Greensleeves
-void test()
-{
-  int* stopped = malloc(sizeof(int));
-  *stopped = 0;
-  int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
-  int repet[8] = {1, 1, 0, 0, 0, 0, 0, 0};
-  
-  playChords(myChords, repet, stopped, 100);
+  free(args);
 }
 
 void* displayNote(void* arguments)
