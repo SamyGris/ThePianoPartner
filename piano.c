@@ -20,7 +20,7 @@ void* test()
   int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
   int repet[8] = {1, 1, 1, 1, 0, 0, 0, 0};
   
-  playChords(myChords, repet, 2400);
+  playChords(myChords, repet, 100);
   
   pthread_exit(NULL);
   return NULL;
@@ -29,17 +29,19 @@ void* test()
 // Fonction qui joue les différents accords de la main gauche
 void playChords(int usrChords[], int repet[], int bpm)
 {
-  //int inter = 60000/bpm * 4;
-  int inter = bpm;
-  for (int i = 0; i < 8; i++)
+  int inter = 60000/bpm * 4;
+  while (1)
   {
-    if (usrChords[i] != -1 && repet[i] > 0)
-    {
-      for (int j = 0; j < repet[i]; j++)
+    for (int i = 0; i < 8; i++)
       {
-        playChord(usrChords[i], inter);
-        msleep(inter);
-      }
+        if (usrChords[i] != -1 && repet[i] > 0)
+        {
+          for (int j = 0; j < repet[i]; j++)
+          {
+            playChord(usrChords[i], inter);
+            msleep(inter);
+          }
+        }
     }
   }
 }
@@ -59,13 +61,13 @@ void playNote(int note, int inter)
   struct noteData * args=malloc(sizeof(struct noteData));
   args->note = note;
   args->inter = inter;
-  pthread_t displayThr;
+  //pthread_t displayThr;
   pthread_t soundThr;
-
+/*
   if (pthread_create(&displayThr, NULL, &displayNote, (void*)args))
   {
     errx(1, "Failed to display note");
-  }
+  }*/
   if (pthread_create(&soundThr, NULL, &playNoteSound, (void*)args))
   {
     errx(1, "Failed to play note");
