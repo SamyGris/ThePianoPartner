@@ -8,6 +8,15 @@ struct noteData
       int inter;
 };
 
+// Structure définissant une impro
+struct songData
+{
+      int bpm;
+      int scale;
+      int chords[8];
+      int repets[8];
+};
+
 // Définition des notes
 
 enum {DO1, DOD1, RE1, RED1, MI1, FA1, FAD1, SOL1, SOLD1, LA1, LAD1, SI1,
