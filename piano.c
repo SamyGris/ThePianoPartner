@@ -24,7 +24,6 @@ void playChords(int usrChords[], int repet[], int bpm)
         for (int j = 0; j < repet[i]; j++)
         {
           playChord(usrChords[i], inter);
-          printf("accord : %d\n", usrChords[i]);
           msleep(inter);
         }
       }
@@ -43,24 +42,20 @@ void playChord(int chord, int inter)
 // Fonction qui joue une note
 void playNote(int note, int inter)
 {
-  struct noteData args; 
-  args.note = note;
-  args.inter = inter;
-  pthread_t thr;
-  
+  struct noteData * args=malloc(sizeof(struct noteData));
+  args->note = note;
+  args->inter = inter;
+  pthread_t displayThr;
+  pthread_t soundThr;
 
-  if (pthread_create(&thr, NULL, &playNoteSound, (void*)args))
-  {
-    errx(1, "Failed to play note");
-     pthread_join(thr,NULL) ;
-  }
-
-  if (pthread_create(&thr, NULL, &displayNote, (void*)args))
+  if (pthread_create(&displayThr, NULL, &displayNote, (void*)args))
   {
     errx(1, "Failed to display note");
-   
   }
-
+  if (pthread_create(&soundThr, NULL, &playNoteSound, (void*)args))
+  {
+    errx(1, "Failed to play note");
+  }
 }
 
 void* displayNote(void* arguments)
@@ -68,12 +63,10 @@ void* displayNote(void* arguments)
   struct noteData *args = arguments;
   int note = args->note;
   int inter = args->inter;
-
-  GtkWidget* highlighter; 
+  GtkWidget* highlighter =malloc(sizeof(GtkWidget)); 
+  
   int x = position[note];
   int y = 1;
-
-
   if (note == DO1 || note == DO2 || note == DO3 || note == DO4 || 
   note == FA1 || note == FA2 || note == FA3 || note == FA4)
   {
@@ -95,26 +88,12 @@ void* displayNote(void* arguments)
   {
     highlighter = gtk_image_new_from_file("assets/tiles/black.png");
   }
-
-  gtk_widget_show(highlighter); 
-
   gtk_container_add(GTK_CONTAINER(piano), highlighter); 
   gtk_fixed_move(GTK_FIXED(piano), highlighter, x, y);
-  
-  printf("Displaying .. \n") ;
-  
-  //msleep(inter); 
-  
-  //pthread_exit(NULL);
-    
-    //printf("INter = %d\n",inter) ;
-    msleep(inter);
-    printf("Changing .. ");
-
-
-    gtk_widget_destroy(highlighter); 
-    //msleep(2400);
-    pthread_exit(NULL);
-  
-  return NULL;
+  gtk_widget_show(highlighter);
+  msleep(inter);
+  gtk_widget_hide(highlighter);
+  gtk_widget_destroy(highlighter);
+  printf("La note est :%d\n",x);
+  pthread_exit(NULL);
 }

@@ -16,6 +16,7 @@ void getFrequency(int note, float* frequency, int* octave);
 void* playNoteSound(void* arguments);
 void* playNoteSoundsec(void* arguments);
 void initAudio(); 
+void updateAudio();
 
 FMOD_SYSTEM *systemSound;
 FMOD_DSP *dsp_effect;

@@ -22,10 +22,10 @@ void startButtonClicked()
 
   //TEST ACCORDS
 
-  if (pthread_create(&left, NULL, &test, NULL))
+  /*if (pthread_create(&left, NULL, &test, NULL))
   {
     errx(1, "Failed to launch left hand");
-  }
+  }*/
 }
 
 void stopButtonClicked()

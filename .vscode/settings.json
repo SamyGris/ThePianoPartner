@@ -3,6 +3,8 @@
         "atomic": "c",
         "sdl_mixer.h": "c",
         "constantes.h": "c",
-        "sound.h": "c"
+        "sound.h": "c",
+        "stdlib.h": "c",
+        "pthread.h": "c"
     }
 }

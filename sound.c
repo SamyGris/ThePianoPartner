@@ -23,47 +23,20 @@ void* playNoteSound(void* arguments)
   {
 	  errx(3,"Couldn't play the sound");
   }
-  if (FMOD_System_Update(systemSound)!=FMOD_OK)
-  {
-    errx(3,"error during system update");
-  }
+  updateAudio();
   
   if (FMOD_Channel_SetVolume(channel,7.5) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the volume"); 
   }
-  if (FMOD_System_Update(systemSound)!=FMOD_OK)
-  {
-    errx(3,"error during system update");
-  }
-  if (FMOD_Channel_SetFrequency(channel,44100) != FMOD_OK)
+  updateAudio();
+  if (FMOD_Channel_SetFrequency(channel,44100*frequency) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the frequency");
   }
-  if (FMOD_System_Update(systemSound)!=FMOD_OK)
-  {
-    errx(3,"error during system update");
-  }
-  if (FMOD_Channel_SetPitch(channel,frequency) != FMOD_OK)
-  {
-	  errx(3,"Couldn't set the frequency");
-  }
-  if (FMOD_System_Update(systemSound)!=FMOD_OK)
-  {
-    errx(3,"error during system update");
-  }
-    
+  updateAudio();
   msleep(inter);
   pthread_exit(NULL);
-    if (FMOD_Sound_Release(son) != FMOD_OK)
-  {
-    errx(3, "Couldn't release the sound");
-  }
-    if (FMOD_System_Update(systemSound)!=FMOD_OK)
-  {
-    errx(3,"error during system update");
-  }
-  return NULL;
 }
 
 /*
@@ -85,27 +58,18 @@ void *playNoteSoundsec(void *arg)
   {
 	  errx(3,"Couldn't play the sound");
   }
-  if (FMOD_System_Update(systemSound)!=FMOD_OK)
-  {
-    errx(3,"error during system update");
-  }
+  updateAudio();
   
   if (FMOD_Channel_SetVolume(channel,7.5) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the volume"); 
   }
-  if (FMOD_System_Update(systemSound)!=FMOD_OK)
-  {
-    errx(3,"error during system update");
-  }
+  updateAudio();
   if (FMOD_Channel_SetFrequency(channel,44100*a*frequency) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the frequency");
   }
-  if (FMOD_System_Update(systemSound)!=FMOD_OK)
-  {
-    errx(3,"error during system update");
-  }
+  
   
     if (FMOD_DSP_SetParameterFloat(dsp_effect,0,b) != FMOD_OK)
   {
@@ -174,5 +138,12 @@ void initAudio()
   if (FMOD_System_CreateDSPByType(systemSound,FMOD_DSP_TYPE_PITCHSHIFT,&dsp_effect) != FMOD_OK)
   {
 	  errx(3,"Signal analyse : couldn't create a dsp ");
+  }
+}
+void updateAudio()
+{
+  if (FMOD_System_Update(systemSound)!=FMOD_OK)
+  {
+    errx(3,"error during system update");
   }
 }
