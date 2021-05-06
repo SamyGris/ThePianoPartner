@@ -6,53 +6,70 @@
 #include "widgets.h"
 #include "sound.h"
 
+int getBpm();
+
 //Callbacks functions
 void startButtonClicked()
 {
-  // LANCEMENT MAIN GAUCHE
   /*
-  int bpm = getBpm();
-  int scale = getScale();
-  int[] chords = getChords();
-  int[] repets = getRepets();
-  stopped = 0;
+  if (!playing)
+  {
+    struct songData;
+    songData.bpm = getBpm();
+    songData.scale = getScale();
+    getChords(&(songData.chords), &(songData.repets));
+    playing = 1;
 
-  playChords(chords, repets, &stopped, bpm);
+    if (pthread_create(&left, NULL, &leftHand, &songData))
+    {
+      errx(1, "Failed to launch left hand");
+    }
+
+    if (pthread_create(&right, NULL, &rightHand, &songData))
+    {
+      errx(1, "Failed to launch right hand");
+    }
+  }
   */
 
   //TEST ACCORDS
-
-  if (pthread_create(&left, NULL, &test, NULL))
+  if (!playing)
   {
-    errx(1, "Failed to launch left hand");
+    playing = 1;
+    if (pthread_create(&left, NULL, &test, NULL))
+    {
+      errx(1, "Failed to launch left hand");
+    }
   }
 }
 
 void stopButtonClicked()
 {
-  /*
-  if (pthread_cancel(left))
+  if (playing)
   {
-    errx(1, "Failed to close left hand");
-  }*/
+    if (pthread_cancel(left))
+    {
+      errx(1, "Failed to close left hand");
+    }
+    playing = 0;
+  }
 }
 
 void aboutButtonClicked()
 {}
 
-/*
 int getBpm()
 {
   char *endptr;
-  char *entry = gtk_entry_get_text(bpmEntry);
+  const char *entry = gtk_entry_get_text(bpmEntry);
   errno = 0;
   int bpm = (int)strtol(entry, &endptr, 10);
 
-  if (entry == endptr || '\0' != *endptr || ERANGE == errno || bpm < 50 || bpm > 150) || (errno != 0 && bpm == 0))
+  if (entry == endptr || '\0' != *endptr || ERANGE == errno || bpm < 50 || bpm > 150 || (errno != 0 && bpm == 0))
     bpm = 100;
 
   return bpm;
-}*/
+}
 
 int main()
 {
@@ -73,6 +90,7 @@ int main()
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
   gtk_window_set_icon_from_file(GTK_WINDOW(window), "assets/icon.png", NULL);
 
+  playing = 0;
   initConst();
   initAudio();
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);

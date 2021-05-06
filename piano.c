@@ -97,16 +97,16 @@ void* displayNote(void* arguments)
   gtk_container_add(GTK_CONTAINER(piano), highlighter); 
   gtk_fixed_move(GTK_FIXED(piano), highlighter, x, y);
   
-  printf("Displaying .. \n") ;
+  printf("Displaying..\n") ;
   
   //msleep(inter); 
   
   //pthread_exit(NULL);
     
-  //printf("INter = %d\n",inter) ;
+  //printf("Inter = %d\n",inter) ;
   msleep(2400);
-  printf("Changing .. ");
-  gtk_widget_hide(highlighter); 
+  printf("Changing..\n");
+  gtk_widget_hide(higlighter); 
   //msleep(2400);
   pthread_exit(NULL);
 
