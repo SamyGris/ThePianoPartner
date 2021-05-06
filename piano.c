@@ -31,7 +31,7 @@ void playChords(int usrChords[], int repet[], int bpm)
         for (int j = 0; j < repet[i]; j++)
         {
           playChord(usrChords[i], inter);
-          printf("accord\n");
+          printf("accord : %d\n", usrChords[i]);
           msleep(inter);
         }
       }
@@ -64,7 +64,6 @@ void playNote(int note, int inter)
   {
     errx(1, "Failed to play note");
   }
-  free(args);
 }
 
 void* displayNote(void* arguments)
