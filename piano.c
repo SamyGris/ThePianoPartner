@@ -1,11 +1,4 @@
-#include <stdlib.h>
-#include <err.h>
-#include <unistd.h>
 #include "piano.h"
-#include "toolbox.h"
-#include "constantes.h"
-#include "sound.h"
-#include "widgets.h"
 
 // Fonction qui teste les accords de Greensleeves
 void* test()

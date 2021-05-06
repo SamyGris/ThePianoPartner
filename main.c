@@ -48,29 +48,14 @@ int getBpm()
   errno = 0;
   int bpm = (int)strtol(entry, &endptr, 10);
 
-  if (entry == endptr || '\0' != *endptr || 
-      ERANGE == errno || bpm < 50 || bpm > 150) ||
-      (errno != 0 && bpm == 0))
+  if (entry == endptr || '\0' != *endptr || ERANGE == errno || bpm < 50 || bpm > 150) || (errno != 0 && bpm == 0))
     bpm = 100;
-  
+
   return bpm;
 }*/
 
 int main()
 {
-  
-  result = FMOD_System_Create(&systemSound); //Initialisation et création de notre systeme    
-  if (result != FMOD_OK)
-  {
-    errx(3,"Couldn't create a system");
-  }
-  
-  result=FMOD_System_Init(systemSound,32,FMOD_INIT_NORMAL,NULL); //initialisation du system ne mode lecture normal de son et a 32 channel
-  if (result!=FMOD_OK)
-  {
-    errx(3,"Couldn't init a system");
-  }
-
   // Initialisation de GTK et ouverture de l'interface
   gtk_init(NULL, NULL);
   GtkBuilder* builder = gtk_builder_new_from_file("assets/interface.glade");

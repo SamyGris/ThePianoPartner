@@ -1,5 +1,4 @@
-#include <errno.h>
-#include <time.h>
+#include "toolbox.h"
 
 int msleep(int tms)
 {
