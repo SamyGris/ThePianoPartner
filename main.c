@@ -7,6 +7,8 @@
 #include "sound.h"
 
 int getBpm();
+int getScale();
+int getChords(int[] *chords, int[] *repets);
 
 //Callbacks functions
 void startButtonClicked()

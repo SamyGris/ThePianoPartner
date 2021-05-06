@@ -1,5 +1,19 @@
 #include "piano.h"
 
+// Algorithme de la main gauche
+void* leftHand(void* arguments)
+{
+  struct songData *args = arguments;
+  playChords(args->chords, args->repets, args->bpm);
+
+  pthread_exit(NULL);
+  return NULL;
+}
+
+// Algorithme de la main droite
+void* rightHand(void* arguments)
+{}
+
 // Fonction qui teste les accords de Greensleeves
 void* test()
 {
@@ -8,10 +22,11 @@ void* test()
   
   playChords(myChords, repet, 100);
   
+  pthread_exit(NULL);
   return NULL;
 }
 
-// Fonction qui orchestre la main gauche
+// Fonction qui joue les différents accords de la main gauche
 void playChords(int usrChords[], int repet[], int bpm)
 {
   int inter = 60000/bpm * 4 ;
@@ -104,7 +119,7 @@ void* displayNote(void* arguments)
   printf("Displaying..\n") ;
   
   msleep(inter);
-  
+
   printf("Changing .. ");
 
   gtk_widget_destroy(highlighter);
