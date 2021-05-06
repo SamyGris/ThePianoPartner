@@ -1,11 +1,4 @@
-#include <stdlib.h>
-#include <err.h>
-#include <unistd.h>
 #include "piano.h"
-#include "toolbox.h"
-#include "constantes.h"
-#include "sound.h"
-#include "widgets.h"
 
 // Fonction qui teste les accords de Greensleeves
 void* test()
@@ -50,13 +43,13 @@ void playChord(int chord, int inter)
 // Fonction qui joue une note
 void playNote(int note, int inter)
 {
-  struct noteData *args = malloc(sizeof(struct noteData)); 
-  args->note = note;
-  args->inter = inter;
+  struct noteData args; 
+  args.note = note;
+  args.inter = inter;
   pthread_t thr;
   
 
-   if (pthread_create(&thr, NULL, &playNoteSound, (void*)args))
+  if (pthread_create(&thr, NULL, &playNoteSound, (void*)args))
   {
     errx(1, "Failed to play note");
      pthread_join(thr,NULL) ;
@@ -75,7 +68,6 @@ void* displayNote(void* arguments)
   struct noteData *args = arguments;
   int note = args->note;
   int inter = args->inter;
-
 
   GtkWidget* highlighter; 
   int x = position[note];
@@ -113,7 +105,7 @@ void* displayNote(void* arguments)
   
   //msleep(inter); 
   
-   //pthread_exit(NULL);
+  //pthread_exit(NULL);
     
     //printf("INter = %d\n",inter) ;
     msleep(inter);
@@ -125,5 +117,4 @@ void* displayNote(void* arguments)
     pthread_exit(NULL);
   
   return NULL;
-  
 }

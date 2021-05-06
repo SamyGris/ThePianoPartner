@@ -132,27 +132,40 @@ void *playNoteSoundsec(void *arg)
 
 void initAudio()
 {
-  FMOD_SOUND *sound; 
-  result = FMOD_System_CreateSound(systemSound,"notes/DO1.wav",FMOD_CREATESAMPLE,0, &sound);
-  if (result != FMOD_OK)
+  // Initialisation et création de notre système    
+  if (FMOD_System_Create(&systemSound) != FMOD_OK)
+  {
+    errx(3,"Couldn't create a system");
+  }
+  
+  // Initialisation du système en mode lecture normale de son et à 32 channels
+  if (FMOD_System_Init(systemSound,32,FMOD_INIT_NORMAL,NULL) != FMOD_OK)
+  {
+    errx(3,"Couldn't init a system");
+  }
+
+  // Chargement de la banque sonore
+  FMOD_SOUND *sound;
+  if (FMOD_System_CreateSound(systemSound,"notes/DO1.wav",FMOD_CREATESAMPLE,0, &sound) != FMOD_OK)
   {
     errx(3,"Couldn't create DO1.wav sound");
   }
-  samples[0] = sound; 
-  result = FMOD_System_CreateSound(systemSound,"notes/DO2.wav",FMOD_CREATESAMPLE,0,&sound);
-  if (result != FMOD_OK)
+  samples[0] = sound;
+
+
+  if (FMOD_System_CreateSound(systemSound,"notes/DO2.wav",FMOD_CREATESAMPLE,0,&sound) != FMOD_OK)
   {
     errx(3,"Couldn't create DO2.wav sound");
   }
-  samples[1] = sound; 
-  result = FMOD_System_CreateSound(systemSound,"notes/DO3.wav",FMOD_CREATESAMPLE,0,&sound);
-  if (result != FMOD_OK)
+  samples[1] = sound;
+
+  if (FMOD_System_CreateSound(systemSound,"notes/DO3.wav",FMOD_CREATESAMPLE,0,&sound) != FMOD_OK)
   {
     errx(3,"Couldn't create DO3.wav sound");
   }
   samples[2] = sound; 
-  result = FMOD_System_CreateSound(systemSound,"notes/DO4.wav",FMOD_CREATESAMPLE,0,&sound);
-  if (result != FMOD_OK)
+
+  if (FMOD_System_CreateSound(systemSound,"notes/DO4.wav",FMOD_CREATESAMPLE,0,&sound) != FMOD_OK)
   {
     errx(3,"Couldn't create DO4.wav sound");
   }

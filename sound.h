@@ -17,7 +17,6 @@ void* playNoteSound(void* arguments);
 void* playNoteSoundsec(void* arguments);
 void initAudio(); 
 
-FMOD_RESULT result;
 FMOD_SYSTEM *systemSound;
 FMOD_DSP *dsp_effect;
 FMOD_SOUND *samples[4]; 

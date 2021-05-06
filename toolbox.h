@@ -1,6 +1,9 @@
 #ifndef TOOLBOX_H
 #define TOOLBOX_H
 
-int msleep(long tms); 
+#include <errno.h>
+#include <time.h>
+
+int msleep(int tms); 
 
 #endif
