@@ -2,10 +2,10 @@
 
 void getFrequency(int note, float* frequency, int* octave)
 {
-  float douze = 0.083333;
+  float douze = 1.05946;
   *octave = note/12;
   note = note % 12;
-  *frequency = powf(2,note*douze);
+  *frequency = powf(douze, note);
 }
 
 void* playNoteSound(void* arguments)
@@ -32,15 +32,15 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't set the volume"); 
   }
   
-  if (FMOD_Channel_SetFrequency(channel,44100) != FMOD_OK)
+  if (FMOD_Channel_SetFrequency(channel,44100*frequency) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the frequency");
   }
-    
+    /*
   if (FMOD_DSP_SetParameterFloat(dsp_effect,0,frequency) != FMOD_OK)
   {
 	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
-  }
+  }*/
 
   /*if (FMOD_DSP_SetParameterInt(dsp_effect,1,4096) != FMOD_OK)
   {
