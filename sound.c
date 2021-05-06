@@ -51,11 +51,11 @@ void* playNoteSound(void* arguments)
   {
 	  errx(3,"Couldn't add the DSP to the channel");
   }
-
+  /*
   if (FMOD_Channel_SetDSPIndex(channel,dsp_effect,1) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the dsp index in the channel");
-  }
+  }*/
   msleep(inter);
   pthread_exit(NULL);
   if (FMOD_Sound_Release(son) != FMOD_OK)

@@ -50,17 +50,17 @@ void playChord(int chord, int inter)
 // Fonction qui joue une note
 void playNote(int note, int inter)
 {
-  struct noteData *args = malloc(sizeof(struct noteData)); 
-  args->note = note;
-  args->inter = inter;
+  struct noteData args; 
+  args.note = note;
+  args.inter = inter;
   pthread_t thr;
-
-  if (pthread_create(&thr, NULL, &displayNote, (void*)args))
+  
+  if (pthread_create(&thr, NULL, &displayNote, (void*)&args))
   {
     errx(1, "Failed to display note");
   }
 
-  if (pthread_create(&thr, NULL, &playNoteSound, (void*)args))
+  if (pthread_create(&thr, NULL, &playNoteSound, (void*)&args))
   {
     errx(1, "Failed to play note");
   }
@@ -71,7 +71,6 @@ void* displayNote(void* arguments)
   struct noteData *args = arguments;
   int note = args->note;
   int inter = args->inter;
-
 
   GtkWidget* highlighter; 
   int x = position[note];
@@ -105,7 +104,7 @@ void* displayNote(void* arguments)
   gtk_container_add(GTK_CONTAINER(piano), highlighter); 
   gtk_fixed_move(GTK_FIXED(piano), highlighter, x, y);
   msleep(inter); 
-  gtk_widget_hide(highlighter); 
+  gtk_widget_hide(highlighter);
 
   pthread_exit(NULL);
   return NULL;
