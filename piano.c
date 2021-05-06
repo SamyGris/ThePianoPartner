@@ -25,11 +25,11 @@ void* test()
   return NULL;
 }
 
-void* test2()
+void* test2(int note , int duree)
 {
   struct noteData *test=malloc(sizeof(struct noteData));
-  test->note =DO1;
-  test->inter=3;
+  test->note =note;
+  test->inter=duree;
   playNoteSoundsec(test);
   free(test);
   return NULL;

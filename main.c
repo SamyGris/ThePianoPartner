@@ -35,15 +35,15 @@ void startButtonClicked()
   */
 
   //TEST ACCORDS
-  if (!playing)
+  /*if (!playing)
   {
     playing = 1;
     if (pthread_create(&left, NULL, &test, NULL)) //Test pour la fonction jouant du son sans prendre en compte le bpm
     {
       errx(1, "Failed to launch left hand");
     }
-  }
-  //test2();   //Test pour la fonction qui joue une note en fonction du bpm
+  }*/
+  //test2(DO1 ,4);   //Test pour la fonction qui joue une note en fonction du bpm
 }
 
 void stopButtonClicked()
