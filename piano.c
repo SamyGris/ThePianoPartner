@@ -11,8 +11,8 @@ void* leftHand(void* arguments)
 }
 
 // Algorithme de la main droite
-void* rightHand(void* arguments)
-{}
+/*void* rightHand(void* arguments)
+{}*/
 
 // Fonction qui teste les accords de Greensleeves
 void* test()
@@ -58,23 +58,21 @@ void playChord(int chord, int inter)
 // Fonction qui joue une note
 void playNote(int note, int inter)
 {
-  struct noteData args; 
-  args.note = note;
-  args.inter = inter;
+  struct noteData *args = malloc(sizeof(struct noteData)); 
+  args->note = note;
+  args->inter = inter;
   pthread_t thr;
   
 
   if (pthread_create(&thr, NULL, &playNoteSound, (void*)args))
   {
     errx(1, "Failed to play note");
-     pthread_join(thr,NULL) ;
   }
 
-  if (pthread_create(&thr, NULL, &displayNote, (void*)args))
+  /*if (pthread_create(&thr, NULL, &displayNote, (void*)args))
   {
     errx(1, "Failed to display note");
-   
-  }
+  }*/
 
 }
 

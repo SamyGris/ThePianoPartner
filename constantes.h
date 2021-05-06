@@ -15,7 +15,7 @@ struct songData
       int scale;
       int chords[8];
       int repets[8];
-}
+};
 
 // Définition des notes
 

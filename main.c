@@ -8,7 +8,7 @@
 
 int getBpm();
 int getScale();
-int getChords(int[] *chords, int[] *repets);
+int getChords(int* chords[8], int* repets[]);
 
 //Callbacks functions
 void startButtonClicked()
