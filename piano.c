@@ -4,7 +4,7 @@
 void* test()
 {
   int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
-  int repet[8] = {2, 2, 2, 2, 0, 0, 0, 0};
+  int repet[8] = {1, 1, 0, 0, 0, 0, 0, 0};
   
   playChords(myChords, repet, 100);
   
@@ -47,11 +47,11 @@ void playNote(int note, int inter)
   args.note = note;
   args.inter = inter;
   pthread_t thr;
-  
-  if (pthread_create(&thr, NULL, &displayNote, (void*)&args))
+  /*
+  if (pthread_create(&thr, NULL, &displayNote, (void*)args))
   {
     errx(1, "Failed to display note");
-  }
+  }*/
 
   if (pthread_create(&thr, NULL, &playNoteSound, (void*)&args))
   {
@@ -63,7 +63,7 @@ void* displayNote(void* arguments)
 {
   struct noteData *args = arguments;
   int note = args->note;
-  int inter = args->inter;
+  //int inter = args->inter;
 
   GtkWidget* highlighter; 
   int x = position[note];
@@ -96,9 +96,19 @@ void* displayNote(void* arguments)
 
   gtk_container_add(GTK_CONTAINER(piano), highlighter); 
   gtk_fixed_move(GTK_FIXED(piano), highlighter, x, y);
-  msleep(inter); 
-  gtk_widget_hide(highlighter);
-
+  
+  printf("Displaying .. \n") ;
+  
+  //msleep(inter); 
+  
+  //pthread_exit(NULL);
+    
+  //printf("INter = %d\n",inter) ;
+  msleep(2400);
+  printf("Changing .. ");
+  gtk_widget_hide(highlighter); 
+  //msleep(2400);
   pthread_exit(NULL);
+
   return NULL;
 }
