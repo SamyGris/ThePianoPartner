@@ -20,14 +20,14 @@ void playChords(int usrChords[], int repet[], int* stopped, int bpm)
         for (int j = 0; j < repet[i]; j++)
         {
           playChord(usrChords[i], inter);
-          printf(" Accord \n");
+          printf("accord\n");
           msleep(inter);
         }
       }
     }
+    *stopped=1;
   }
 }
-
 // Fonction qui joue un accord
 void playChord(int chord, int inter)
 {
@@ -63,7 +63,7 @@ void test()
   int* stopped = malloc(sizeof(int));
   *stopped = 0;
   int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
-  int repet[8] = {1, 1, 1, 1, 0, 0, 0, 0};
+  int repet[8] = {1, 1, 0, 0, 0, 0, 0, 0};
   
   playChords(myChords, repet, stopped, 100);
 }

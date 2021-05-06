@@ -31,7 +31,6 @@ int chords[24][3];
 // Positions des touches
 
 int position[48];
-
-void initConst(); 
+void initConst();
 
 #endif

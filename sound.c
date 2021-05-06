@@ -10,7 +10,6 @@ void getFrequency(int note, float* frequency, int* octave)
 
 void* playNoteSound(void* arguments)
 {
-  printf("In sound playnotesound \n") ; 
   struct noteData *args = arguments;
   int note = args->note;
   int inter = args->inter;
@@ -38,14 +37,6 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't set the frequency");
   }
     
-  FMOD_DSP *dsp_effect;
-
-  if (FMOD_System_CreateDSPByType(systemSound,FMOD_DSP_TYPE_PITCHSHIFT,&dsp_effect) != FMOD_OK)
-  {
-	  errx(3,"Signal analyse : couldn't create a dsp ");
-  }
-
-  /*pour changer la frequence : */
   if (FMOD_DSP_SetParameterFloat(dsp_effect,0,frequency) != FMOD_OK)
   {
 	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
@@ -65,22 +56,17 @@ void* playNoteSound(void* arguments)
   {
 	  errx(3,"Couldn't set the dsp index in the channel");
   }
-
   msleep(inter);
-
-  printf(" Durée de note = %d \n",inter) ;
-    pthread_exit(NULL);
-  return NULL;
-
+  pthread_exit(NULL);
   if (FMOD_Sound_Release(son) != FMOD_OK)
   {
     errx(3, "Couldn't release the sound");
   }
-
-
-  printf("Out of PlayNoteSound \n") ;
+  
+  
 }
 
+/*
 void *playNoteSoundsec(void *arg,int sec)
 {
   struct noteData *args = arg;
@@ -141,7 +127,7 @@ void *playNoteSoundsec(void *arg,int sec)
       break;
   }
   return NULL;
-}
+}*/
 
 void initAudio()
 {
@@ -170,4 +156,9 @@ void initAudio()
     errx(3,"Couldn't create DO4.wav sound");
   }
   samples[3] = sound; 
+
+  if (FMOD_System_CreateDSPByType(systemSound,FMOD_DSP_TYPE_PITCHSHIFT,&dsp_effect) != FMOD_OK)
+  {
+	  errx(3,"Signal analyse : couldn't create a dsp ");
+  }
 }
