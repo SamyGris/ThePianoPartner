@@ -1,7 +1,6 @@
 #include "piano.h"
 
-// Algorithme de la main gauche
-void* leftHand(void* arguments)
+void* leftHand(void* arguments) // Algorithme de la main gauche
 {
   struct songData *args = arguments;
   playChords(args->chords, args->repets, args->bpm);
@@ -23,6 +22,16 @@ void* test()
   playChords(myChords, repet, 100);
   
   pthread_exit(NULL);
+  return NULL;
+}
+
+void* test2()
+{
+  struct noteData *test=malloc(sizeof(struct noteData));
+  test->note =DO1;
+  test->inter=3;
+  playNoteSoundsec(test);
+  free(test);
   return NULL;
 }
 
@@ -63,8 +72,8 @@ void playNote(int note, int inter)
   args->inter = inter;
   //pthread_t displayThr;
   pthread_t soundThr;
-/*
-  if (pthread_create(&displayThr, NULL, &displayNote, (void*)args))
+
+  /*if (pthread_create(&displayThr, NULL, &displayNote, (void*)args))
   {
     errx(1, "Failed to display note");
   }*/

@@ -10,6 +10,7 @@
 #define PIANO_H
 
 void* test();
+void* test2();
 void* leftHand(void* arguments);
 void* rightHand(void* arguments);
 void playChords(int usrChords[], int repet[], int bpm);

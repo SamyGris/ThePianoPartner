@@ -25,7 +25,7 @@ void* playNoteSound(void* arguments)
   }
   updateAudio();
   
-  if (FMOD_Channel_SetVolume(channel,7.5) != FMOD_OK)
+  if (FMOD_Channel_SetVolume(channel,8.5) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the volume"); 
   }
@@ -50,8 +50,11 @@ void *playNoteSoundsec(void *arg)
   getFrequency(note, &frequency, &octave);
   FMOD_SOUND *son;
   son =samples[octave];
-  float b =2321/inter;
+  printf("inter = %d",inter);
+  float b =2.321/inter;
   float a =1/b;
+  printf(" 1/b = %f \n",a);
+  printf(" b = %f \n",b);
   FMOD_CHANNEL *channel;
   if (FMOD_System_PlaySound(systemSound,son,NULL,0,&channel) != FMOD_OK)
   {
@@ -59,17 +62,28 @@ void *playNoteSoundsec(void *arg)
   }
   updateAudio();
   
-  if (FMOD_Channel_SetVolume(channel,7.5) != FMOD_OK)
+  if (FMOD_Channel_SetVolume(channel,8.5) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the volume"); 
   }
   updateAudio();
-  if (FMOD_Channel_SetFrequency(channel,44100*a*frequency) != FMOD_OK)
+  if (FMOD_Channel_SetFrequency(channel,44100) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the frequency");
   }
   updateAudio();
-  if (FMOD_DSP_SetParameterFloat(dsp_effect,0,b) != FMOD_OK)
+
+  if (FMOD_Channel_SetPitch(channel,b) != FMOD_OK)
+  {
+	  errx(3,"Couldn't set the frequency");
+  }
+  updateAudio();
+  if (FMOD_DSP_SetParameterFloat(dsp_effect,0,frequency*a) != FMOD_OK)
+  {
+	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
+  }
+  updateAudio();
+  if (FMOD_DSP_SetParameterFloat(dsp_effect,1,4096) != FMOD_OK)
   {
 	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
   }
