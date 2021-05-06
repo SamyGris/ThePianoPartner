@@ -13,7 +13,7 @@ int getChords(int* chords[8], int* repets[]);
 //Callbacks functions
 void startButtonClicked()
 {
-  /*
+  /* VRAI ALGORITHME
   if (!playing)
   {
     struct songData;

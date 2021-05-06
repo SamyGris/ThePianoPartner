@@ -20,7 +20,7 @@ void* test()
   int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
   int repet[8] = {1, 1, 1, 1, 0, 0, 0, 0};
   
-  playChords(myChords, repet, 100);
+  playChords(myChords, repet, 2400);
   
   pthread_exit(NULL);
   return NULL;
@@ -29,22 +29,21 @@ void* test()
 // Fonction qui joue les différents accords de la main gauche
 void playChords(int usrChords[], int repet[], int bpm)
 {
-  int inter = 60000/bpm * 4 ;
-  while (1)
+  //int inter = 60000/bpm * 4;
+  int inter = bpm;
+  for (int i = 0; i < 8; i++)
   {
-    for (int i = 0; i < 8; i++)
+    if (usrChords[i] != -1 && repet[i] > 0)
     {
-      if (usrChords[i] != -1 && repet[i] > 0)
+      for (int j = 0; j < repet[i]; j++)
       {
-        for (int j = 0; j < repet[i]; j++)
-        {
-          playChord(usrChords[i], inter);
-          msleep(inter);
-        }
+        playChord(usrChords[i], inter);
+        msleep(inter);
       }
     }
   }
 }
+
 // Fonction qui joue un accord
 void playChord(int chord, int inter)
 {
@@ -78,7 +77,7 @@ void* displayNote(void* arguments)
   struct noteData *args = arguments;
   int note = args->note;
   int inter = args->inter;
-  GtkWidget* highlighter =malloc(sizeof(GtkWidget)); 
+  GtkWidget* highlighter = malloc(sizeof(GtkWidget)); 
   
   int x = position[note];
   int y = 1;
@@ -96,13 +95,14 @@ void* displayNote(void* arguments)
   note == SOL1 || note == SOL2 || note == SOL3 || note == SOL4 ||
   note == LA1 || note == LA2 || note == LA3 || note == LA4)
   {
-    y = 2; 
+    y = 2;
     highlighter = gtk_image_new_from_file("assets/tiles/center.png");
   }
   else
   {
     highlighter = gtk_image_new_from_file("assets/tiles/black.png");
   }
+
   gtk_container_add(GTK_CONTAINER(piano), highlighter); 
   gtk_fixed_move(GTK_FIXED(piano), highlighter, x, y);
   gtk_widget_show(highlighter);
