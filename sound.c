@@ -24,7 +24,6 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't play the sound");
   }
   updateAudio();
-  
   if (FMOD_Channel_SetVolume(channel,8.5) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the volume"); 
@@ -33,7 +32,7 @@ void* playNoteSound(void* arguments)
   float initial_frequency;
   if (FMOD_Channel_GetFrequency(channel,&initial_frequency) != FMOD_OK)
   {
-	  errx(3,"Couldn't set the frequency");
+	  errx(3,"Couldn't get the frequency");
   }
   updateAudio();
   if (FMOD_Channel_SetFrequency(channel,initial_frequency*demitone) != FMOD_OK)
