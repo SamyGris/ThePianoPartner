@@ -1,11 +1,11 @@
 #include "sound.h"
 
-void getFrequency(int note, float* frequency, int* octave)
+void getDemitone(int note, float* demitone, int* octave)
 {//Fonction qui calcule le demi-ton à atteindre pour jouer la note souhaiter
-  float douze = 1.05946;
+  float constante = 1.05946;
   *octave = note/12;
   note = note % 12;
-  *frequency = powf(douze, note);
+  *demitone = powf(constante, note);
 }
 
 void* playNoteSound(void* arguments)
@@ -13,10 +13,10 @@ void* playNoteSound(void* arguments)
   struct noteData *args = arguments;
   int note = args->note;
   //int inter = args->inter;
-  float frequency;
+  float demitone;
   int octave;
   FMOD_SOUND *son;
-  getFrequency(note, &frequency, &octave);
+  getDemitone(note, &demitone, &octave);
   son = samples[octave];  
   FMOD_CHANNEL *channel;
   if (FMOD_System_PlaySound(systemSound,son,NULL,0,&channel) != FMOD_OK)
@@ -36,12 +36,12 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't set the frequency");
   }
   updateAudio();
-  if (FMOD_Channel_SetFrequency(channel,initial_frequency*frequency) != FMOD_OK)
+  if (FMOD_Channel_SetFrequency(channel,initial_frequency*demitone) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the frequency");
   }
   updateAudio();
-  msleep(2321);//ICI ON LAISSE LA NOTE CE JOUER
+  msleep(2321);//Ici on laisse la note durée le temps qu'elle lui faut (2321 ms) ajouter les enums pour la durée de chaque note
   pthread_exit(NULL);
 }
 
@@ -51,9 +51,9 @@ void *playNoteSoundsec(void *arg)
   struct noteData *args = arg;
   int note = args->note;
   int inter =args->inter;
-  float frequency;
+  float demiTone;
   int octave;
-  getFrequency(note, &frequency, &octave);
+  getDemitone(note, &demiTone, &octave);
   FMOD_SOUND *son;
   son =samples[octave];
   printf("inter = %d",inter);
@@ -84,7 +84,7 @@ void *playNoteSoundsec(void *arg)
 	  errx(3,"Couldn't set the frequency");
   }
   updateAudio();
-  if (FMOD_DSP_SetParameterFloat(dsp_effect,0,frequency*a) != FMOD_OK)
+  if (FMOD_DSP_SetParameterFloat(dsp_effect,0,demiTone*a) != FMOD_OK)
   {
 	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
   }
