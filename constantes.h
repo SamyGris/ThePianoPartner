@@ -1,3 +1,4 @@
+#include <gtk/gtk.h>
 #ifndef DEF_CONSTANTES
 #define DEF_CONSTANTES
 
@@ -40,6 +41,7 @@ int chords[24][3];
 // Positions des touches
 
 int position[48];
+GtkWidget *highlightsNotes[48]; 
 void initConst();
 
 #endif

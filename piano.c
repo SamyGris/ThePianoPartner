@@ -1,4 +1,5 @@
 #include "piano.h"
+#include "widgets.h"
 
 // Algorithme de la main gauche
 void* leftHand(void* arguments)
@@ -53,6 +54,8 @@ void playChord(int chord, int inter)
   {
     playNote(chords[chord][i], inter);
   }
+  for (int i = 0; i <3; i++)
+    gtk_widget_show(highlightsNotes[chords[chord][i]]); 
 }
 
 // Fonction qui joue une note
@@ -61,17 +64,23 @@ void playNote(int note, int inter)
   struct noteData * args=malloc(sizeof(struct noteData));
   args->note = note;
   args->inter = inter;
-  //pthread_t displayThr;
   pthread_t soundThr;
-/*
-  if (pthread_create(&displayThr, NULL, &displayNote, (void*)args))
-  {
-    errx(1, "Failed to display note");
-  }*/
+  pthread_t displayThr;
+  
   if (pthread_create(&soundThr, NULL, &playNoteSound, (void*)args))
   {
     errx(1, "Failed to play note");
   }
+  
+  if (pthread_create(&displayThr, NULL, &displayNote, (void*)args))
+  {
+    errx(1, "Failed to display note");
+  }
+  
+  pthread_detach(displayThr);  
+
+  pthread_detach(soundThr);
+  
 }
 
 void* displayNote(void* arguments)
@@ -79,39 +88,22 @@ void* displayNote(void* arguments)
   struct noteData *args = arguments;
   int note = args->note;
   int inter = args->inter;
-  GtkWidget* highlighter = malloc(sizeof(GtkWidget)); 
-  
-  int x = position[note];
-  int y = 1;
-  if (note == DO1 || note == DO2 || note == DO3 || note == DO4 || 
-  note == FA1 || note == FA2 || note == FA3 || note == FA4)
-  {
-    highlighter = gtk_image_new_from_file("assets/tiles/left.png");
-  }
-  else if (note == MI1 || note == MI2 || note == MI3 || note == MI4 ||
-  note == SI1 || note == SI2 || note == SI3 || note == SI4)
-  {
-    highlighter = gtk_image_new_from_file("assets/tiles/right.png");
-  }
-  else if (note == RE1 || note == RE2 || note == RE3 || note == RE4 ||
-  note == SOL1 || note == SOL2 || note == SOL3 || note == SOL4 ||
-  note == LA1 || note == LA2 || note == LA3 || note == LA4)
-  {
-    y = 2;
-    highlighter = gtk_image_new_from_file("assets/tiles/center.png");
-  }
-  else
-  {
-    highlighter = gtk_image_new_from_file("assets/tiles/black.png");
-  }
 
-  gtk_container_add(GTK_CONTAINER(piano), highlighter); 
-  gtk_fixed_move(GTK_FIXED(piano), highlighter, x, y);
-  gtk_widget_show(highlighter);
   msleep(inter);
-  gtk_widget_hide(highlighter);
-  gtk_widget_destroy(highlighter);
-  printf("La note est :%d\n",x);
+  gtk_widget_hide(highlightsNotes[note]); 
   pthread_exit(NULL);
-  return NULL;
 }
+
+/**
+char* getChords()
+{
+
+}
+
+char* getValueComboBox(GtkWidget* w)
+{
+  char[256] textentry; 
+  textentry = gtk_entry_get_text(GTK_ENTRY(w)); 
+  return textentry; 
+}
+**/

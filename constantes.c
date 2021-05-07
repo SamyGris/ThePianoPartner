@@ -1,4 +1,6 @@
 #include "constantes.h"
+#include "widgets.h"
+#include <gtk/gtk.h>
 
 void initConst()
 {
@@ -317,4 +319,34 @@ void initConst()
   position[LAD2] = 243; 
   position[LAD3] = 371; 
   position[LAD4] = 498; 
+
+  for (int note = 0; note < 48; note++)
+  {
+    int x = position[note];
+    int y = 1;
+    if (note == DO1 || note == DO2 || note == DO3 || note == DO4 || 
+    note == FA1 || note == FA2 || note == FA3 || note == FA4)
+    {
+      highlightsNotes[note] = gtk_image_new_from_file("assets/tiles/left.png");
+    }
+    else if (note == MI1 || note == MI2 || note == MI3 || note == MI4 ||
+    note == SI1 || note == SI2 || note == SI3 || note == SI4)
+    {
+      highlightsNotes[note] = gtk_image_new_from_file("assets/tiles/right.png");
+    }
+    else if (note == RE1 || note == RE2 || note == RE3 || note == RE4 ||
+    note == SOL1 || note == SOL2 || note == SOL3 || note == SOL4 ||
+    note == LA1 || note == LA2 || note == LA3 || note == LA4)
+    {
+      y = 2;
+      highlightsNotes[note] = gtk_image_new_from_file("assets/tiles/center.png");
+    }
+    else
+    {
+      highlightsNotes[note] = gtk_image_new_from_file("assets/tiles/black.png");
+    }
+    gtk_container_add(GTK_CONTAINER(piano), highlightsNotes[note]); 
+    gtk_fixed_move(GTK_FIXED(piano), highlightsNotes[note], x, y);
+  }
+
 }
