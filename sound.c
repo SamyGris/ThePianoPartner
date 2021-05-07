@@ -2,10 +2,10 @@
 
 void getDemitone(int note, float* demitone, int* octave)
 {//Fonction qui calcule le demi-ton à atteindre pour jouer la note souhaiter
-  float constante = 1.05946;
+  float demitonevalue = 1.05946;
   *octave = note/12;
   note = note % 12;
-  *demitone = powf(constante, note);
+  *demitone = powf(demitonevalue, note);
 }
 
 void* playNoteSound(void* arguments)
