@@ -10,10 +10,9 @@ int getBpm();
 int getScale();
 int getChords(int* chords[8], int* repets[]);
 
-//Callbacks functions
+// Fonction du bouton start
 void startButtonClicked()
 {
-
   /* VRAI ALGORITHME
   if (!playing)
   {
@@ -45,9 +44,10 @@ void startButtonClicked()
       errx(1, "Failed to launch left hand");
     }
   }
-  //test2(DO1 ,2.5);   //Test pour la fonction qui joue une note en fonction du bpm
+  //test2(DO1 ,2.5);   //Test pour la fonction qui joue une note en fonction de la durée désirée
 }
 
+// Fonction du bouton stop
 void stopButtonClicked()
 {
   if (playing)
@@ -60,9 +60,11 @@ void stopButtonClicked()
   }
 }
 
+// Fonction du bouton About
 void aboutButtonClicked()
 {}
 
+// Fonction qui récupère le BPM
 int getBpm()
 {
   char *endptr;

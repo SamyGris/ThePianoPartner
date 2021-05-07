@@ -1,7 +1,8 @@
 #include "piano.h"
 #include "widgets.h"
 
-void* leftHand(void* arguments) // Algorithme de la main gauche
+// Algorithme de la main gauche
+void* leftHand(void* arguments)
 {
   struct songData *args = arguments;
   playChords(args->chords, args->repets, args->bpm);
@@ -20,12 +21,13 @@ void* test()
   int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
   int repet[8] = {1, 1, 1, 1, 0, 0, 0, 0};
   
-  playChords(myChords, repet,100);
+  playChords(myChords, repet, 100);
   
   pthread_exit(NULL);
   return NULL;
 }
 
+/*
 void* test2(int note , int duree)
 {
   struct noteData *test=malloc(sizeof(struct noteData));
@@ -34,7 +36,7 @@ void* test2(int note , int duree)
   playNoteSoundsec(test);
   free(test);
   return NULL;
-}
+}*/
 
 // Fonction qui joue les différents accords de la main gauche
 void playChords(int usrChords[], int repet[], int bpm)
@@ -92,6 +94,7 @@ void playNote(int note, int inter)
   
 }
 
+// Fonction qui affiche une note
 void* displayNote(void* arguments)
 {
   struct noteData *args = arguments;
@@ -103,7 +106,7 @@ void* displayNote(void* arguments)
   pthread_exit(NULL);
 }
 
-/**
+/*
 char* getChords()
 {
 
@@ -111,8 +114,8 @@ char* getChords()
 
 char* getValueComboBox(GtkWidget* w)
 {
-  char[256] textentry; 
-  textentry = gtk_entry_get_text(GTK_ENTRY(w)); 
-  return textentry; 
+  char[256] textentry;
+  textentry = gtk_entry_get_text(GTK_ENTRY(w));
+  return textentry;
 }
-**/
+*/

@@ -1,5 +1,6 @@
 #include "toolbox.h"
 
+// Fonction sleep (en ms)
 int msleep(int tms)
 {
     struct timespec ts;

@@ -1,18 +1,19 @@
 #include "sound.h"
 
+// Fonction qui calcule le demi-ton à atteindre pour jouer la note souhaitée
 void getDemitone(int note, float* demitone, int* octave)
-{//Fonction qui calcule le demi-ton à atteindre pour jouer la note souhaiter
+{
   float demitonevalue = 1.05946;
   *octave = note/12;
   note = note % 12;
   *demitone = powf(demitonevalue, note);
 }
 
+// Fonction executée qui joue le son en utilisant la bibliothèque FMOD sans prendre en compte le BPM
 void* playNoteSound(void* arguments)
-{//Fonction executer qui calcule joue le son en utilisant la bibliotheque FMOD sans prendre en compte le bpm
+{
   struct noteData *args = arguments;
   int note = args->note;
-  //int inter = args->inter;
   float demitone;
   int octave;
   FMOD_SOUND *son;
@@ -40,13 +41,15 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't set the frequency");
   }
   updateAudio();
-  msleep(2321);//Ici on laisse la note durée le temps qu'elle lui faut (2321 ms) ajouter les enums pour la durée de chaque note
+  // Ici on laisse la note durer le temps qu'il lui faut (2321 ms)
+  // A faire : ajouter les enums pour la durée de chaque note
+  msleep(2321);
   pthread_exit(NULL);
 }
 
-
+// Fonction qui joue le son en utilisant la bibliothèque FMOD en prenant en compte le bpm
 void *playNoteSoundsec(void *arg)
-{//Fonction executer qui calcule joue le son en utilisant la bibliotheque FMOD sans prendre en compte le bpm
+{
   struct noteData *args = arg;
   int note = args->note;
   int inter =args->inter;
@@ -98,13 +101,14 @@ void *playNoteSoundsec(void *arg)
 	  errx(3,"Couldn't add the DSP to the channel");
   }
   updateAudio();
-  msleep(2321); //ICI ON LAISSE LA NOTE CE JOUER
+  msleep(2321);
   pthread_exit(NULL);
   return NULL;
 }
 
+// Fonction qui va initialiser le système et les variables nécessaires pour la lecture du son
 void initAudio()
-{//Fonction qui va initialiser les systemes et les variables necessaires pour la lecture de son
+{
   // Initialisation et création de notre système    
   if (FMOD_System_Create(&systemSound) != FMOD_OK)
   {
@@ -143,8 +147,9 @@ void initAudio()
   }
 }
 
+// Fonction qui update le système sonore
 void updateAudio()
-{//Fonction qui update le system sonore
+{
   if (FMOD_System_Update(systemSound)!=FMOD_OK)
   {
     errx(3,"error during system update");
