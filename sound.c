@@ -12,7 +12,7 @@ void* playNoteSound(void* arguments)
 {//Fonction executer qui calcule joue le son en utilisant la bibliotheque FMOD sans prendre en compte le bpm
   struct noteData *args = arguments;
   int note = args->note;
-  int inter = args->inter;
+  //int inter = args->inter;
   float frequency;
   int octave;
   FMOD_SOUND *son;
@@ -30,12 +30,18 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't set the volume"); 
   }
   updateAudio();
-  if (FMOD_Channel_SetFrequency(channel,44100*frequency) != FMOD_OK)
+  float initial_frequency;
+  if (FMOD_Channel_GetFrequency(channel,&initial_frequency) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the frequency");
   }
   updateAudio();
-  msleep(inter);
+  if (FMOD_Channel_SetFrequency(channel,initial_frequency*frequency) != FMOD_OK)
+  {
+	  errx(3,"Couldn't set the frequency");
+  }
+  updateAudio();
+  msleep(2321);//ICI ON LAISSE LA NOTE CE JOUER
   pthread_exit(NULL);
 }
 
@@ -93,7 +99,7 @@ void *playNoteSoundsec(void *arg)
 	  errx(3,"Couldn't add the DSP to the channel");
   }
   updateAudio();
-  msleep(inter);
+  msleep(2321); //ICI ON LAISSE LA NOTE CE JOUER
   pthread_exit(NULL);
   return NULL;
 }
@@ -106,7 +112,7 @@ void initAudio()
     errx(3,"Couldn't create a system");
   }
   // Initialisation du système en mode lecture normale de son et à 32 channels
-  if (FMOD_System_Init(systemSound,32,FMOD_INIT_NORMAL,NULL) != FMOD_OK)
+  if (FMOD_System_Init(systemSound,64,FMOD_INIT_NORMAL,NULL) != FMOD_OK)
   {
     errx(3,"Couldn't init a system");
   }

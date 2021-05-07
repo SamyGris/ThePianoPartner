@@ -16,10 +16,10 @@ void* leftHand(void* arguments) // Algorithme de la main gauche
 // Fonction qui teste les accords de Greensleeves
 void* test()
 {
-  int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
-  int repet[8] = {1, 1, 1, 1, 0, 0, 0, 0};
+  int myChords[8] = {LAMI, SIMI, FAMA, MIMA, -1, -1, -1, -1};
+  int repet[8] = {1, 1, 0, 0, 0, 0, 0, 0};
   
-  playChords(myChords, repet, 100);
+  playChords(myChords, repet, 260);
   
   pthread_exit(NULL);
   return NULL;
