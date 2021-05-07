@@ -1,22 +1,22 @@
 #include "sound.h"
 
-void getFrequency(int note, float* frequency, int* octave)
+void getDemitone(int note, float* demitone, int* octave)
 {//Fonction qui calcule le demi-ton à atteindre pour jouer la note souhaiter
-  float douze = 1.05946;
+  float demitonevalue = 1.05946;
   *octave = note/12;
   note = note % 12;
-  *frequency = powf(douze, note);
+  *demitone = powf(demitonevalue, note);
 }
 
 void* playNoteSound(void* arguments)
 {//Fonction executer qui calcule joue le son en utilisant la bibliotheque FMOD sans prendre en compte le bpm
   struct noteData *args = arguments;
   int note = args->note;
-  int inter = args->inter;
-  float frequency;
+  //int inter = args->inter;
+  float demitone;
   int octave;
   FMOD_SOUND *son;
-  getFrequency(note, &frequency, &octave);
+  getDemitone(note, &demitone, &octave);
   son = samples[octave];  
   FMOD_CHANNEL *channel;
   if (FMOD_System_PlaySound(systemSound,son,NULL,0,&channel) != FMOD_OK)
@@ -24,18 +24,23 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't play the sound");
   }
   updateAudio();
-  
-  if (FMOD_Channel_SetVolume(channel,7.5) != FMOD_OK)
+  if (FMOD_Channel_SetVolume(channel,8.5) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the volume"); 
   }
   updateAudio();
-  if (FMOD_Channel_SetFrequency(channel,44100*frequency) != FMOD_OK)
+  float initial_frequency;
+  if (FMOD_Channel_GetFrequency(channel,&initial_frequency) != FMOD_OK)
+  {
+	  errx(3,"Couldn't get the frequency");
+  }
+  updateAudio();
+  if (FMOD_Channel_SetFrequency(channel,initial_frequency*demitone) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the frequency");
   }
   updateAudio();
-  msleep(inter);
+  msleep(2321);//Ici on laisse la note durée le temps qu'elle lui faut (2321 ms) ajouter les enums pour la durée de chaque note
   pthread_exit(NULL);
 }
 
@@ -45,13 +50,16 @@ void *playNoteSoundsec(void *arg)
   struct noteData *args = arg;
   int note = args->note;
   int inter =args->inter;
-  float frequency;
+  float demiTone;
   int octave;
-  getFrequency(note, &frequency, &octave);
+  getDemitone(note, &demiTone, &octave);
   FMOD_SOUND *son;
   son =samples[octave];
-  float b =2321/inter;
+  printf("inter = %d",inter);
+  float b =2.321/inter;
   float a =1/b;
+  printf(" 1/b = %f \n",a);
+  printf(" b = %f \n",b);
   FMOD_CHANNEL *channel;
   if (FMOD_System_PlaySound(systemSound,son,NULL,0,&channel) != FMOD_OK)
   {
@@ -59,17 +67,28 @@ void *playNoteSoundsec(void *arg)
   }
   updateAudio();
   
-  if (FMOD_Channel_SetVolume(channel,7.5) != FMOD_OK)
+  if (FMOD_Channel_SetVolume(channel,8.5) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the volume"); 
   }
   updateAudio();
-  if (FMOD_Channel_SetFrequency(channel,44100*a*frequency) != FMOD_OK)
+  if (FMOD_Channel_SetFrequency(channel,44100) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the frequency");
   }
   updateAudio();
-  if (FMOD_DSP_SetParameterFloat(dsp_effect,0,b) != FMOD_OK)
+
+  if (FMOD_Channel_SetPitch(channel,b) != FMOD_OK)
+  {
+	  errx(3,"Couldn't set the frequency");
+  }
+  updateAudio();
+  if (FMOD_DSP_SetParameterFloat(dsp_effect,0,demiTone*a) != FMOD_OK)
+  {
+	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
+  }
+  updateAudio();
+  if (FMOD_DSP_SetParameterFloat(dsp_effect,1,4096) != FMOD_OK)
   {
 	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
   }
@@ -79,7 +98,7 @@ void *playNoteSoundsec(void *arg)
 	  errx(3,"Couldn't add the DSP to the channel");
   }
   updateAudio();
-  msleep(inter);
+  msleep(2321); //ICI ON LAISSE LA NOTE CE JOUER
   pthread_exit(NULL);
   return NULL;
 }
@@ -92,7 +111,7 @@ void initAudio()
     errx(3,"Couldn't create a system");
   }
   // Initialisation du système en mode lecture normale de son et à 32 channels
-  if (FMOD_System_Init(systemSound,32,FMOD_INIT_NORMAL,NULL) != FMOD_OK)
+  if (FMOD_System_Init(systemSound,64,FMOD_INIT_NORMAL,NULL) != FMOD_OK)
   {
     errx(3,"Couldn't init a system");
   }

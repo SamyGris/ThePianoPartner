@@ -1,8 +1,7 @@
 #include "piano.h"
 #include "widgets.h"
 
-// Algorithme de la main gauche
-void* leftHand(void* arguments)
+void* leftHand(void* arguments) // Algorithme de la main gauche
 {
   struct songData *args = arguments;
   playChords(args->chords, args->repets, args->bpm);
@@ -21,9 +20,19 @@ void* test()
   int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
   int repet[8] = {1, 1, 1, 1, 0, 0, 0, 0};
   
-  playChords(myChords, repet, 100);
+  playChords(myChords, repet,100);
   
   pthread_exit(NULL);
+  return NULL;
+}
+
+void* test2(int note , int duree)
+{
+  struct noteData *test=malloc(sizeof(struct noteData));
+  test->note =note;
+  test->inter=duree;
+  playNoteSoundsec(test);
+  free(test);
   return NULL;
 }
 

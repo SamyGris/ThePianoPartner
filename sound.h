@@ -12,7 +12,7 @@
 #include "constantes.h"
 #include "toolbox.h"
 
-void getFrequency(int note, float* frequency, int* octave);
+void getDemitone(int note, float* demitone, int* octave);
 void* playNoteSound(void* arguments);
 void* playNoteSoundsec(void* arguments);
 void initAudio(); 
