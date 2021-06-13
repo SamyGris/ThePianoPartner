@@ -14,10 +14,9 @@ void getChords();
 // Fonction du bouton start
 void startButtonClicked()
 {
-  // VRAI ALGORITHME
-  
   if (!playing)
   {
+
     getBpm();
     getChords();
     playing = 1;

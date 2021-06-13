@@ -111,3 +111,8 @@ void getChords()
   song.chords[6] = gtk_combo_box_get_active(chord7); 
   song.chords[7] = gtk_combo_box_get_active(chord8); 
 }
+
+void getScale()
+{
+  song.scale = gtk_combo_box_get_active(scaleComboBox); 
+}
