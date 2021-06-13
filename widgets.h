@@ -18,6 +18,16 @@ GtkComboBox* chord5;
 GtkComboBox* chord6; 
 GtkComboBox* chord7; 
 GtkComboBox* chord8; 
+
+GtkEntry* repet1;
+GtkEntry* repet2;
+GtkEntry* repet3;
+GtkEntry* repet4;
+GtkEntry* repet5;
+GtkEntry* repet6;
+GtkEntry* repet7;
+GtkEntry* repet8;
+
 GtkWidget* piano;
 
 #endif
