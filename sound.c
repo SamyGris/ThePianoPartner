@@ -41,9 +41,10 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't set the frequency");
   }
   updateAudio();
-  // Ici on laisse la note durer le temps qu'il lui faut (2321 ms)
-  // A faire : ajouter les enums pour la durée de chaque note
-  msleep(2321);
+  printf("frequence est de HZ :%f \n",initial_frequency*demitone);
+  msleep(2321*demitone);
+  printf("J'ai finis de jouer  %f\n",2321*demitone);
+  free(args);
   pthread_exit(NULL);
 }
 
@@ -115,7 +116,7 @@ void initAudio()
     errx(3,"Couldn't create a system");
   }
   // Initialisation du système en mode lecture normale de son et à 32 channels
-  if (FMOD_System_Init(systemSound,64,FMOD_INIT_NORMAL,NULL) != FMOD_OK)
+  if (FMOD_System_Init(systemSound,64,FMOD_INIT_THREAD_UNSAFE,NULL) != FMOD_OK)
   {
     errx(3,"Couldn't init a system");
   }

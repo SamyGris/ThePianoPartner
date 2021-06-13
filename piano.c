@@ -12,8 +12,24 @@ void* leftHand(void* arguments)
 }
 
 // Algorithme de la main droite
-/*void* rightHand(void* arguments)
-{}*/
+void* rightHand(void* arguments)
+{
+  struct songData *args = arguments;
+  int inter = 60000/(args->bpm)*4;
+  int scale = args->scale;
+  srand(time(NULL));
+
+  while(1)
+  {
+    int note = rand() % 7;
+    int length = rand() % 6;
+    inter *= (int)pow(0.5, (double)length);
+    playNote(scaleNotes[scale][note], inter);
+  }
+
+  pthread_exit(NULL);
+  return NULL;
+}
 
 // Fonction qui teste les accords de Greensleeves
 void* test()

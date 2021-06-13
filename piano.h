@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <err.h>
 #include <unistd.h>
+#include <time.h>
+#include <math.h>
 #include "toolbox.h"
 #include "constantes.h"
 #include "sound.h"
