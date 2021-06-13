@@ -13,7 +13,9 @@ void* leftHand()
 // Algorithme de la main droite
 void* rightHand()
 {
-  int inter = 60000/(song.bpm)*4;
+  int inter = 60000/(song.bpm);
+  printf("BPM : %i\n", song.bpm);
+  printf("INTERVALLE1 : %i\n", inter);
   int scale = song.scale;
   srand(time(NULL));
 
@@ -21,21 +23,11 @@ void* rightHand()
   {
     int note = rand() % 7;
     int length = rand() % 6;
-    inter *= (int)pow(0.5, (double)length);
-    playNote(scaleNotes[scale][note], inter);
+    printf("LENGTH : %i\n", length);
+    inter *= 4*pow(0.5, (double)length);
+    printf("INTERVALLE2 : %i\n", inter);
+    playNoteSoundSec(scaleNotes[scale][note], inter);
   }
-  pthread_exit(NULL);
-  return NULL;
-}
-
-// Fonction qui teste les accords de Greensleeves
-void* test()
-{
-  int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
-  int repet[8] = {1, 1, 1, 1, 0, 0, 0, 0};
-  
-  playChords(myChords, repet, 250);
-  
   pthread_exit(NULL);
   return NULL;
 }
@@ -86,29 +78,3 @@ void playNote(int note, int inter)
     errx(1, "Failed to play note");
   } 
 }
-
-// Fonction qui affiche une note
-void* displayNote(void* arguments)
-{
-  struct noteData *args = arguments;
-  int note = args->note;
-  int inter = args->inter;
-  gtk_widget_set_opacity(highlightsNotes[note], 1); 
-  msleep(inter);
-  gtk_widget_set_opacity(highlightsNotes[note], 0); 
-  pthread_exit(NULL);
-}
-
-/*
-char* getChords()
-{
-
-}
-
-char* getValueComboBox(GtkWidget* w)
-{
-  char[256] textentry;
-  textentry = gtk_entry_get_text(GTK_ENTRY(w));
-  return textentry;
-}
-*/

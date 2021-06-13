@@ -26,14 +26,13 @@ void startButtonClicked()
     {
       errx(1, "Failed to launch left hand");
     }
-    /*
+    
     //getScale(&args);
-    /*
     song.scale = LAMI;
     if (pthread_create(&right, NULL, &rightHand, NULL))
     {
       errx(1, "Failed to launch right hand");
-    }*/
+    }
   }
 }
 
@@ -94,6 +93,14 @@ void getChords()
   song.repets[6] = 0;
   song.repets[7] = 0;
 }
+
+/*char* getValueComboBox(GtkWidget* w)
+{
+  char[256] textentry;
+  textentry = gtk_entry_get_text(GTK_ENTRY(w));
+  return textentry;
+}
+*/
 
 int main()
 {

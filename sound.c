@@ -47,11 +47,8 @@ void* playNoteSound(void* arguments)
 }
 
 // Fonction qui joue le son en utilisant la bibliothèque FMOD en prenant en compte le bpm
-void *playNoteSoundsec(void *arg)
+void playNoteSoundSec(int note, int inter)
 {
-  struct noteData *args = arg;
-  int note = args->note;
-  int inter =args->inter;
   float demiTone;
   int octave;
   getDemitone(note, &demiTone, &octave);
@@ -100,9 +97,7 @@ void *playNoteSoundsec(void *arg)
 	  errx(3,"Couldn't add the DSP to the channel");
   }
   updateAudio();
-  msleep(2321);
-  pthread_exit(NULL);
-  return NULL;
+  msleep(4000);
 }
 
 // Fonction qui va initialiser le système et les variables nécessaires pour la lecture du son
