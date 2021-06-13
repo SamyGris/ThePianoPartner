@@ -12,17 +12,26 @@ void* leftHand()
 // Algorithme de la main droite
 void* rightHand()
 {
-  int inter = 60000/(song.bpm)*4;
+  int inter = 60000/(song.bpm);
+  printf("BPM : %i\n", song.bpm);
+  printf("INTERVALLE1 : %i\n", inter);
   int scale = song.scale;
   srand(time(NULL));
   while(1)
   {
     int note = rand() % 7;
     int length = rand() % 6;
+<<<<<<< HEAD
     inter *= (int)pow(0.5, (double)length);
     printf("Je suis la \n");
     playNote(scaleNotes[scale][note], inter);
     msleep(song.bpm);
+=======
+    printf("LENGTH : %i\n", length);
+    inter *= 4*pow(0.5, (double)length);
+    printf("INTERVALLE2 : %i\n", inter);
+    playNoteSoundSec(scaleNotes[scale][note], inter);
+>>>>>>> 0b56ec270bb34509e903c96d7de105800ff02196
   }
   pthread_exit(NULL);
   return NULL;
@@ -73,34 +82,4 @@ void playNote(int note, int inter)
   {
     errx(1, "Failed to play note");
   } 
-}
-
-// Fonction qui affiche une note
-void* displayNote(void* arguments)
-{
-  struct noteData *args = arguments;
-  int note = args->note;
-  int inter = args->inter;
-  gtk_widget_set_opacity(highlightsNotes[note], 1); 
-  msleep(inter);
-  gtk_widget_set_opacity(highlightsNotes[note], 0); 
-  pthread_exit(NULL);
-}
-
-
-void getChords()
-{
-  song.chords[0] = gtk_combo_box_get_active(chord1); 
-  song.chords[1] = gtk_combo_box_get_active(chord2); 
-  song.chords[2] = gtk_combo_box_get_active(chord3); 
-  song.chords[3] = gtk_combo_box_get_active(chord4); 
-  song.chords[4] = gtk_combo_box_get_active(chord5); 
-  song.chords[5] = gtk_combo_box_get_active(chord6); 
-  song.chords[6] = gtk_combo_box_get_active(chord7); 
-  song.chords[7] = gtk_combo_box_get_active(chord8); 
-}
-
-void getScale()
-{
-  song.scale = gtk_combo_box_get_active(scaleComboBox); 
 }

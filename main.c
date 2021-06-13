@@ -17,22 +17,19 @@ void startButtonClicked()
   getChords(); 
   getScale();
   
-  for(int i = 0; i < 8; i ++)
-  {
-    printf("accord 1 = %i \n", song.scale); 
-  }
   // VRAI ALGORITHME
-  /*
   if (!playing)
   {
     getBpm();
     getChords();
+    getScale();
     playing = 1;
 
     if (pthread_create(&left, NULL, &leftHand, NULL))
     {
       errx(1, "Failed to launch left hand");
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
     
 =======
@@ -50,6 +47,14 @@ void startButtonClicked()
     }*/
   
 >>>>>>> da058f0a9a4b41e90347cb3dc9d4c80d9d74e48e
+=======
+  
+    if (pthread_create(&right, NULL, &rightHand, NULL))
+    {
+      errx(1, "Failed to launch right hand");
+    }
+  }
+>>>>>>> 0b56ec270bb34509e903c96d7de105800ff02196
 }
 
 // Fonction du bouton stop
@@ -87,6 +92,24 @@ void getBpm()
 
   if (entry == endptr || '\0' != *endptr || ERANGE == errno || song.bpm < 50 || song.bpm > 150 || (errno != 0 && song.bpm == 0))
     song.bpm = 100;
+}
+
+
+void getChords()
+{
+  song.chords[0] = gtk_combo_box_get_active(chord1); 
+  song.chords[1] = gtk_combo_box_get_active(chord2); 
+  song.chords[2] = gtk_combo_box_get_active(chord3); 
+  song.chords[3] = gtk_combo_box_get_active(chord4); 
+  song.chords[4] = gtk_combo_box_get_active(chord5); 
+  song.chords[5] = gtk_combo_box_get_active(chord6); 
+  song.chords[6] = gtk_combo_box_get_active(chord7); 
+  song.chords[7] = gtk_combo_box_get_active(chord8); 
+}
+
+void getScale()
+{
+  song.scale = gtk_combo_box_get_active(scaleComboBox); 
 }
 
 int main()

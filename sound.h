@@ -14,7 +14,7 @@
 
 void getDemitone(int note, float* demitone, int* octave);
 void* playNoteSound(void* arguments);
-void* playNoteSoundsec(void* arguments);
+void playNoteSoundSec(int note, int inter);
 void initAudio(); 
 void updateAudio();
 

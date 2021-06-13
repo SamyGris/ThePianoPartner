@@ -47,7 +47,11 @@ void* playNoteSound(void* arguments)
 }
 
 // Fonction qui joue le son en utilisant la bibliothèque FMOD en prenant en compte le bpm
+<<<<<<< HEAD
 void *playNoteSoundsec(int note ,int duree)
+=======
+void playNoteSoundSec(int note, int inter)
+>>>>>>> 0b56ec270bb34509e903c96d7de105800ff02196
 {
   float demiTone;
   int octave;
@@ -93,8 +97,11 @@ void *playNoteSoundsec(int note ,int duree)
   }
   updateAudio();
   msleep(4000);
+<<<<<<< HEAD
   pthread_exit(NULL);
   return NULL;
+=======
+>>>>>>> 0b56ec270bb34509e903c96d7de105800ff02196
 }
 
 // Fonction qui va initialiser le système et les variables nécessaires pour la lecture du son
