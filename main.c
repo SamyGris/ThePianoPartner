@@ -6,9 +6,9 @@
 #include "widgets.h"
 #include "sound.h"
 
-void getBpm(void* arguments);
-void getScale(void* arguments);
-void getChords(void* arguments);
+void getBpm();
+void getScale();
+void getChords();
 
 
 // Fonction du bouton start
@@ -18,19 +18,19 @@ void startButtonClicked()
   
   if (!playing)
   {
-    struct songData *args=malloc(sizeof(struct songData));
-    getBpm(args);
-    getChords(args);
+    getBpm();
+    getChords();
     playing = 1;
 
-    if (pthread_create(&left, NULL, &leftHand, (void*)args))
+    if (pthread_create(&left, NULL, &leftHand, NULL))
     {
       errx(1, "Failed to launch left hand");
     }
     /*
     //getScale(&args);
-    args->scale = LAMI;
-    if (pthread_create(&right, NULL, &rightHand, (void*)args))
+    /*
+    song.scale = LAMI;
+    if (pthread_create(&right, NULL, &rightHand, NULL))
     {
       errx(1, "Failed to launch right hand");
     }*/
@@ -63,38 +63,36 @@ void aboutButtonClicked()
 {}
 
 // Fonction qui récupère le BPM
-void getBpm(void* arguments)
+void getBpm()
 {
-  struct songData *args = arguments;
   char *endptr;
   const char *entry = gtk_entry_get_text(bpmEntry);
   errno = 0;
-  args->bpm = (int)strtol(entry, &endptr, 10);
+  song.bpm = (int)strtol(entry, &endptr, 10);
 
-  if (entry == endptr || '\0' != *endptr || ERANGE == errno || args->bpm < 50 || args->bpm > 150 || (errno != 0 && args->bpm == 0))
-    args->bpm = 100;
+  if (entry == endptr || '\0' != *endptr || ERANGE == errno || song.bpm < 50 || song.bpm > 150 || (errno != 0 && song.bpm == 0))
+    song.bpm = 100;
 }
 
 // Fonction qui récupère les accords
-void getChords(void* arguments)
+void getChords()
 {
-  struct songData *args = arguments;
-  args->chords[0] = LAMI;
-  args->chords[1] = SOLMA;
-  args->chords[2] = FAMA;
-  args->chords[3] = MIMA;
-  args->chords[4] = -1;
-  args->chords[5] = -1;
-  args->chords[6] = -1;
-  args->chords[7] = -1;
-  args->repets[0] = 1;
-  args->repets[1] = 1;
-  args->repets[2] = 1;
-  args->repets[3] = 1;
-  args->repets[4] = 0;
-  args->repets[5] = 0;
-  args->repets[6] = 0;
-  args->repets[7] = 0;
+  song.chords[0] = LAMI;
+  song.chords[1] = SOLMA;
+  song.chords[2] = FAMA;
+  song.chords[3] = MIMA;
+  song.chords[4] = -1;
+  song.chords[5] = -1;
+  song.chords[6] = -1;
+  song.chords[7] = -1;
+  song.repets[0] = 1;
+  song.repets[1] = 1;
+  song.repets[2] = 1;
+  song.repets[3] = 1;
+  song.repets[4] = 0;
+  song.repets[5] = 0;
+  song.repets[6] = 0;
+  song.repets[7] = 0;
 }
 
 int main()

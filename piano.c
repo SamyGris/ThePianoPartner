@@ -2,21 +2,19 @@
 #include "widgets.h"
 
 // Algorithme de la main gauche
-void* leftHand(void* arguments)
+void* leftHand()
 {
-  struct songData *args = arguments;
-  playChords(args->chords, args->repets, args->bpm);
-  free(args); 
+  playChords(song.chords, song.repets, song.bpm);
+
   pthread_exit(NULL);
   return NULL;
 }
 
 // Algorithme de la main droite
-void* rightHand(void* arguments)
+void* rightHand()
 {
-  struct songData *args = arguments;
-  int inter = 60000/(args->bpm)*4;
-  int scale = args->scale;
+  int inter = 60000/(song.bpm)*4;
+  int scale = song.scale;
   srand(time(NULL));
 
   while(1)
@@ -26,7 +24,6 @@ void* rightHand(void* arguments)
     inter *= (int)pow(0.5, (double)length);
     playNote(scaleNotes[scale][note], inter);
   }
-
   pthread_exit(NULL);
   return NULL;
 }
