@@ -14,9 +14,15 @@ void getChords();
 // Fonction du bouton start
 void startButtonClicked()
 {
+  getChords(); 
+  for(int i = 0; i < 8; i ++)
+  {
+    printf("accord 1 = %i \n", song.chords[i]); 
+  }
+  // VRAI ALGORITHME
+  /*
   if (!playing)
   {
-
     getBpm();
     getChords();
     playing = 1;
@@ -25,7 +31,7 @@ void startButtonClicked()
     {
       errx(1, "Failed to launch left hand");
     }
-    
+    */
     //getScale(&args);
     /*
     song.scale = LAMI;
