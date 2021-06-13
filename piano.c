@@ -21,17 +21,10 @@ void* rightHand()
   {
     int note = rand() % 7;
     int length = rand() % 6;
-<<<<<<< HEAD
-    inter *= (int)pow(0.5, (double)length);
-    printf("Je suis la \n");
-    playNote(scaleNotes[scale][note], inter);
-    msleep(song.bpm);
-=======
     printf("LENGTH : %i\n", length);
     inter *= 4*pow(0.5, (double)length);
     printf("INTERVALLE2 : %i\n", inter);
     playNoteSoundSec(scaleNotes[scale][note], inter);
->>>>>>> 0b56ec270bb34509e903c96d7de105800ff02196
   }
   pthread_exit(NULL);
   return NULL;

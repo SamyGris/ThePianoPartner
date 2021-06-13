@@ -29,32 +29,14 @@ void startButtonClicked()
     {
       errx(1, "Failed to launch left hand");
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-    
-=======
-    */
->>>>>>> da058f0a9a4b41e90347cb3dc9d4c80d9d74e48e
+
     //getScale(&args);
     song.scale = LAMI;
     if (pthread_create(&right, NULL, &rightHand, NULL))
     {
       errx(1, "Failed to launch right hand");
-<<<<<<< HEAD
     }
   }
-=======
-    }*/
-  
->>>>>>> da058f0a9a4b41e90347cb3dc9d4c80d9d74e48e
-=======
-  
-    if (pthread_create(&right, NULL, &rightHand, NULL))
-    {
-      errx(1, "Failed to launch right hand");
-    }
-  }
->>>>>>> 0b56ec270bb34509e903c96d7de105800ff02196
 }
 
 // Fonction du bouton stop
@@ -66,10 +48,10 @@ void stopButtonClicked()
     {
       errx(1, "Failed to close left hand");
     }
-    /*if (pthread_cancel(right))
+    if (pthread_cancel(right))
     {
       errx(1, "Failed to close right hand");
-    }*/
+    }
     playing = 0;
   }
   for (int i = 0; i < 48; i++)
