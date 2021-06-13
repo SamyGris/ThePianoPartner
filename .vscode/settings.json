@@ -5,6 +5,7 @@
         "constantes.h": "c",
         "sound.h": "c",
         "stdlib.h": "c",
-        "pthread.h": "c"
+        "pthread.h": "c",
+        "typeinfo": "c"
     }
 }

@@ -23,33 +23,18 @@ void startButtonClicked()
     getChords(args);
     playing = 1;
 
-    pthread_t left;
-
     if (pthread_create(&left, NULL, &leftHand, (void*)args))
     {
       errx(1, "Failed to launch left hand");
     }
     
-    /*getScale(&args);
-
-    if (pthread_create(&right, NULL, &rightHand,&args))
+    //getScale(&args);
+    args->scale = LAMI;
+    if (pthread_create(&right, NULL, &rightHand, (void*)args))
     {
       errx(1, "Failed to launch right hand");
-    }*/
-  }
-  
-  /*//TEST ACCORDS
-  
-  if (!playing)
-  {
-    playing = 1;
-    if (pthread_create(&left, NULL, &test, NULL)) //Test pour la fonction jouant du son sans prendre en compte le bpm
-    {
-      errx(1, "Failed to launch left hand");
     }
   }
-  */
-  //test2(DO1 ,2.5);   //Test pour la fonction qui joue une note en fonction de la durée désirée
 }
 
 // Fonction du bouton stop
@@ -61,7 +46,15 @@ void stopButtonClicked()
     {
       errx(1, "Failed to close left hand");
     }
+    if (pthread_cancel(right))
+    {
+      errx(1, "Failed to close right hand");
+    }
     playing = 0;
+  }
+  for (int i = 0; i < 48; i++)
+  {
+    gtk_widget_set_opacity(highlightsNotes[i], 0); 
   }
 }
 
@@ -130,7 +123,11 @@ int main()
 
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
   gtk_builder_connect_signals(builder, NULL);
-  gtk_widget_show((GtkWidget*)window);
+  gtk_widget_show_all((GtkWidget*)window);
+  for (int i = 0; i < 48; i++)
+  {
+    gtk_widget_set_opacity(highlightsNotes[i], 0); 
+  }
   gtk_main();
   return 0; 
 }
