@@ -14,7 +14,7 @@ void* playNoteSound(void* arguments)
 {
   struct noteData *args = arguments;
   int note = args->note;
-  float demitone;
+  float demitone; 
   int octave;
   FMOD_SOUND *son;
   getDemitone(note, &demitone, &octave);
