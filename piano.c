@@ -5,7 +5,6 @@
 void* leftHand()
 {
   playChords(song.chords, song.repets, song.bpm);
-
   pthread_exit(NULL);
   return NULL;
 }
@@ -16,26 +15,15 @@ void* rightHand()
   int inter = 60000/(song.bpm)*4;
   int scale = song.scale;
   srand(time(NULL));
-
   while(1)
   {
     int note = rand() % 7;
     int length = rand() % 6;
     inter *= (int)pow(0.5, (double)length);
+    printf("Je suis la \n");
     playNote(scaleNotes[scale][note], inter);
+    msleep(song.bpm);
   }
-  pthread_exit(NULL);
-  return NULL;
-}
-
-// Fonction qui teste les accords de Greensleeves
-void* test()
-{
-  int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
-  int repet[8] = {1, 1, 1, 1, 0, 0, 0, 0};
-  
-  playChords(myChords, repet, 250);
-  
   pthread_exit(NULL);
   return NULL;
 }
