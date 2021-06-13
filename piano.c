@@ -6,23 +6,24 @@ void* leftHand(void* arguments)
 {
   struct songData *args = arguments;
   playChords(args->chords, args->repets, args->bpm);
-
+  free(args);
   pthread_exit(NULL);
   return NULL;
 }
 
 // Algorithme de la main droite
 /*void* rightHand(void* arguments)
-{}*/
+{
+  
+}
+*/
 
 // Fonction qui teste les accords de Greensleeves
 void* test()
 {
   int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
   int repet[8] = {1, 1, 1, 1, 0, 0, 0, 0};
-  
   playChords(myChords, repet, 250);
-  
   pthread_exit(NULL);
   return NULL;
 }
@@ -73,7 +74,7 @@ void playChord(int chord, int inter)
 // Fonction qui joue une note
 void playNote(int note, int inter)
 {
-  struct noteData * args=malloc(sizeof(struct noteData));
+  struct noteData *args = malloc(sizeof(struct noteData));
   args->note = note;
   args->inter = inter;
   pthread_t soundThr;
@@ -90,9 +91,7 @@ void playNote(int note, int inter)
   }*/
   
   //pthread_detach(displayThr);  
-
   pthread_detach(soundThr);
-  
 }
 
 // Fonction qui affiche une note
