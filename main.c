@@ -14,21 +14,22 @@ void getChords();
 // Fonction du bouton start
 void startButtonClicked()
 {
-  // VRAI ALGORITHME
+  getChords(); 
+  getScale();
   
+  // VRAI ALGORITHME
   if (!playing)
   {
     getBpm();
     getChords();
+    getScale();
     playing = 1;
 
     if (pthread_create(&left, NULL, &leftHand, NULL))
     {
       errx(1, "Failed to launch left hand");
     }
-    
-    //getScale(&args);
-    song.scale = LAMI;
+  
     if (pthread_create(&right, NULL, &rightHand, NULL))
     {
       errx(1, "Failed to launch right hand");
@@ -73,34 +74,23 @@ void getBpm()
     song.bpm = 100;
 }
 
-// Fonction qui récupère les accords
+
 void getChords()
 {
-  song.chords[0] = LAMI;
-  song.chords[1] = SOLMA;
-  song.chords[2] = FAMA;
-  song.chords[3] = MIMA;
-  song.chords[4] = -1;
-  song.chords[5] = -1;
-  song.chords[6] = -1;
-  song.chords[7] = -1;
-  song.repets[0] = 1;
-  song.repets[1] = 1;
-  song.repets[2] = 1;
-  song.repets[3] = 1;
-  song.repets[4] = 0;
-  song.repets[5] = 0;
-  song.repets[6] = 0;
-  song.repets[7] = 0;
+  song.chords[0] = gtk_combo_box_get_active(chord1); 
+  song.chords[1] = gtk_combo_box_get_active(chord2); 
+  song.chords[2] = gtk_combo_box_get_active(chord3); 
+  song.chords[3] = gtk_combo_box_get_active(chord4); 
+  song.chords[4] = gtk_combo_box_get_active(chord5); 
+  song.chords[5] = gtk_combo_box_get_active(chord6); 
+  song.chords[6] = gtk_combo_box_get_active(chord7); 
+  song.chords[7] = gtk_combo_box_get_active(chord8); 
 }
 
-/*char* getValueComboBox(GtkWidget* w)
+void getScale()
 {
-  char[256] textentry;
-  textentry = gtk_entry_get_text(GTK_ENTRY(w));
-  return textentry;
+  song.scale = gtk_combo_box_get_active(scaleComboBox); 
 }
-*/
 
 int main()
 {
@@ -116,6 +106,14 @@ int main()
   bpmEntry = GTK_ENTRY(gtk_builder_get_object(builder, "bpmEntry"));
   scaleComboBox = GTK_COMBO_BOX(gtk_builder_get_object(builder, "scaleComboBox"));
   piano = GTK_WIDGET(gtk_builder_get_object(builder, "piano")); 
+  chord1 =  GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord1")); 
+  chord2 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord2")); 
+  chord3 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord3")); 
+  chord4 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord4")); 
+  chord5 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord5")); 
+  chord6 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord6")); 
+  chord7 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord7")); 
+  chord8 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord8")); 
 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
