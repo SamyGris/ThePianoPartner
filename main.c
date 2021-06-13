@@ -15,41 +15,31 @@ void getChords(void* arguments);
 void startButtonClicked()
 {
   // VRAI ALGORITHME
+  
   if (!playing)
   {
-    struct songData args;
-    getBpm(&args);
-    getChords(&args);
+    struct songData *args=malloc(sizeof(struct songData));
+    getBpm(args);
+    getChords(args);
     playing = 1;
-    printf("Got BPM: %i\n", args.bpm);
-    printf("Got Chords\n");
-    printf("Accord1 : %i\n", args.chords[0]);
-    printf("Accord2 : %i\n", args.chords[1]);
-    printf("Accord3 : %i\n", args.chords[2]);
-    printf("Accord4 : %i\n", args.chords[3]);
-    printf("Accord5 : %i\n", args.chords[4]);
-    printf("Accord6 : %i\n", args.chords[5]);
-    printf("Accord7 : %i\n", args.chords[6]);
-    printf("Accord8 : %i\n", args.chords[7]);
 
     pthread_t left;
 
-    if (pthread_create(&left, NULL, &leftHand, &args))
+    if (pthread_create(&left, NULL, &leftHand, (void*)args))
     {
       errx(1, "Failed to launch left hand");
     }
-
-    /*
-    getScale(&args);
+    
+    /*getScale(&args);
 
     if (pthread_create(&right, NULL, &rightHand,&args))
     {
       errx(1, "Failed to launch right hand");
     }*/
   }
-
-  //TEST ACCORDS
-  /*
+  
+  /*//TEST ACCORDS
+  
   if (!playing)
   {
     playing = 1;
@@ -57,7 +47,8 @@ void startButtonClicked()
     {
       errx(1, "Failed to launch left hand");
     }
-  }*/
+  }
+  */
   //test2(DO1 ,2.5);   //Test pour la fonction qui joue une note en fonction de la durée désirée
 }
 
