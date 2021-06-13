@@ -40,17 +40,6 @@ void* test()
   return NULL;
 }
 
-/*
-void* test2(int note , int duree)
-{
-  struct noteData *test=malloc(sizeof(struct noteData));
-  test->note =note;
-  test->inter=duree;
-  playNoteSoundsec(test);
-  free(test);
-  return NULL;
-}*/
-
 // Fonction qui joue les différents accords de la main gauche
 void playChords(int usrChords[], int repet[], int bpm)
 {

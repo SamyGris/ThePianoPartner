@@ -41,9 +41,7 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't set the frequency");
   }
   updateAudio();
-  printf("frequence est de HZ :%f \n",initial_frequency*demitone);
-  msleep(2321*demitone);
-  printf("J'ai finis de jouer  %f\n",2321*demitone);
+  msleep(4000);
   free(args);
   pthread_exit(NULL);
 }
