@@ -76,7 +76,7 @@ void getBpm()
     song.bpm = 100;
 }
 
-
+// Fonction qui récupère les accords
 void getChords()
 {
   song.chords[0] = gtk_combo_box_get_active(chord1); 
@@ -89,6 +89,7 @@ void getChords()
   song.chords[7] = gtk_combo_box_get_active(chord8); 
 }
 
+// Fonction qui récupère la gamme
 void getScale()
 {
   song.scale = gtk_combo_box_get_active(scaleComboBox); 
