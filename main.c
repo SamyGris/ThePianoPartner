@@ -23,33 +23,18 @@ void startButtonClicked()
     getChords(args);
     playing = 1;
 
-    pthread_t left;
-
     if (pthread_create(&left, NULL, &leftHand, (void*)args))
     {
       errx(1, "Failed to launch left hand");
     }
     
-    /*getScale(&args);
-
-    if (pthread_create(&right, NULL, &rightHand,&args))
+    //getScale(&args);
+    args->scale = LAMI;
+    if (pthread_create(&right, NULL, &rightHand, (void*)args))
     {
       errx(1, "Failed to launch right hand");
-    }*/
-  }
-  
-  /*//TEST ACCORDS
-  
-  if (!playing)
-  {
-    playing = 1;
-    if (pthread_create(&left, NULL, &test, NULL)) //Test pour la fonction jouant du son sans prendre en compte le bpm
-    {
-      errx(1, "Failed to launch left hand");
     }
   }
-  */
-  //test2(DO1 ,2.5);   //Test pour la fonction qui joue une note en fonction de la durée désirée
 }
 
 // Fonction du bouton stop
@@ -60,6 +45,10 @@ void stopButtonClicked()
     if (pthread_cancel(left))
     {
       errx(1, "Failed to close left hand");
+    }
+    if (pthread_cancel(right))
+    {
+      errx(1, "Failed to close right hand");
     }
     playing = 0;
   }
