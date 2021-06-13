@@ -21,6 +21,18 @@ void startButtonClicked()
     getBpm(&args);
     getChords(&args);
     playing = 1;
+    printf("Got BPM: %i\n", args.bpm);
+    printf("Got Chords\n");
+    printf("Accord1 : %i\n", args.chords[0]);
+    printf("Accord2 : %i\n", args.chords[1]);
+    printf("Accord3 : %i\n", args.chords[2]);
+    printf("Accord4 : %i\n", args.chords[3]);
+    printf("Accord5 : %i\n", args.chords[4]);
+    printf("Accord6 : %i\n", args.chords[5]);
+    printf("Accord7 : %i\n", args.chords[6]);
+    printf("Accord8 : %i\n", args.chords[7]);
+
+    pthread_t left;
 
     if (pthread_create(&left, NULL, &leftHand, &args))
     {
