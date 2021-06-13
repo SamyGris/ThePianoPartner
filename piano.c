@@ -5,7 +5,6 @@
 void* leftHand()
 {
   playChords(song.chords, song.repets, song.bpm);
-
   pthread_exit(NULL);
   return NULL;
 }
@@ -13,29 +12,20 @@ void* leftHand()
 // Algorithme de la main droite
 void* rightHand()
 {
-  int inter = 60000/(song.bpm)*4;
+  int inter = 60000/(song.bpm);
+  printf("BPM : %i\n", song.bpm);
+  printf("INTERVALLE1 : %i\n", inter);
   int scale = song.scale;
   srand(time(NULL));
-
   while(1)
   {
     int note = rand() % 7;
     int length = rand() % 6;
-    inter *= (int)pow(0.5, (double)length);
-    playNote(scaleNotes[scale][note], inter);
+    printf("LENGTH : %i\n", length);
+    inter *= 4*pow(0.5, (double)length);
+    printf("INTERVALLE2 : %i\n", inter);
+    playNoteSoundSec(scaleNotes[scale][note], inter);
   }
-  pthread_exit(NULL);
-  return NULL;
-}
-
-// Fonction qui teste les accords de Greensleeves
-void* test()
-{
-  int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
-  int repet[8] = {1, 1, 1, 1, 0, 0, 0, 0};
-  
-  playChords(myChords, repet, 250);
-  
   pthread_exit(NULL);
   return NULL;
 }
@@ -85,48 +75,4 @@ void playNote(int note, int inter)
   {
     errx(1, "Failed to play note");
   } 
-}
-
-// Fonction qui affiche une note
-void* displayNote(void* arguments)
-{
-  struct noteData *args = arguments;
-  int note = args->note;
-  int inter = args->inter;
-  gtk_widget_set_opacity(highlightsNotes[note], 1); 
-  msleep(inter);
-  gtk_widget_set_opacity(highlightsNotes[note], 0); 
-  pthread_exit(NULL);
-}
-
-
-void getChords()
-{
-  song.chords[0] = gtk_combo_box_get_active(chord1); 
-  song.chords[1] = gtk_combo_box_get_active(chord2); 
-  song.chords[2] = gtk_combo_box_get_active(chord3); 
-  song.chords[3] = gtk_combo_box_get_active(chord4); 
-  song.chords[4] = gtk_combo_box_get_active(chord5); 
-  song.chords[5] = gtk_combo_box_get_active(chord6); 
-  song.chords[6] = gtk_combo_box_get_active(chord7); 
-  song.chords[7] = gtk_combo_box_get_active(chord8); 
-}
-
-void getScale()
-{
-  song.scale = gtk_combo_box_get_active(scaleComboBox); 
-}
-
-
-void getReps() 
-{
-  song.repets[0] = atoi(gtk_entry_get_text(repet1));
-  song.repets[1] = atoi(gtk_entry_get_text(repet2));
-  song.repets[2] = atoi(gtk_entry_get_text(repet3));
-  song.repets[3] = atoi(gtk_entry_get_text(repet4));
-  song.repets[4] = atoi(gtk_entry_get_text(repet5));
-  song.repets[5] = atoi(gtk_entry_get_text(repet6));
-  song.repets[6] = atoi(gtk_entry_get_text(repet7));
-  song.repets[7] = atoi(gtk_entry_get_text(repet8));
-
 }

@@ -9,39 +9,34 @@
 void getBpm();
 void getScale();
 void getChords();
-void getReps() ; 
+void getReps();
 
 // Fonction du bouton start
 void startButtonClicked()
 {
   getChords(); 
   getScale();
-  getReps();
-  for(int i = 0; i < 8; i ++)
-  {
-    printf("accord %i = %i \n", i,song.repets[i]); 
-  }
+  
   // VRAI ALGORITHME
-  /*
   if (!playing)
   {
     getBpm();
     getChords();
+    getScale();
     playing = 1;
 
     if (pthread_create(&left, NULL, &leftHand, NULL))
     {
       errx(1, "Failed to launch left hand");
     }
-    */
+
     //getScale(&args);
-    /*
     song.scale = LAMI;
     if (pthread_create(&right, NULL, &rightHand, NULL))
     {
       errx(1, "Failed to launch right hand");
-    }*/
-  
+    }
+  }
 }
 
 // Fonction du bouton stop
@@ -79,6 +74,37 @@ void getBpm()
 
   if (entry == endptr || '\0' != *endptr || ERANGE == errno || song.bpm < 50 || song.bpm > 150 || (errno != 0 && song.bpm == 0))
     song.bpm = 100;
+}
+
+// Fonction qui récupère les accords
+void getChords()
+{
+  song.chords[0] = gtk_combo_box_get_active(chord1); 
+  song.chords[1] = gtk_combo_box_get_active(chord2); 
+  song.chords[2] = gtk_combo_box_get_active(chord3); 
+  song.chords[3] = gtk_combo_box_get_active(chord4); 
+  song.chords[4] = gtk_combo_box_get_active(chord5); 
+  song.chords[5] = gtk_combo_box_get_active(chord6); 
+  song.chords[6] = gtk_combo_box_get_active(chord7); 
+  song.chords[7] = gtk_combo_box_get_active(chord8); 
+}
+
+void getReps() 
+{
+  song.repets[0] = atoi(gtk_entry_get_text(repet1));
+  song.repets[1] = atoi(gtk_entry_get_text(repet2));
+  song.repets[2] = atoi(gtk_entry_get_text(repet3));
+  song.repets[3] = atoi(gtk_entry_get_text(repet4));
+  song.repets[4] = atoi(gtk_entry_get_text(repet5));
+  song.repets[5] = atoi(gtk_entry_get_text(repet6));
+  song.repets[6] = atoi(gtk_entry_get_text(repet7));
+  song.repets[7] = atoi(gtk_entry_get_text(repet8));
+}
+
+// Fonction qui récupère la gamme
+void getScale()
+{
+  song.scale = gtk_combo_box_get_active(scaleComboBox); 
 }
 
 int main()

@@ -11,17 +11,11 @@
 #ifndef PIANO_H
 #define PIANO_H
 
-void* test();
-void* test2(int note,int duree);
 void* leftHand();
 void* rightHand();
 void playChords(int usrChords[], int repet[], int bpm);
 void playChord(int chord, int inter);
 void playNote(int note, int inter);
-void* displayNote(void* arguments);
-void getChords(); 
-void getScale(); 
-void getReps();
 int playing;
 
 pthread_t left;
