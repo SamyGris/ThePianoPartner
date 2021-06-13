@@ -9,13 +9,14 @@
 void getBpm();
 void getScale();
 void getChords();
-
+void getReps();
 
 // Fonction du bouton start
 void startButtonClicked()
 {
   getChords(); 
   getScale();
+  getReps();
   
   // VRAI ALGORITHME
   if (!playing)
@@ -29,17 +30,16 @@ void startButtonClicked()
     {
       errx(1, "Failed to launch left hand");
     }
-/*
-    //getScale(&args);
-    song.scale = LAMI;
+    getScale();
     if (pthread_create(&right, NULL, &rightHand, NULL))
     {
       errx(1, "Failed to launch right hand");
-    }*/
+    }
   }
 }
 
 // Fonction du bouton stop
+
 void stopButtonClicked()
 {
   if (playing)
@@ -48,11 +48,11 @@ void stopButtonClicked()
     {
       errx(1, "Failed to close left hand");
     }
-    /*
+    
     if (pthread_cancel(right))
     {
       errx(1, "Failed to close right hand");
-    }*/
+    }
     playing = 0;
   }
   for (int i = 0; i < 48; i++)
@@ -90,6 +90,18 @@ void getChords()
   song.chords[7] = gtk_combo_box_get_active(chord8); 
 }
 
+void getReps() 
+{
+  song.repets[0] = atoi(gtk_entry_get_text(repet1));
+  song.repets[1] = atoi(gtk_entry_get_text(repet2));
+  song.repets[2] = atoi(gtk_entry_get_text(repet3));
+  song.repets[3] = atoi(gtk_entry_get_text(repet4));
+  song.repets[4] = atoi(gtk_entry_get_text(repet5));
+  song.repets[5] = atoi(gtk_entry_get_text(repet6));
+  song.repets[6] = atoi(gtk_entry_get_text(repet7));
+  song.repets[7] = atoi(gtk_entry_get_text(repet8));
+}
+
 // Fonction qui récupère la gamme
 void getScale()
 {
@@ -118,6 +130,14 @@ int main()
   chord6 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord6")); 
   chord7 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord7")); 
   chord8 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord8")); 
+  repet1 = GTK_ENTRY(gtk_builder_get_object(builder,"repet1"));
+  repet2 = GTK_ENTRY(gtk_builder_get_object(builder,"repet2"));
+  repet3 = GTK_ENTRY(gtk_builder_get_object(builder,"repet3"));
+  repet4 = GTK_ENTRY(gtk_builder_get_object(builder,"repet4"));
+  repet5 = GTK_ENTRY(gtk_builder_get_object(builder,"repet5"));
+  repet6 = GTK_ENTRY(gtk_builder_get_object(builder,"repet6"));
+  repet7 = GTK_ENTRY(gtk_builder_get_object(builder,"repet7"));
+  repet8 = GTK_ENTRY(gtk_builder_get_object(builder,"repet8"));
 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
