@@ -21,7 +21,7 @@ void* test()
   int myChords[8] = {LAMI, SOLMA, FAMA, MIMA, -1, -1, -1, -1};
   int repet[8] = {1, 1, 1, 1, 0, 0, 0, 0};
   
-  playChords(myChords, repet, 100);
+  playChords(myChords, repet, 250);
   
   pthread_exit(NULL);
   return NULL;
@@ -64,9 +64,10 @@ void playChord(int chord, int inter)
   for (int i = 0; i < 3; i++)
   {
     playNote(chords[chord][i], inter);
-  }
-  for (int i = 0; i <3; i++)
-    gtk_widget_show(highlightsNotes[chords[chord][i]]); 
+  }/*
+    for (int i = 0; i <3; i++)
+      gtk_widget_show(highlightsNotes[chords[chord][i]]); 
+      */
 }
 
 // Fonction qui joue une note
@@ -76,19 +77,19 @@ void playNote(int note, int inter)
   args->note = note;
   args->inter = inter;
   pthread_t soundThr;
-  pthread_t displayThr;
+  //pthread_t displayThr;
   
   if (pthread_create(&soundThr, NULL, &playNoteSound, (void*)args))
   {
     errx(1, "Failed to play note");
   }
-  
+  /*
   if (pthread_create(&displayThr, NULL, &displayNote, (void*)args))
   {
     errx(1, "Failed to display note");
-  }
+  }*/
   
-  pthread_detach(displayThr);  
+  //pthread_detach(displayThr);  
 
   pthread_detach(soundThr);
   

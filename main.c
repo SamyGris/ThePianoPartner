@@ -6,44 +6,46 @@
 #include "widgets.h"
 #include "sound.h"
 
-int getBpm();
-int getScale();
-int getChords(int* chords[8], int* repets[]);
+void getBpm(void* arguments);
+void getScale(void* arguments);
+void getChords(void* arguments);
+
 
 // Fonction du bouton start
 void startButtonClicked()
 {
-  /* VRAI ALGORITHME
+  // VRAI ALGORITHME
   if (!playing)
   {
-    struct songData;
-    songData.bpm = getBpm();
-    songData.scale = getScale();
-    getChords(&(songData.chords), &(songData.repets));
+    struct songData args;
+    getBpm(&args);
+    getChords(&args);
     playing = 1;
 
-    if (pthread_create(&left, NULL, &leftHand, &songData))
+    if (pthread_create(&left, NULL, &leftHand, &args))
     {
       errx(1, "Failed to launch left hand");
     }
 
-    if (pthread_create(&right, NULL, &rightHand, &songData))
+    /*
+    getScale(&args);
+
+    if (pthread_create(&right, NULL, &rightHand,&args))
     {
       errx(1, "Failed to launch right hand");
-    }
+    }*/
   }
-  */
 
   //TEST ACCORDS
+  /*
   if (!playing)
   {
-    
     playing = 1;
     if (pthread_create(&left, NULL, &test, NULL)) //Test pour la fonction jouant du son sans prendre en compte le bpm
     {
       errx(1, "Failed to launch left hand");
     }
-  }
+  }*/
   //test2(DO1 ,2.5);   //Test pour la fonction qui joue une note en fonction de la durée désirée
 }
 
@@ -65,17 +67,38 @@ void aboutButtonClicked()
 {}
 
 // Fonction qui récupère le BPM
-int getBpm()
+void getBpm(void* arguments)
 {
+  struct songData *args = arguments;
   char *endptr;
   const char *entry = gtk_entry_get_text(bpmEntry);
   errno = 0;
-  int bpm = (int)strtol(entry, &endptr, 10);
+  args->bpm = (int)strtol(entry, &endptr, 10);
 
-  if (entry == endptr || '\0' != *endptr || ERANGE == errno || bpm < 50 || bpm > 150 || (errno != 0 && bpm == 0))
-    bpm = 100;
+  if (entry == endptr || '\0' != *endptr || ERANGE == errno || args->bpm < 50 || args->bpm > 150 || (errno != 0 && args->bpm == 0))
+    args->bpm = 100;
+}
 
-  return bpm;
+// Fonction qui récupère les accords
+void getChords(void* arguments)
+{
+  struct songData *args = arguments;
+  args->chords[0] = LAMI;
+  args->chords[1] = SOLMA;
+  args->chords[2] = FAMA;
+  args->chords[3] = MIMA;
+  args->chords[4] = -1;
+  args->chords[5] = -1;
+  args->chords[6] = -1;
+  args->chords[7] = -1;
+  args->repets[0] = 1;
+  args->repets[1] = 1;
+  args->repets[2] = 1;
+  args->repets[3] = 1;
+  args->repets[4] = 0;
+  args->repets[5] = 0;
+  args->repets[6] = 0;
+  args->repets[7] = 0;
 }
 
 int main()
