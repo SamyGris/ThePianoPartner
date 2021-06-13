@@ -87,16 +87,20 @@ void* displayNote(void* arguments)
   pthread_exit(NULL);
 }
 
-/*
-char* getChords()
-{
 
+void getChords()
+{
+  song.chords[0] = gtk_combo_box_get_active(chord1); 
+  song.chords[1] = gtk_combo_box_get_active(chord2); 
+  song.chords[2] = gtk_combo_box_get_active(chord3); 
+  song.chords[3] = gtk_combo_box_get_active(chord4); 
+  song.chords[4] = gtk_combo_box_get_active(chord5); 
+  song.chords[5] = gtk_combo_box_get_active(chord6); 
+  song.chords[6] = gtk_combo_box_get_active(chord7); 
+  song.chords[7] = gtk_combo_box_get_active(chord8); 
 }
 
-char* getValueComboBox(GtkWidget* w)
+void getScale()
 {
-  char[256] textentry;
-  textentry = gtk_entry_get_text(GTK_ENTRY(w));
-  return textentry;
+  song.scale = gtk_combo_box_get_active(scaleComboBox); 
 }
-*/

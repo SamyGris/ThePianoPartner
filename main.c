@@ -14,8 +14,15 @@ void getChords();
 // Fonction du bouton start
 void startButtonClicked()
 {
-  // VRAI ALGORITHME
+  getChords(); 
+  getScale();
   
+  for(int i = 0; i < 8; i ++)
+  {
+    printf("accord 1 = %i \n", song.scale); 
+  }
+  // VRAI ALGORITHME
+  /*
   if (!playing)
   {
     getBpm();
@@ -26,14 +33,23 @@ void startButtonClicked()
     {
       errx(1, "Failed to launch left hand");
     }
+<<<<<<< HEAD
     
+=======
+    */
+>>>>>>> da058f0a9a4b41e90347cb3dc9d4c80d9d74e48e
     //getScale(&args);
     song.scale = LAMI;
     if (pthread_create(&right, NULL, &rightHand, NULL))
     {
       errx(1, "Failed to launch right hand");
+<<<<<<< HEAD
     }
   }
+=======
+    }*/
+  
+>>>>>>> da058f0a9a4b41e90347cb3dc9d4c80d9d74e48e
 }
 
 // Fonction du bouton stop
@@ -73,27 +89,6 @@ void getBpm()
     song.bpm = 100;
 }
 
-// Fonction qui récupère les accords
-void getChords()
-{
-  song.chords[0] = LAMI;
-  song.chords[1] = SOLMA;
-  song.chords[2] = FAMA;
-  song.chords[3] = MIMA;
-  song.chords[4] = -1;
-  song.chords[5] = -1;
-  song.chords[6] = -1;
-  song.chords[7] = -1;
-  song.repets[0] = 1;
-  song.repets[1] = 1;
-  song.repets[2] = 1;
-  song.repets[3] = 1;
-  song.repets[4] = 0;
-  song.repets[5] = 0;
-  song.repets[6] = 0;
-  song.repets[7] = 0;
-}
-
 int main()
 {
   // Initialisation de GTK et ouverture de l'interface
@@ -108,6 +103,14 @@ int main()
   bpmEntry = GTK_ENTRY(gtk_builder_get_object(builder, "bpmEntry"));
   scaleComboBox = GTK_COMBO_BOX(gtk_builder_get_object(builder, "scaleComboBox"));
   piano = GTK_WIDGET(gtk_builder_get_object(builder, "piano")); 
+  chord1 =  GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord1")); 
+  chord2 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord2")); 
+  chord3 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord3")); 
+  chord4 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord4")); 
+  chord5 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord5")); 
+  chord6 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord6")); 
+  chord7 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord7")); 
+  chord8 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord8")); 
 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
