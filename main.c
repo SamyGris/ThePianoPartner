@@ -16,6 +16,7 @@ void startButtonClicked()
 {
   getChords(); 
   getScale();
+  getReps();
   
   // VRAI ALGORITHME
   if (!playing)
@@ -32,14 +33,17 @@ void startButtonClicked()
 
     //getScale(&args);
     song.scale = LAMI;
+    /*
     if (pthread_create(&right, NULL, &rightHand, NULL))
     {
       errx(1, "Failed to launch right hand");
     }
+    */
   }
 }
 
 // Fonction du bouton stop
+
 void stopButtonClicked()
 {
   if (playing)
@@ -48,10 +52,11 @@ void stopButtonClicked()
     {
       errx(1, "Failed to close left hand");
     }
+    /*
     if (pthread_cancel(right))
     {
       errx(1, "Failed to close right hand");
-    }
+    }*/
     playing = 0;
   }
   for (int i = 0; i < 48; i++)
