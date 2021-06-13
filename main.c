@@ -15,9 +15,11 @@ void getChords();
 void startButtonClicked()
 {
   getChords(); 
+  getScale();
+  
   for(int i = 0; i < 8; i ++)
   {
-    printf("accord 1 = %i \n", song.chords[i]); 
+    printf("accord 1 = %i \n", song.scale); 
   }
   // VRAI ALGORITHME
   /*
