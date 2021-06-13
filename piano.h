@@ -21,6 +21,7 @@ void playNote(int note, int inter);
 void* displayNote(void* arguments);
 void getChords(); 
 void getScale(); 
+void getReps();
 int playing;
 
 pthread_t left;

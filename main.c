@@ -9,17 +9,17 @@
 void getBpm();
 void getScale();
 void getChords();
-
+void getReps() ; 
 
 // Fonction du bouton start
 void startButtonClicked()
 {
   getChords(); 
   getScale();
-  
+  getReps();
   for(int i = 0; i < 8; i ++)
   {
-    printf("accord 1 = %i \n", song.scale); 
+    printf("accord %i = %i \n", i,song.repets[i]); 
   }
   // VRAI ALGORITHME
   /*
@@ -103,6 +103,14 @@ int main()
   chord6 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord6")); 
   chord7 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord7")); 
   chord8 = GTK_COMBO_BOX(gtk_builder_get_object(builder, "chord8")); 
+  repet1 = GTK_ENTRY(gtk_builder_get_object(builder,"repet1"));
+  repet2 = GTK_ENTRY(gtk_builder_get_object(builder,"repet2"));
+  repet3 = GTK_ENTRY(gtk_builder_get_object(builder,"repet3"));
+  repet4 = GTK_ENTRY(gtk_builder_get_object(builder,"repet4"));
+  repet5 = GTK_ENTRY(gtk_builder_get_object(builder,"repet5"));
+  repet6 = GTK_ENTRY(gtk_builder_get_object(builder,"repet6"));
+  repet7 = GTK_ENTRY(gtk_builder_get_object(builder,"repet7"));
+  repet8 = GTK_ENTRY(gtk_builder_get_object(builder,"repet8"));
 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");

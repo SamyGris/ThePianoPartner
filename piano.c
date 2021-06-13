@@ -116,3 +116,17 @@ void getScale()
 {
   song.scale = gtk_combo_box_get_active(scaleComboBox); 
 }
+
+
+void getReps() 
+{
+  song.repets[0] = atoi(gtk_entry_get_text(repet1));
+  song.repets[1] = atoi(gtk_entry_get_text(repet2));
+  song.repets[2] = atoi(gtk_entry_get_text(repet3));
+  song.repets[3] = atoi(gtk_entry_get_text(repet4));
+  song.repets[4] = atoi(gtk_entry_get_text(repet5));
+  song.repets[5] = atoi(gtk_entry_get_text(repet6));
+  song.repets[6] = atoi(gtk_entry_get_text(repet7));
+  song.repets[7] = atoi(gtk_entry_get_text(repet8));
+
+}
