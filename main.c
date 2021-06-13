@@ -27,13 +27,13 @@ void startButtonClicked()
     {
       errx(1, "Failed to launch left hand");
     }
-    
+    /*
     //getScale(&args);
     args->scale = LAMI;
     if (pthread_create(&right, NULL, &rightHand, (void*)args))
     {
       errx(1, "Failed to launch right hand");
-    }
+    }*/
   }
 }
 
@@ -119,8 +119,6 @@ int main()
   playing = 0;
   initConst();
   initAudio();
-
-
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
   gtk_builder_connect_signals(builder, NULL);
   gtk_widget_show_all((GtkWidget*)window);
