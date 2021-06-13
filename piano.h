@@ -13,8 +13,8 @@
 
 void* test();
 void* test2(int note,int duree);
-void* leftHand(void* arguments);
-void* rightHand(void* arguments);
+void* leftHand();
+void* rightHand();
 void playChords(int usrChords[], int repet[], int bpm);
 void playChord(int chord, int inter);
 void playNote(int note, int inter);
@@ -23,5 +23,7 @@ int playing;
 
 pthread_t left;
 pthread_t right;
+
+struct songData song;
 
 #endif
