@@ -24,7 +24,7 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't play the sound");
   }
   updateAudio();
-  if (FMOD_Channel_SetVolume(channel,8.5) != FMOD_OK)
+  if (FMOD_Channel_SetVolume(channel,2.5) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the volume"); 
   }
@@ -61,7 +61,7 @@ void playNoteSoundSec(int note, int inter)
   }
   updateAudio();
   
-  if (FMOD_Channel_SetVolume(channel,8.5) != FMOD_OK)
+  if (FMOD_Channel_SetVolume(channel,2.5) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the volume"); 
   }

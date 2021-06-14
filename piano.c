@@ -7,19 +7,17 @@ void *metronome()
   int inter = 60000/(song.bpm);
   while(playing)
   {
-    printf("metro = %d\n",song.metronome);
     if(song.metronome == 1)
     {
-      printf("SAlut\n");
       pthread_t metrosound;
       if (pthread_create(&metrosound, NULL, &bim, NULL))
       {
-      errx(1, "Failed to launch metronome");
+        errx(1, "Failed to launch metronome");
       }
       msleep(inter);
     }
   }
-  return NULL;
+  return NULL; 
 }
 
 void *bim()
@@ -63,6 +61,7 @@ void* rightHand()
     return NULL;
   }
   srand(time(NULL));
+  int i = 0;
   while(1)
   {
     /* GAMME NON PENTATONIQUE
@@ -70,17 +69,21 @@ void* rightHand()
     int note = rand() % 5;
     if (note >= 3)
       note++;
-    printf("Note:%i\n", note);
     note = scaleNotes[scale][note] + 24;
 
-    int length = rand() % 6;
+    //int length = rand() % 6;
     //int length = 2;
-    float abs = (float)inter;
-    abs *= powf(0.5, (double)length);
-    gtk_widget_set_opacity(highlightsNotes[note], 1);
-    playNote(note, abs);
-    msleep(abs);
-    gtk_widget_set_opacity(highlightsNotes[note], 0);
+    int length = patterns[0][i];
+    if (length != -1)
+    {
+      float abs = (float)inter;
+      abs *= powf(0.5, (double)length);
+      gtk_widget_set_opacity(highlightsNotes[note], 1);
+      playNote(note, abs);
+      msleep(abs);
+      gtk_widget_set_opacity(highlightsNotes[note], 0);
+    }
+    i = (i+1)%4;
   }
   pthread_exit(NULL);
   return NULL;

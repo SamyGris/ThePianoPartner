@@ -318,7 +318,14 @@ void initConst()
   position[LAD1] = 116; 
   position[LAD2] = 243; 
   position[LAD3] = 371; 
-  position[LAD4] = 498; 
+  position[LAD4] = 498;
+
+  // Initialisation des patterns
+
+  patterns[0][0] = 1;
+  patterns[0][1] = -1;
+  patterns[0][2] = 2;
+  patterns[0][3] = 2;
 
   for (int note = 0; note < 48; note++)
   {

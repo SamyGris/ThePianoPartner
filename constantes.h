@@ -40,6 +40,10 @@ int scaleNotes[24][7];
 
 int chords[24][3];
 
+// Définition des patterns de rythmes
+
+int patterns[4][4];
+
 // Positions des touches
 
 int position[48];
