@@ -22,7 +22,7 @@ void *metronome()
         continue; 
       }
       pthread_t metrosound;
-      if (pthread_create(&metrosound, NULL, &bim, NULL))
+      if (pthread_create(&metrosound, NULL, &metrofunction, NULL))
       {
         errx(1, "Failed to launch metronome");
       }
@@ -32,7 +32,7 @@ void *metronome()
   return NULL; 
 }
 
-void *bim()
+void *metrofunction()
 {
   FMOD_CHANNEL *channel;
   FMOD_SOUND *sound;
