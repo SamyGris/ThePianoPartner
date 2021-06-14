@@ -6,6 +6,7 @@
         "sound.h": "c",
         "stdlib.h": "c",
         "pthread.h": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "widgets.h": "c"
     }
 }

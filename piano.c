@@ -19,30 +19,42 @@ void* rightHand()
     pthread_exit(NULL);
     return NULL;
   }
+
   srand(time(NULL));
   int i = 0;
+  int pat = 0;
   while(1)
   {
-    /* GAMME NON PENTATONIQUE
-    int note = rand() % 7;*/
-    int note = rand() % 5;
-    if (note >= 3)
-      note++;
-    note = scaleNotes[scale][note] + 24;
+    int note;
 
-    //int length = rand() % 6;
-    //int length = 2;
-    int length = patterns[0][i];
-    if (length != -1)
+    if (rand() % 2)
     {
-      float abs = (float)inter;
-      abs *= powf(0.5, (double)length);
-      gtk_widget_set_opacity(highlightsNotes[note], 1);
-      playNote(note, abs);
-      msleep(abs);
-      gtk_widget_set_opacity(highlightsNotes[note], 0);
+      note = rand() % 5;
+      if (note >= 3)
+        note++;
     }
-    i = (i+1)%4;
+    else
+      note = rand() % 7;
+
+    note = scaleNotes[scale][note] + 24;
+    if (i==0)
+    {
+      pat = rand() % 2;
+    }
+
+    int length = patterns[pat][i];
+    
+    float abs = (float)inter;
+    abs *= powf(0.5, (double)length);
+    gtk_widget_set_opacity(highlightsNotes[note], 1);
+    playNote(note, abs);
+    msleep(abs);
+    gtk_widget_set_opacity(highlightsNotes[note], 0);
+    do
+    {
+      i++;
+      i = i%16;
+    } while (i < 16 && patterns[pat][i] == -1);
   }
   pthread_exit(NULL);
   return NULL;

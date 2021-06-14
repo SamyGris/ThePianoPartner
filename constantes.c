@@ -1,5 +1,6 @@
 #include "constantes.h"
 #include "widgets.h"
+#include "toolbox.h"
 #include <gtk/gtk.h>
 
 void initConst()
@@ -321,11 +322,47 @@ void initConst()
   position[LAD4] = 498;
 
   // Initialisation des patterns
-
-  patterns[0][0] = 1;
+  
+  patterns[0][0] = 2;
   patterns[0][1] = -1;
-  patterns[0][2] = 2;
-  patterns[0][3] = 2;
+  patterns[0][2] = -1;
+  patterns[0][3] = -1;
+
+  patterns[0][4] = 3;
+  patterns[0][5] = -1;
+  patterns[0][6] = 3;
+  patterns[0][7] = -1;
+
+  patterns[0][8] = 2;
+  patterns[0][9] = -1;
+  patterns[0][10] = -1;
+  patterns[0][11] = -1;
+
+  patterns[0][12] = 3;
+  patterns[0][13] = -1;
+  patterns[0][14] = 3;
+  patterns[0][15] = -1;
+
+  patterns[1][0] = 3;
+  patterns[1][1] = -1;
+  patterns[1][2] = 3;
+  patterns[1][3] = -1;
+
+  patterns[1][4] = 3;
+  patterns[1][5] = -1;
+  patterns[1][6] = 4;
+  patterns[1][7] = 4;
+
+  patterns[1][8] = 3;
+  patterns[1][9] = -1;
+  patterns[1][10] = 3;
+  patterns[1][11] = -1;
+
+  patterns[1][12] = 4;
+  patterns[1][13] = 4;
+  patterns[1][14] = 3;
+  patterns[1][15] = -1;
+
 
   for (int note = 0; note < 48; note++)
   {

@@ -4,6 +4,6 @@
 #include <errno.h>
 #include <time.h>
 
-int msleep(int tms); 
+int msleep(int tms);
 
 #endif
