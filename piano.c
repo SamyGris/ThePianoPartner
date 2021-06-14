@@ -12,19 +12,17 @@ void* leftHand()
 // Algorithme de la main droite
 void* rightHand()
 {
-  int inter = 60000/(song.bpm);
-  printf("BPM : %i\n", song.bpm);
-  printf("INTERVALLE1 : %i\n", inter);
+  int inter = 60000/(song.bpm)*4;
   int scale = song.scale;
   srand(time(NULL));
   while(1)
   {
     int note = rand() % 7;
     int length = rand() % 6;
-    printf("LENGTH : %i\n", length);
-    inter *= 4*pow(0.5, (double)length);
-    printf("INTERVALLE2 : %i\n", inter);
-    playNoteSoundSec(scaleNotes[scale][note], inter);
+    float abs= (float)inter;
+    abs *= powf(0.5, (double)length);
+    playNote(scaleNotes[scale][note], abs);
+    msleep(abs+100);
   }
   pthread_exit(NULL);
   return NULL;

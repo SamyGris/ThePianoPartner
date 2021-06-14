@@ -13,13 +13,14 @@ void getReps();
 
 // Fonction du bouton start
 void startButtonClicked()
-{ 
+{  
   // VRAI ALGORITHME
   if (!playing)
   {
     getBpm();
     getChords();
     getScale();
+    getReps();
     playing = 1;
 
     if (pthread_create(&left, NULL, &leftHand, NULL))
@@ -35,6 +36,7 @@ void startButtonClicked()
 }
 
 // Fonction du bouton stop
+
 void stopButtonClicked()
 {
   if (playing)
