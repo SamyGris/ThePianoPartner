@@ -1,14 +1,26 @@
 #include "piano.h"
 #include "widgets.h"
 
+
+
 // Algorithme jouant un metronome
 void *metronome()
 {
   int inter = 60000/(song.bpm);
   while(playing)
   {
+    printf("%s","");
     if(song.metronome == 1)
     {
+      if (!NewChordPlaying)
+      {
+        NewChordPlaying = 1;  
+      }
+      while(NewChordPlaying != 2)
+      {
+        printf("%s",""); 
+        continue; 
+      }
       pthread_t metrosound;
       if (pthread_create(&metrosound, NULL, &bim, NULL))
       {
@@ -128,6 +140,10 @@ void playChords(int usrChords[], int repet[], int bpm)
 // Fonction qui joue un accord
 void playChord(int chord, int inter)
 {
+  if (NewChordPlaying == 1)
+  {
+    NewChordPlaying = 2; 
+  }
   for (int i = 0; i < 3; i++)
   {
     playNote(chords[chord][i], inter);

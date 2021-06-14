@@ -31,6 +31,10 @@ void initDefaultParameters()
 
 void on_MetronomeButton_toggled()
 {
+  if (song.metronome == 1)
+  {
+    NewChordPlaying = 0; 
+  }
   song.metronome*=-1;
 }
 // Fonction du bouton start
@@ -171,6 +175,7 @@ void gtk_initall()
   AboutWindow =GTK_ABOUT_DIALOG(gtk_builder_get_object(builder,"GtkAboutDialog"));
   MetronomeButton = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "MetronomeButton")); 
   song.metronome = -1; 
+  NewChordPlaying = 0; 
 
   initDefaultParameters(); 
 
