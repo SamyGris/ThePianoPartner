@@ -24,7 +24,7 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't play the sound");
   }
   updateAudio();
-  if (FMOD_Channel_SetVolume(channel,2.5) != FMOD_OK)
+  if (FMOD_Channel_SetVolume(channel,4) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the volume"); 
   }
@@ -53,7 +53,7 @@ void playNoteSoundSec(int note, int inter)
   getDemitone(note, &demiTone, &octave);
   son =samples[octave];
   float b = 2.321/inter;
-  float a =1/b;
+  float a = 1/b;
   FMOD_CHANNEL *channel;
   if (FMOD_System_PlaySound(systemSound,son,NULL,0,&channel) != FMOD_OK)
   {
@@ -61,7 +61,7 @@ void playNoteSoundSec(int note, int inter)
   }
   updateAudio();
   
-  if (FMOD_Channel_SetVolume(channel,2.5) != FMOD_OK)
+  if (FMOD_Channel_SetVolume(channel,4) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the volume"); 
   }

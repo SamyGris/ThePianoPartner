@@ -42,7 +42,7 @@ int chords[24][3];
 
 // Définition des patterns de rythmes
 
-int patterns[4][4];
+int patterns[2][16];
 
 // Positions des touches
 
