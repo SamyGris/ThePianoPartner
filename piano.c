@@ -1,6 +1,49 @@
 #include "piano.h"
 #include "widgets.h"
 
+// Algorithme jouant un metronome
+void *metronome()
+{
+  int inter = 60000/(song.bpm);
+  while(playing)
+  {
+    printf("metro = %d\n",song.metronome);
+    if(song.metronome == 1)
+    {
+      printf("SAlut\n");
+      pthread_t metrosound;
+      if (pthread_create(&metrosound, NULL, &bim, NULL))
+      {
+      errx(1, "Failed to launch metronome");
+      }
+      msleep(inter);
+    }
+  }
+  return NULL;
+}
+
+void *bim()
+{
+  FMOD_CHANNEL *channel;
+  FMOD_SOUND *sound;
+  if (FMOD_System_CreateSound(systemSound,"metronome/bam.wav",FMOD_CREATESAMPLE,0, &sound) != FMOD_OK)
+  {
+    errx(3,"Couldn't create BIM.wav sound");
+  }
+  if (FMOD_System_PlaySound(systemSound,sound,NULL,0,&channel) != FMOD_OK)
+  {
+	  errx(3,"Couldn't play the metronome");
+  }
+  updateAudio();
+  if (FMOD_Channel_SetVolume(channel,8.5) != FMOD_OK)
+  {
+	  errx(3,"Couldn't set the volume"); 
+  }
+  updateAudio();
+  msleep(4000);
+  pthread_exit(NULL);
+}
+
 // Algorithme de la main gauche
 void* leftHand()
 {

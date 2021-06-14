@@ -30,6 +30,17 @@ void initDefaultParameters()
 
 }
 
+void on_MetronomeButton_toggled()
+{
+  if (song.metronome==1)
+  {
+    if (pthread_cancel(metro))
+    {
+      errx(1,"Error to close metronome");
+    }
+  }
+  song.metronome*=-1;
+}
 // Fonction du bouton start
 void startButtonClicked()
 {  
@@ -41,7 +52,10 @@ void startButtonClicked()
     getScale();
     getReps();
     playing = 1;
-
+    if (pthread_create(&metro, NULL, &metronome, NULL))
+    {
+      errx(1, "Failed to launch metronome");
+    }
     if (pthread_create(&left, NULL, &leftHand, NULL))
     {
       errx(1, "Failed to launch left hand");
@@ -54,12 +68,19 @@ void startButtonClicked()
   }
 }
 
-
 // Fonction du bouton stop
 void stopButtonClicked()
 {
   if (playing)
   {
+    if (song.metronome)
+    {
+       if(pthread_cancel(metro))
+      {
+        errx(1, "Failed to close metronome");
+      }
+    }
+    
     if (pthread_cancel(left))
     {
       errx(1, "Failed to close left hand");
@@ -163,6 +184,8 @@ int main()
   repet7 = GTK_ENTRY(gtk_builder_get_object(builder,"repet7"));
   repet8 = GTK_ENTRY(gtk_builder_get_object(builder,"repet8"));
   AboutWindow =GTK_ABOUT_DIALOG(gtk_builder_get_object(builder,"GtkAboutDialog"));
+  MetronomeButton = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "MetronomeButton")); 
+  song.metronome = -1; 
 
   initDefaultParameters(); 
 
@@ -181,5 +204,6 @@ int main()
     gtk_widget_set_opacity(highlightsNotes[i], 0); 
   }
   gtk_main();
+  quitAudio();
   return 0; 
 }
