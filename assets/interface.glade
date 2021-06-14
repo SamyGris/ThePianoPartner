@@ -284,6 +284,7 @@
                       <object class="GtkEntry" id="bpmEntry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="text" translatable="yes">100</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -326,7 +327,6 @@
                         <child internal-child="entry">
                           <object class="GtkEntry">
                             <property name="can_focus">False</property>
-                            <property name="text" translatable="yes">Sol Majeur</property>
                           </object>
                         </child>
                       </object>

@@ -46,7 +46,7 @@ void stopButtonClicked()
       errx(1, "Failed to close left hand");
     }
     
-    if (pthread_cancel(right))
+    if (song.scale != -1 && pthread_cancel(right))
     {
       errx(1, "Failed to close right hand");
     }
