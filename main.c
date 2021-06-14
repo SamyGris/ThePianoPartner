@@ -35,8 +35,8 @@ void startButtonClicked()
   }
 }
 
-// Fonction du bouton stop
 
+// Fonction du bouton stop
 void stopButtonClicked()
 {
   if (playing)
