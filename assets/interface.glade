@@ -606,16 +606,17 @@
     <property name="deletable">False</property>
     <property name="transient_for">interface</property>
     <property name="program_name">About The Piano Partner</property>
-    <property name="version">0.1</property>
-    <property name="copyright" translatable="yes">(c)2021 , A.W.A TechLimited </property>
-    <property name="comments" translatable="yes">Salam</property>
+    <property name="version">1.0</property>
+    <property name="copyright" translatable="yes">(c)2021 - A.W.A Techs Limited </property>
+    <property name="comments" translatable="yes">En manque d'inspiration ? Bienvenue sur The Piano Partner !
+Choisissez quelques accords, une gamme pour la main droite et laissez la magie opérer...</property>
     <property name="website">file:///home/maruecos/Bureau/Dossier/ThePianoPartner/website/one.html</property>
     <property name="website_label" translatable="yes">Visiter notre site</property>
     <property name="authors">GRIS Samy
 ABOU Thomas 
 GUERMI Mohamed
 EN-NABTY Reyane</property>
-    <property name="logo_icon_name">text-x-generic</property>
+    <property name="logo">2.png</property>
     <property name="license_type">lgpl-2-1</property>
     <signal name="response" handler="on_GtkAboutDialog_response" swapped="no"/>
     <child type="titlebar">
@@ -643,9 +644,6 @@ EN-NABTY Reyane</property>
                 <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
-            </child>
-            <child>
-              <placeholder/>
             </child>
           </object>
           <packing>
