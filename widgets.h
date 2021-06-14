@@ -9,6 +9,7 @@ GtkButton* startButton;
 GtkButton* stopButton; 
 GtkButton* aboutButton;
 GtkEntry* bpmEntry;
+GtkAboutDialog* AboutWindow;
 GtkComboBox* scaleComboBox;
 GtkComboBox* chord1; 
 GtkComboBox* chord2; 

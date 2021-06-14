@@ -53,9 +53,9 @@ void playNoteSoundSec(int note, int inter)
   int octave;
   getDemitone(note, &demiTone, &octave);
   FMOD_SOUND *son;
-  son = samples[octave];
+  son =samples[octave];
   float b = 2.321/inter;
-  float a = 1/b;
+  float a =1/b;
   FMOD_CHANNEL *channel;
   if (FMOD_System_PlaySound(systemSound,son,NULL,0,&channel) != FMOD_OK)
   {
