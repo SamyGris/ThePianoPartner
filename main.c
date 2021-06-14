@@ -60,7 +60,15 @@ void stopButtonClicked()
 
 // Fonction du bouton About
 void aboutButtonClicked()
-{}
+{
+  gtk_widget_show(GTK_WIDGET(AboutWindow));
+  
+}
+
+void on_GtkAboutDialog_response()
+{
+  gtk_widget_hide(GTK_WIDGET(AboutWindow));
+}
 
 // Fonction qui récupère le BPM
 void getBpm()
@@ -135,6 +143,7 @@ int main()
   repet6 = GTK_ENTRY(gtk_builder_get_object(builder,"repet6"));
   repet7 = GTK_ENTRY(gtk_builder_get_object(builder,"repet7"));
   repet8 = GTK_ENTRY(gtk_builder_get_object(builder,"repet8"));
+  AboutWindow =GTK_ABOUT_DIALOG(gtk_builder_get_object(builder,"GtkAboutDialog"));
 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
