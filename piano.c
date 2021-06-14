@@ -22,18 +22,21 @@ void* rightHand()
   srand(time(NULL));
   while(1)
   {
-    /* GAMME NON PENTATONIQUE*/
-    int note = rand() % 7;
+    /* GAMME NON PENTATONIQUE
+    int note = rand() % 7;*/
+    int note = rand() % 5;
+    if (note >= 3)
+      note++;
+    printf("Note:%i\n", note);
     note = scaleNotes[scale][note] + 24;
-    
 
-    //int length = rand() % 6;
-    int length = 0;
+    int length = rand() % 6;
+    //int length = 2;
     float abs = (float)inter;
     abs *= powf(0.5, (double)length);
     gtk_widget_set_opacity(highlightsNotes[note], 1);
     playNote(note, abs);
-    msleep(abs+100);
+    msleep(abs);
     gtk_widget_set_opacity(highlightsNotes[note], 0);
   }
   pthread_exit(NULL);
