@@ -12,6 +12,24 @@ void getChords();
 void getReps();
 void initDefaultParameters(); 
 
+void initDefaultParameters()
+{
+  gtk_combo_box_set_active(chord1, LAMI); 
+  gtk_combo_box_set_active(chord2, SOLMA); 
+  gtk_combo_box_set_active(chord3, FAMA); 
+  gtk_combo_box_set_active(chord4, MIMA); 
+
+  gtk_combo_box_set_active(scaleComboBox, SOLMA);
+
+  gtk_entry_set_text(repet1, "1"); 
+  gtk_entry_set_text(repet2, "1"); 
+  gtk_entry_set_text(repet3, "1"); 
+  gtk_entry_set_text(repet4, "1"); 
+
+  gtk_entry_set_text(bpmEntry, "100"); 
+
+}
+
 // Fonction du bouton start
 void startButtonClicked()
 {  
@@ -61,7 +79,15 @@ void stopButtonClicked()
 
 // Fonction du bouton About
 void aboutButtonClicked()
-{}
+{
+  gtk_widget_show(GTK_WIDGET(AboutWindow));
+  
+}
+
+void on_GtkAboutDialog_response()
+{
+  gtk_widget_hide(GTK_WIDGET(AboutWindow));
+}
 
 // Fonction qui récupère le BPM
 void getBpm()
@@ -136,6 +162,9 @@ int main()
   repet6 = GTK_ENTRY(gtk_builder_get_object(builder,"repet6"));
   repet7 = GTK_ENTRY(gtk_builder_get_object(builder,"repet7"));
   repet8 = GTK_ENTRY(gtk_builder_get_object(builder,"repet8"));
+  AboutWindow =GTK_ABOUT_DIALOG(gtk_builder_get_object(builder,"GtkAboutDialog"));
+
+  initDefaultParameters(); 
 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
