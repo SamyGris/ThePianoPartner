@@ -13,10 +13,7 @@ void getReps();
 
 // Fonction du bouton start
 void startButtonClicked()
-{
-  getChords(); 
-  getScale();
-  
+{ 
   // VRAI ALGORITHME
   if (!playing)
   {
@@ -46,10 +43,11 @@ void stopButtonClicked()
     {
       errx(1, "Failed to close left hand");
     }
+    /*
     if (pthread_cancel(right))
     {
       errx(1, "Failed to close right hand");
-    }
+    }*/
     playing = 0;
   }
   for (int i = 0; i < 48; i++)
