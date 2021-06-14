@@ -18,11 +18,15 @@ void* rightHand()
   while(1)
   {
     int note = rand() % 7;
+    note = scaleNotes[scale][note] + 24;
+    printf("note:%i\n", note);
     int length = rand() % 6;
-    float abs= (float)inter;
+    float abs = (float)inter;
     abs *= powf(0.5, (double)length);
-    playNote(scaleNotes[scale][note], abs);
+    gtk_widget_set_opacity(highlightsNotes[note], 1);
+    playNote(note, abs);
     msleep(abs+100);
+    gtk_widget_set_opacity(highlightsNotes[note], 0);
   }
   pthread_exit(NULL);
   return NULL;
