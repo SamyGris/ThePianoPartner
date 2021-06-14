@@ -11,6 +11,7 @@ void getScale();
 void getChords();
 void getReps();
 void initDefaultParameters(); 
+void on_closeAboutDialog_clicked(); 
 
 void initDefaultParameters()
 {
@@ -25,11 +26,13 @@ void initDefaultParameters()
   gtk_entry_set_text(repet2, "1"); 
   gtk_entry_set_text(repet3, "1"); 
   gtk_entry_set_text(repet4, "1"); 
-
   gtk_entry_set_text(bpmEntry, "100"); 
-
 }
 
+void on_MetronomeButton_toggled()
+{
+  song.metronome*=-1;
+}
 // Fonction du bouton start
 void startButtonClicked()
 {  
@@ -41,7 +44,10 @@ void startButtonClicked()
     getScale();
     getReps();
     playing = 1;
-
+    if (pthread_create(&metro, NULL, &metronome, NULL))
+    {
+      errx(1, "Failed to launch metronome");
+    }
     if (pthread_create(&left, NULL, &leftHand, NULL))
     {
       errx(1, "Failed to launch left hand");
@@ -55,7 +61,6 @@ void startButtonClicked()
 }
 
 // Fonction du bouton stop
-
 void stopButtonClicked()
 {
   if (playing)
@@ -84,7 +89,7 @@ void aboutButtonClicked()
   
 }
 
-void on_GtkAboutDialog_response()
+void on_closeAboutDialog_clicked()
 {
   gtk_widget_hide(GTK_WIDGET(AboutWindow));
 }
@@ -104,6 +109,8 @@ void getBpm()
 // Fonction qui récupère les accords
 void getChords()
 {
+
+  
   song.chords[0] = gtk_combo_box_get_active(chord1); 
   song.chords[1] = gtk_combo_box_get_active(chord2); 
   song.chords[2] = gtk_combo_box_get_active(chord3); 
@@ -112,6 +119,7 @@ void getChords()
   song.chords[5] = gtk_combo_box_get_active(chord6); 
   song.chords[6] = gtk_combo_box_get_active(chord7); 
   song.chords[7] = gtk_combo_box_get_active(chord8); 
+  
 }
 
 void getReps() 
@@ -132,12 +140,10 @@ void getScale()
   song.scale = gtk_combo_box_get_active(scaleComboBox); 
 }
 
-int main()
+void gtk_initall()
 {
-  // Initialisation de GTK et ouverture de l'interface
-  gtk_init(NULL, NULL);
+   gtk_init(NULL, NULL);
   GtkBuilder* builder = gtk_builder_new_from_file("assets/interface.glade");
-
   // Initialisation de tous les widgets de glade
   window = GTK_WIDGET(gtk_builder_get_object(builder, "interface"));
   startButton = GTK_BUTTON(gtk_builder_get_object(builder, "startButton"));
@@ -163,23 +169,31 @@ int main()
   repet7 = GTK_ENTRY(gtk_builder_get_object(builder,"repet7"));
   repet8 = GTK_ENTRY(gtk_builder_get_object(builder,"repet8"));
   AboutWindow =GTK_ABOUT_DIALOG(gtk_builder_get_object(builder,"GtkAboutDialog"));
+  MetronomeButton = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "MetronomeButton")); 
+  song.metronome = -1; 
 
   initDefaultParameters(); 
 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
   gtk_window_set_icon_from_file(GTK_WINDOW(window), "assets/icon.png", NULL);
-
   playing = 0;
   initConst();
   initAudio();
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
   gtk_builder_connect_signals(builder, NULL);
   gtk_widget_show_all((GtkWidget*)window);
+
+}
+int main()
+{
+  gtk_initall();
+
   for (int i = 0; i < 48; i++)
   {
     gtk_widget_set_opacity(highlightsNotes[i], 0); 
   }
   gtk_main();
+  quitAudio();
   return 0; 
 }

@@ -11,6 +11,8 @@
 #ifndef PIANO_H
 #define PIANO_H
 
+void* metronome();
+void* bim();
 void* leftHand();
 void* rightHand();
 void playChords(int usrChords[], int repet[], int bpm);
@@ -20,6 +22,7 @@ int playing;
 
 pthread_t left;
 pthread_t right;
+pthread_t metro;
 
 struct songData song;
 

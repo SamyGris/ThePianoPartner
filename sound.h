@@ -17,9 +17,11 @@ void* playNoteSound(void* arguments);
 void playNoteSoundSec(int note, int inter);
 void initAudio(); 
 void updateAudio();
+void quitAudio();
 
 FMOD_SYSTEM *systemSound;
 FMOD_DSP *dsp_effect;
 FMOD_SOUND *samples[4]; 
+FMOD_SOUND *son;
 
 #endif

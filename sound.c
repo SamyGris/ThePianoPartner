@@ -16,7 +16,6 @@ void* playNoteSound(void* arguments)
   int note = args->note;
   float demitone; 
   int octave;
-  FMOD_SOUND *son;
   getDemitone(note, &demitone, &octave);
   son = samples[octave];  
   FMOD_CHANNEL *channel;
@@ -52,7 +51,6 @@ void playNoteSoundSec(int note, int inter)
   float demiTone;
   int octave;
   getDemitone(note, &demiTone, &octave);
-  FMOD_SOUND *son;
   son =samples[octave];
   float b = 2.321/inter;
   float a = 1/b;
@@ -144,5 +142,20 @@ void updateAudio()
   if (FMOD_System_Update(systemSound)!=FMOD_OK)
   {
     errx(3,"error during system update");
+  }
+}
+void quitAudio()
+{
+  if (FMOD_Sound_Release(son)!=FMOD_OK)
+  {
+    errx(1,"Eroor while releasing sound");
+  }
+  if (FMOD_System_Close(systemSound)!=FMOD_OK)
+  {
+    errx(1,"Eroor while releasing sound");
+  }
+  if (FMOD_System_Release(systemSound)!=FMOD_OK)
+  {
+    errx(1,"Eroor while releasing sound");
   }
 }

@@ -19,6 +19,7 @@ GtkComboBox* chord5;
 GtkComboBox* chord6; 
 GtkComboBox* chord7; 
 GtkComboBox* chord8; 
+GtkCheckButton* MetronomeButton; 
 
 GtkEntry* repet1;
 GtkEntry* repet2;
