@@ -10,6 +10,7 @@ void getBpm();
 void getScale();
 void getChords();
 void getReps();
+void initDefaultParameters(); 
 
 // Fonction du bouton start
 void startButtonClicked()
