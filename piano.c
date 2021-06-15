@@ -100,6 +100,7 @@ void* rightHand()
     float abs = (float)inter;
     abs *= powf(0.5, (double)length);
     gtk_widget_set_opacity(highlightsNotes[note], 1);
+    fprintf(fp, "       note main droite: %s\n", notesString[note]); 
     playNote(note, abs);
     msleep(abs);
     gtk_widget_set_opacity(highlightsNotes[note], 0);
@@ -140,6 +141,7 @@ void playChords(int usrChords[], int repet[], int bpm)
 // Fonction qui joue un accord
 void playChord(int chord, int inter)
 {
+  fprintf(fp, "\nAccord main gauche : %s\n\n", chordsString[chord]); 
   if (NewChordPlaying == 1)
   {
     NewChordPlaying = 2; 

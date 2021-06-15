@@ -437,4 +437,89 @@ void initConst()
     gtk_fixed_move(GTK_FIXED(piano), highlightsNotes[note], x, y);
   }
 
+  chordsString[DOMA] = "Do Majeur"; 
+  chordsString[DOMI] = "Do Mineur";
+  chordsString[REMA] = "Ré Majeur";
+  chordsString[REMI] = "Ré Mineur"; 
+  chordsString[MIMA] = "Mi Majeur"; 
+  chordsString[MIMI] = "Mi Mineur";
+  chordsString[FAMA] = "Fa Majeur";
+  chordsString[FAMI] = "Fa Mineur"; 
+  chordsString[SOLMA] = "Sol Majeur"; 
+  chordsString[SOLMI] = "Sol Mineur";
+  chordsString[LAMA] = "La Majeur"; 
+  chordsString[LAMI] = "La Mineur";
+  chordsString[SIMA] = "Si Majeur";
+  chordsString[SIMI] = "Si Mineur";
+  chordsString[DODMA] = "Do Dièse Majeur"; 
+  chordsString[DODMI] = "Do Dièse Mineur";
+  chordsString[REDMA] = "Ré Dièse Majeur"; 
+  chordsString[REDMI] = "Ré Dièse Mineur";
+  chordsString[FADMA] = "Fa Dièse Majeur";
+  chordsString[FADMI] = "Fa Dièse Mineur"; 
+  chordsString[SOLDMA] = "Sol Dièse Majeur";  
+  chordsString[SOLDMI] = "Dol Dièse Mineur";
+  chordsString[LADMA] = "La Dièse Majeur";
+  chordsString[LADMI] = "La Dièse Mineur";
+
+
+  notesString[DO1] = "Do 1"; 
+  notesString[DO2] = "Do 2"; 
+  notesString[DO3] = "Do 3"; 
+  notesString[DO4] = "Do 4"; 
+
+  notesString[RE1] = "Ré 1"; 
+  notesString[RE2] = "Ré 2"; 
+  notesString[RE3] = "Ré 3"; 
+  notesString[RE4] = "Ré 4"; 
+
+  notesString[MI1] = "Mi 1"; 
+  notesString[MI2] = "Mi 2"; 
+  notesString[MI3] = "Mi 3"; 
+  notesString[MI4] = "Mi 4"; 
+
+  notesString[FA1] = "Fa 1"; 
+  notesString[FA2] = "Fa 2"; 
+  notesString[FA3] = "Fa 3"; 
+  notesString[FA4] = "Fa 4"; 
+
+  notesString[SOL1] = "Sol 1"; 
+  notesString[SOL2] = "Sol 2"; 
+  notesString[SOL3] = "Sol 3"; 
+  notesString[SOL4] = "Sol 4"; 
+
+  notesString[LA1] = "La 1"; 
+  notesString[LA2] = "La 2"; 
+  notesString[LA3] = "La 3"; 
+  notesString[LA4] = "La 4"; 
+
+  notesString[SI1] = "Si 1"; 
+  notesString[SI2] = "Si 2"; 
+  notesString[SI3] = "Si 3"; 
+  notesString[SI4] = "Si 4"; 
+
+  notesString[DOD1] = "Do Dièse 1"; 
+  notesString[DOD2] = "Do Dièse 2"; 
+  notesString[DOD3] = "Do Dièse 3"; 
+  notesString[DOD4] = "Do Dièse 4"; 
+
+  notesString[RED1] = "Ré Dièse 1"; 
+  notesString[RED2] = "Ré Dièse 2"; 
+  notesString[RED3] = "Ré Dièse 3"; 
+  notesString[RED4] = "Ré Dièse 4"; 
+
+  notesString[FAD1] = "Fa Dièse 1"; 
+  notesString[FAD2] = "Fa Dièse 2"; 
+  notesString[FAD3] = "Fa Dièse 3"; 
+  notesString[FAD4] = "Fa Dièse 4"; 
+
+  notesString[SOLD1] = "Sol Dièse 1"; 
+  notesString[SOLD2] = "Sol Dièse 2"; 
+  notesString[SOLD3] = "Sol Dièse 3"; 
+  notesString[SOLD4] = "Sol Dièse 4"; 
+
+  notesString[LAD1] = "La Dièse 1"; 
+  notesString[LAD2] = "La Dièse 2"; 
+  notesString[LAD3] = "La Dièse 3"; 
+  notesString[LAD4] = "La Dièse 4"; 
 }

@@ -47,7 +47,18 @@ int patterns[2][16];
 // Positions des touches
 
 int position[48];
+
 GtkWidget *highlightsNotes[48]; 
+
+// Tableau de chaines de caractères composant les accords
+char* chordsString[24]; 
+
+// Tableau de chaine de caractères comprenant les notes
+char* notesString[48]; 
+
+// Fichier dans lequel seront stockés les notes jouées
+FILE *fp; 
+
 void initConst();
 
 #endif

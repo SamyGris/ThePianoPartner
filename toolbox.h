@@ -5,5 +5,6 @@
 #include <time.h>
 
 int msleep(int tms);
+void initFileText(); 
 
 #endif

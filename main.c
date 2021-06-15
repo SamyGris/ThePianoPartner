@@ -43,6 +43,7 @@ void startButtonClicked()
   // VRAI ALGORITHME
   if (!playing)
   {
+    initFileText(); 
     getBpm();
     getChords();
     getScale();
@@ -84,6 +85,7 @@ void stopButtonClicked()
   {
     gtk_widget_set_opacity(highlightsNotes[i], 0); 
   }
+  fclose(fp); 
 }
 
 
@@ -197,6 +199,7 @@ int main()
     gtk_widget_set_opacity(highlightsNotes[i], 0); 
   }
   gtk_main();
+  fclose(fp); 
   quitAudio();
   return 0; 
 }

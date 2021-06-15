@@ -1,0 +1,20 @@
+Les accords et les notes jouées: 
+
+Accord main gauche : La Mineur
+
+       note main droite: Ré 4
+       note main droite: Fa Dièse 4
+       note main droite: Ré 4
+       note main droite: Ré 4
+       note main droite: Sol 3
+       note main droite: Sol 3
+
+Accord main gauche : Sol Majeur
+
+       note main droite: Sol 3
+       note main droite: Sol 3
+       note main droite: Fa Dièse 4
+       note main droite: Sol 3
+       note main droite: La 3
+       note main droite: Ré 4
+       note main droite: Si 3
