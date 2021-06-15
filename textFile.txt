@@ -1,1 +1,7 @@
+Les accords et les notes jouées: 
 
+Accord main gauche : La Mineur
+   Main droite: 
+       Note = Sol 3, Length = blanche
+       Note = La 3, Length = noire
+       Note = Sol 3, Length = noire
