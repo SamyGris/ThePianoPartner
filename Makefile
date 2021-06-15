@@ -22,4 +22,4 @@ $(NAME)        : $(OBJ)
 	$(CC) -o $(NAME) $(DIRH) $(OBJ) $(CFLAGS) $(CPPFLAGS) $(LDLIBS) $(LDFLAGS)
 
 clean:
-	rm -f $(OBJ) src/*.d $(NAME)
+	rm -f $(OBJ) src/*.d $(NAME) *.txt

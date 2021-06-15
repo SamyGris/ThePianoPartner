@@ -44,56 +44,6 @@ void* playNoteSound(void* arguments)
   free(args);
   pthread_exit(NULL);
 }
-
-// Fonction qui joue le son en utilisant la bibliothèque FMOD en prenant en compte le bpm
-void playNoteSoundSec(int note, int inter)
-{
-  float demiTone;
-  int octave;
-  getDemitone(note, &demiTone, &octave);
-  son =samples[octave];
-  float b = 2.321/inter;
-  float a = 1/b;
-  FMOD_CHANNEL *channel;
-  if (FMOD_System_PlaySound(systemSound,son,NULL,0,&channel) != FMOD_OK)
-  {
-	  errx(3,"Couldn't play the sound");
-  }
-  updateAudio();
-  
-  if (FMOD_Channel_SetVolume(channel,4) != FMOD_OK)
-  {
-	  errx(3,"Couldn't set the volume"); 
-  }
-  updateAudio();
-  if (FMOD_Channel_SetFrequency(channel,44100) != FMOD_OK)
-  {
-	  errx(3,"Couldn't set the frequency");
-  }
-  updateAudio();
-
-  if (FMOD_Channel_SetPitch(channel,b) != FMOD_OK)
-  {
-	  errx(3,"Couldn't set the frequency");
-  }
-  updateAudio();
-  if (FMOD_DSP_SetParameterFloat(dsp_effect,0,demiTone*a) != FMOD_OK)
-  {
-	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
-  }
-  updateAudio();
-  if (FMOD_DSP_SetParameterFloat(dsp_effect,1,4096) != FMOD_OK)
-  {
-	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
-  }
-  updateAudio();
-  if (FMOD_Channel_AddDSP(channel,0,dsp_effect) != FMOD_OK)
-  {
-	  errx(3,"Couldn't add the DSP to the channel");
-  }
-  updateAudio();
-  msleep(4000);
-}
 void *metrofunction()
 {
   FMOD_CHANNEL *channel;
@@ -178,7 +128,7 @@ void initAudio()
   metronomeSounds[1]=sound;
 }
 
-// Fonction qui update le système sonore
+// Fonction qui actualise le système sonore
 void updateAudio()
 {
   if (FMOD_System_Update(systemSound)!=FMOD_OK)
