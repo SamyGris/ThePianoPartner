@@ -14,6 +14,8 @@
 void* metronome();
 void* leftHand();
 void* rightHand();
+int getLength(int* crotchet);
+void* metronome();
 void playChords(int usrChords[], int repet[], int bpm);
 void playChord(int chord, int inter);
 void playNote(int note, int inter);

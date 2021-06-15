@@ -1,86 +1,6 @@
 #include "../headers/piano.h"
 #include "../headers/widgets.h"
 
-// Algorithme jouant un metronome
-void *metronome()
-{
-  int inter = 60000/(song.bpm);
-  while(playing)
-  {
-    printf("%s","");
-    if(song.metronome == 1)
-    {
-      if (!NewChordPlaying)
-      {
-        NewChordPlaying = 1;  
-      }
-      while(NewChordPlaying != 2)
-      {
-        printf("%s",""); 
-        continue; 
-      }
-      pthread_t metrosound;
-      if (pthread_create(&metrosound, NULL, &metrofunction, NULL))
-      {
-        errx(1, "Failed to launch metronome");
-      }
-      msleep(inter);
-      metroPlaying += 1;
-    }
-    else
-    {
-      metroPlaying = 0;
-    }
-  }
-  return NULL; 
-}
-
-// Choisit "aléatoirement" une durée pour la note
-int getLength(int *crotchet)
-{
-  int length;
-  if (!*crotchet)
-    {
-      int p = rand() % 100;
-      if (p < 70)
-        length = 2;
-      else if (p < 80)
-        length = 1;
-      else if (p < 90)
-      {
-        length = 3;
-        *crotchet = 2;
-      }
-      else if (p < 95)
-      {
-        length = 4;
-        *crotchet = 3;
-      }
-      else
-        length = 0;
-    }
-    else if (*crotchet >= 2)
-    {
-      if (rand() % 2)
-      {
-        length = 3;
-        *crotchet-=2;
-      }
-      else
-      {
-        length = 4;
-        *crotchet-=1;
-      }
-    }
-    else
-    {
-      length = 4;
-      *crotchet-=1;
-    }
-
-  return length;
-}
-
 // Algorithme de la main gauche
 void* leftHand()
 {
@@ -125,6 +45,86 @@ void* rightHand()
   }
   pthread_exit(NULL);
   return NULL;
+}
+
+// Choisit "aléatoirement" une durée pour la note
+int getLength(int* crotchet)
+{
+  int length;
+  if (!*crotchet)
+    {
+      int p = rand() % 100;
+      if (p < 70)
+        length = 2;
+      else if (p < 80)
+        length = 1;
+      else if (p < 90)
+      {
+        length = 3;
+        *crotchet = 2;
+      }
+      else if (p < 95)
+      {
+        length = 4;
+        *crotchet = 3;
+      }
+      else
+        length = 0;
+    }
+    else if (*crotchet >= 2)
+    {
+      if (rand() % 2)
+      {
+        length = 3;
+        *crotchet-=2;
+      }
+      else
+      {
+        length = 4;
+        *crotchet-=1;
+      }
+    }
+    else
+    {
+      length = 4;
+      *crotchet-=1;
+    }
+
+  return length;
+}
+
+// Algorithme jouant un metronome
+void* metronome()
+{
+  int inter = 60000/(song.bpm);
+  while(playing)
+  {
+    printf("%s","");
+    if(song.metronome == 1)
+    {
+      if (!NewChordPlaying)
+      {
+        NewChordPlaying = 1;  
+      }
+      while(NewChordPlaying != 2)
+      {
+        printf("%s",""); 
+        continue; 
+      }
+      pthread_t metrosound;
+      if (pthread_create(&metrosound, NULL, &metrofunction, NULL))
+      {
+        errx(1, "Failed to launch metronome");
+      }
+      msleep(inter);
+      metroPlaying += 1;
+    }
+    else
+    {
+      metroPlaying = 0;
+    }
+  }
+  return NULL; 
 }
 
 // Fonction qui joue les différents accords de la main gauche
