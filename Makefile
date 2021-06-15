@@ -20,6 +20,6 @@ constantes.o: constantes.c constantes.h
 .PHONY: clean
 
 clean:
-	${RM} $(EXE) *~ *# *.o *.d
+	${RM} $(EXE) *~ *# *.o *.d *.txt
 
 # END

@@ -30,6 +30,8 @@ GtkEntry* repet6;
 GtkEntry* repet7;
 GtkEntry* repet8;
 
+GtkComboBoxText* chooseInstrument; 
+
 GtkWidget* piano;
 
 #endif

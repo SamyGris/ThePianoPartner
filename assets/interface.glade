@@ -132,6 +132,7 @@
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
+        <property name="spacing">9</property>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
@@ -186,10 +187,37 @@
                 <property name="position">2</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkComboBoxText" id="chooseInstrument">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="active">0</property>
+                <property name="has-entry">True</property>
+                <property name="active-id">0</property>
+                <items>
+                  <item translatable="yes">Piano</item>
+                  <item translatable="yes">Guitare</item>
+                  <item translatable="yes">Violon</item>
+                </items>
+                <child internal-child="entry">
+                  <object class="GtkEntry">
+                    <property name="can-focus">False</property>
+                    <property name="text" translatable="yes">Piano</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="padding">54</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="padding">3</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -221,6 +249,7 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="spacing">5</property>
             <child>
               <object class="GtkBox">
                 <property name="visible">True</property>
@@ -258,6 +287,22 @@
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="MetronomeButton">
+                    <property name="label" translatable="yes">Métronome</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
+                    <signal name="toggled" handler="on_MetronomeButton_toggled" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="padding">36</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
@@ -301,39 +346,8 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="padding">31</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="MetronomeButton">
-                    <property name="label" translatable="yes">Métronome</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="draw-indicator">True</property>
-                    <signal name="toggled" handler="on_MetronomeButton_toggled" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkButton" id="saveImpro">
-                    <property name="label" translatable="yes">   Enregistrer  
-Improvisation</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">True</property>
-                    <signal name="clicked" handler="on_saveImpro_clicked" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
                     <property name="padding">25</property>
-                    <property name="position">3</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
@@ -348,6 +362,8 @@ Improvisation</property>
               <object class="GtkGrid">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="row-spacing">5</property>
+                <property name="column-spacing">6</property>
                 <property name="row-homogeneous">True</property>
                 <child>
                   <object class="GtkLabel">
@@ -634,6 +650,7 @@ Improvisation</property>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="padding">4</property>
             <property name="position">2</property>
           </packing>
         </child>
