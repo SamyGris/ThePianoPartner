@@ -1,0 +1,6 @@
+Les accords et les notes jouées: 
+       Note = Si 3, Length = noire
+
+Accord main gauche : La Mineur
+   Main droite: 
+       Note = Ré 4, Length = noire
