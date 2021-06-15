@@ -55,6 +55,7 @@ void startButtonClicked()
     getScale();
     getReps();
     playing = 1;
+    metroPlaying=0;
     if (pthread_create(&metro, NULL, &metronome, NULL))
     {
       errx(1, "Failed to launch metronome");
