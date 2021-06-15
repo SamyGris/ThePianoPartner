@@ -9,7 +9,7 @@ void getDemitone(int note, float* demitone, int* octave)
   *demitone = powf(demitonevalue, note);
 }
 
-// Fonction executée qui joue le son en utilisant la bibliothèque FMOD sans prendre en compte le BPM
+// Fonction executée qui joue le son en utilisant la bibliothèque FMOD 
 void* playNoteSound(void* arguments)
 {
   struct noteData *args = arguments;
