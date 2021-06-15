@@ -1,8 +1,6 @@
 #include "piano.h"
 #include "widgets.h"
 
-
-
 // Algorithme jouant un metronome
 void *metronome()
 {
@@ -33,6 +31,7 @@ void *metronome()
     {
       metroPlaying=0;
     }
+    
   }
   return NULL; 
 }
@@ -91,57 +90,6 @@ void* leftHand()
   return NULL;
 }
 
-// Algorithme de la main droite (avec patterns)
-/*void* rightHand()
-{
-  int inter = 60000/(song.bpm)*4;
-  int scale = song.scale;
-  if (song.scale == -1)
-  {
-    pthread_exit(NULL);
-    return NULL;
-  }
-
-  srand(time(NULL));
-  int i = 0;
-  int pat = 0;
-  while(1)
-  {
-    int note;
-
-    if (rand() % 2)
-    {
-      note = rand() % 5;
-      if (note >= 3)
-        note++;
-    }
-    else
-      note = rand() % 7;
-
-    note = scaleNotes[scale][note] + 24;
-    if (i==0)
-    {
-      pat = rand() % 2;
-    }
-
-    int length = patterns[pat][i];
-    
-    float abs = (float)inter;
-    abs *= powf(0.5, (double)length);
-    gtk_widget_set_opacity(highlightsNotes[note], 1);
-    playNote(note, abs);
-    msleep(abs);
-    gtk_widget_set_opacity(highlightsNotes[note], 0);
-    do
-    {
-      i++;
-      i = i%16;
-    } while (i < 16 && patterns[pat][i] == -1);
-  }
-  pthread_exit(NULL);
-  return NULL;
-}*/
-
 // Algorithme de la main droite (sans patterns)
 void* rightHand()
 {
@@ -158,15 +106,6 @@ void* rightHand()
   while(1)
   {
     int note;
-    /*
-    if (rand() % 4 > 0)
-    {
-      note = rand() % 5;
-      if (note >= 3)
-        note++;
-    }
-    else
-      note = rand() % 7;*/
     
     note = rand() % 5;
     if (note >= 3)
