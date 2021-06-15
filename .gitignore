@@ -45,4 +45,4 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-main
+tpp
