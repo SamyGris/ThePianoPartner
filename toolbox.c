@@ -27,7 +27,7 @@ int msleep(int tms)
 
 void initFileText()
 {
-  fp = fopen("textFile.txt", "w");
+  fp = fopen("out.txt", "w+");
   if (fp == NULL)
   {
     errx(1, "Cannot open file"); 

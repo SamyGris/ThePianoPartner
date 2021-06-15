@@ -7,5 +7,5 @@
 int msleep(int tms);
 void initFileText(); 
 char* getLengthNote(int l); 
-
+ 
 #endif
