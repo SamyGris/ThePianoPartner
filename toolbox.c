@@ -34,3 +34,28 @@ void initFileText()
   }
   fprintf(fp, "Les accords et les notes jouées: \n" );
 }
+
+char* getLengthNote(int l)
+{
+    switch (l)
+    {
+    case 0:
+        return "ronde"; 
+        break;
+    case 1:
+        return "blanche"; 
+        break; 
+    case 2:
+        return "noire"; 
+        break; 
+    case 3: 
+        return "croche"; 
+        break; 
+    case 4:
+        return "double croche"; 
+        break;     
+    default:
+        return "don't know"; 
+        break;
+    }
+}
