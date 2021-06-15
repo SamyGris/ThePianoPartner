@@ -40,6 +40,7 @@ void on_MetronomeButton_toggled()
   if (song.metronome == 1)
   {
     NewChordPlaying = 0; 
+    metroPlaying = 0; 
   }
   song.metronome*=-1;
 }
