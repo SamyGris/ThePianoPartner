@@ -125,6 +125,7 @@ void* rightHand()
   }
 
   srand(time(NULL));
+  int crotchet = 0;
   while(1)
   {
     int note;
@@ -146,16 +147,43 @@ void* rightHand()
     
     int p = rand() % 100;
     int length;
-    if (p < 70)
-      length = 2;
-    else if (p < 80)
-      length = 1;
-    else if (p < 90)
-      length = 3;
-    else if (p < 95)
-      length = 4;
+    if (!crotchet)
+    {
+      if (p < 70)
+        length = 2;
+      else if (p < 80)
+        length = 1;
+      else if (p < 90)
+      {
+        length = 3;
+        crotchet = 2;
+      }
+      else if (p < 95)
+      {
+        length = 4;
+        crotchet = 3;
+      }
+      else
+        length = 0;
+    }
+    else if (crotchet >= 2)
+    {
+      if (rand() % 2)
+      {
+        length = 3;
+        crotchet-=2;
+      }
+      else
+      {
+        length = 4;
+        crotchet--;
+      }
+    }
     else
-      length = 0;
+    {
+      length = 4;
+      crotchet--;
+    }
     
     float abs = (float)inter;
     abs *= powf(0.5, (double)length);
