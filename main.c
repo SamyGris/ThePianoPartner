@@ -176,9 +176,8 @@ void gtk_initall()
   MetronomeButton = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "MetronomeButton")); 
   song.metronome = -1; 
   NewChordPlaying = 0; 
-
+  metroPlaying=0;
   initDefaultParameters(); 
-
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
   gtk_window_set_icon_from_file(GTK_WINDOW(window), "assets/icon.png", NULL);

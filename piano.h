@@ -20,6 +20,7 @@ void playChord(int chord, int inter);
 void playNote(int note, int inter);
 int playing;
 int NewChordPlaying; 
+int metroPlaying;
 
 pthread_t left;
 pthread_t right;

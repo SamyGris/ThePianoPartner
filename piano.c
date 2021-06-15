@@ -7,7 +7,6 @@
 void *metronome()
 {
   int inter = 60000/(song.bpm);
-  int pop=0;
   while(playing)
   {
     printf("%s","");
@@ -23,21 +22,24 @@ void *metronome()
         continue; 
       }
       pthread_t metrosound;
-      if (pthread_create(&metrosound, NULL, &metrofunction, (void*)pop))
+      if (pthread_create(&metrosound, NULL, &metrofunction, NULL))
       {
         errx(1, "Failed to launch metronome");
       }
       msleep(inter);
-      pop+=1;
+      metroPlaying+=1;
+    }
+    else
+    {
+      metroPlaying=0;
     }
   }
   return NULL; 
 }
 
-void *metrofunction(void* pop)
+void *metrofunction()
 {
-  int pa=(int)pop;
-  if (pa%2==0)
+  if (metroPlaying%4==0)
   {
     FMOD_CHANNEL *channel;
     FMOD_SOUND *sound;
