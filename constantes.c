@@ -231,6 +231,28 @@ void initConst()
   chords[SIMA][1] = RED2;
   chords[SIMA][2] = FAD2;
 
+  chords[DODMA][0] = DOD1; 
+  chords[DODMA][1] = FA1; 
+  chords[DODMA][2] = SOLD1;
+
+  chords[REDMA][0] = RED1; 
+  chords[REDMA][1] = SOL1; 
+  chords[REDMA][2] = LAD1; 
+
+  chords[FADMA][0] = FAD1; 
+  chords[FADMA][1] = LAD1; 
+  chords[FADMA][2] = DOD2; 
+
+  chords[SOLDMA][0] = SOLD1; 
+  chords[SOLDMA][1] = DO2; 
+  chords[SOLDMA][2] = RED2; 
+
+  chords[LADMA][0] = LAD1; 
+  chords[LADMA][1] = RE2; 
+  chords[LADMA][2] = FA2; 
+
+
+
   // Accords mineurs
 
   chords[DOMI][0] = DO1;
@@ -260,6 +282,28 @@ void initConst()
   chords[SIMI][0] = SI1;
   chords[SIMI][1] = RE2;
   chords[SIMI][2] = FAD2;
+
+  chords[DODMI][0] = DOD1; 
+  chords[DODMI][1] = MI1; 
+  chords[DODMI][2] = SOLD1;
+
+  chords[REDMI][0] = RED1; 
+  chords[REDMI][1] = FAD1; 
+  chords[REDMI][2] = LAD1; 
+
+  chords[FADMI][0] = FAD1; 
+  chords[FADMI][1] = LA1; 
+  chords[FADMI][2] = DOD2; 
+
+  chords[SOLDMI][0] = SOLD1; 
+  chords[SOLDMI][1] = SI1; 
+  chords[SOLDMI][2] = RED2; 
+
+  chords[LADMI][0] = LAD1; 
+  chords[LADMI][1] = DOD2; 
+  chords[LADMI][2] = FA2; 
+
+  //position des touches sur l'écran (en px)
 
   position[DO1] = 11; 
   position[DO2] = 139; 
