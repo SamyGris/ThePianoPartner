@@ -154,7 +154,6 @@ int main()
   // Initialisation de GTK et ouverture de l'interface
   gtk_init(NULL, NULL);
   GtkBuilder* builder = gtk_builder_new_from_file("assets/interface.glade");
-
   window = GTK_WIDGET(gtk_builder_get_object(builder, "interface"));
   startButton = GTK_BUTTON(gtk_builder_get_object(builder, "startButton"));
   stopButton = GTK_BUTTON(gtk_builder_get_object(builder, "stopButton"));
@@ -181,12 +180,15 @@ int main()
   AboutWindow =GTK_ABOUT_DIALOG(gtk_builder_get_object(builder,"GtkAboutDialog"));
   MetronomeButton = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "MetronomeButton")); 
   chooseInstrument = GTK_COMBO_BOX_TEXT(gtk_builder_get_object(builder, "chooseInstrument"));
+
   initDefaultParameters(); 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
   gtk_window_set_icon_from_file(GTK_WINDOW(window), "assets/icon.png", NULL);
+
   initConst();
   initAudio();
+  
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
   gtk_builder_connect_signals(builder, NULL);
   gtk_widget_show_all((GtkWidget*)window);
