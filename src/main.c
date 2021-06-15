@@ -1,10 +1,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "constantes.h"
-#include "piano.h"
-#include "widgets.h"
-#include "sound.h"
+#include "../headers/constantes.h"
+#include "../headers/piano.h"
+#include "../headers/widgets.h"
+#include "../headers/sound.h"
 
 void getBpm();
 void getScale();

@@ -9,8 +9,8 @@
 #include <string.h>
 #include <math.h>
 #include <fmod.h>
-#include "constantes.h"
-#include "toolbox.h"
+#include "../headers/constantes.h"
+#include "../headers/toolbox.h"
 
 void getDemitone(int note, float* demitone, int* octave);
 void* playNoteSound(void* arguments);

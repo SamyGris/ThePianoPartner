@@ -1,5 +1,5 @@
-#include "piano.h"
-#include "widgets.h"
+#include "../headers/piano.h"
+#include "../headers/widgets.h"
 
 // Algorithme jouant un metronome
 void *metronome()

@@ -1,6 +1,6 @@
-#include "constantes.h"
-#include "widgets.h"
-#include "toolbox.h"
+#include "../headers/constantes.h"
+#include "../headers/widgets.h"
+#include "../headers/toolbox.h"
 #include <gtk/gtk.h>
 
 void initConst()

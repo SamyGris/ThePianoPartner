@@ -1,4 +1,4 @@
-#include "sound.h"
+#include "../headers/sound.h"
 
 // Fonction qui calcule le demi-ton à atteindre pour jouer la note souhaitée
 void getDemitone(int note, float* demitone, int* octave)

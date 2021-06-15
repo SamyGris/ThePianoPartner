@@ -1,6 +1,6 @@
-#include "toolbox.h"
+#include "../headers/toolbox.h"
 #include <stdio.h>
-#include "constantes.h"
+#include "../headers/constantes.h"
 #include <err.h>
 
 // Fonction sleep (en ms)

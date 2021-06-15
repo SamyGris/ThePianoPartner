@@ -1,26 +1,25 @@
-# Makefile
+SRC		= src/main.c \
+		  src/piano.c \
+		  src/sound.c \
+		  src/constantes.c \
+		  src/toolbox.c 
 
-CC = gcc
+OBJ        = $(SRC:.c=.o)
+ 
+DIRH       = -Iheaders/
+
+CC         = gcc
 CPPFLAGS = `pkg-config --cflags gtk+-3.0` -MMD
 CFLAGS = -Wall -Wextra -Werror -std=c99 -O3 -I /usr/local/include/ 
 LDFLAGS = -pthread -export-dynamic -rdynamic
 LDLIBS = `pkg-config --libs gtk+-3.0` -L /usr/local/lib/ -lfmod -lm -fuse-ld=gold 
 
-EXE = main
+NAME	= tpp
 
-all: ${EXE}
+all:        $(NAME)
 
-main	:	main.o sound.o piano.o toolbox.o constantes.o
-main.o	:	main.c widgets.h
-sound.o	:	sound.c sound.h
-piano.o : 	piano.c piano.h widgets.h toolbox.h
-toolbox.o:	toolbox.c toolbox.h
-constantes.o: constantes.c constantes.h
-
-.PHONY: clean
+$(NAME)        : $(OBJ)
+	$(CC) -o $(NAME) $(DIRH) $(OBJ) $(CFLAGS) $(CPPFLAGS) $(LDLIBS) $(LDFLAGS)
 
 clean:
-	${RM} $(EXE) *~ *# *.o *.d *.txt
-
-# END
- 
+	rm -f $(OBJ) $(NAME)

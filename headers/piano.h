@@ -3,10 +3,10 @@
 #include <unistd.h>
 #include <time.h>
 #include <math.h>
-#include "toolbox.h"
-#include "constantes.h"
-#include "sound.h"
-#include "widgets.h"
+#include "../headers/toolbox.h"
+#include "../headers/constantes.h"
+#include "../headers/sound.h"
+#include "../headers/widgets.h"
 
 #ifndef PIANO_H
 #define PIANO_H
