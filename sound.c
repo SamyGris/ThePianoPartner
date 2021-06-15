@@ -152,10 +152,10 @@ void quitAudio()
   }
   if (FMOD_System_Close(systemSound)!=FMOD_OK)
   {
-    errx(1,"Eroor while releasing sound");
+    errx(1,"Eroor while closing the system");
   }
   if (FMOD_System_Release(systemSound)!=FMOD_OK)
   {
-    errx(1,"Eroor while releasing sound");
+    errx(1,"Eroor while releasing sytem");
   }
 }

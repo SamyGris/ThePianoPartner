@@ -1,8 +1,6 @@
 #include "piano.h"
 #include "widgets.h"
 
-
-
 // Algorithme jouant un metronome
 void *metronome()
 {
@@ -22,36 +20,66 @@ void *metronome()
         continue; 
       }
       pthread_t metrosound;
-      if (pthread_create(&metrosound, NULL, &bim, NULL))
+      if (pthread_create(&metrosound, NULL, &metrofunction, NULL))
       {
         errx(1, "Failed to launch metronome");
       }
       msleep(inter);
+      metroPlaying+=1;
     }
+    else
+    {
+      metroPlaying=0;
+    }
+    
   }
   return NULL; 
 }
 
-void *bim()
+void *metrofunction()
 {
-  FMOD_CHANNEL *channel;
-  FMOD_SOUND *sound;
-  if (FMOD_System_CreateSound(systemSound,"metronome/bam.wav",FMOD_CREATESAMPLE,0, &sound) != FMOD_OK)
+  if (metroPlaying%4==0)
   {
-    errx(3,"Couldn't create BIM.wav sound");
+    FMOD_CHANNEL *channel;
+    FMOD_SOUND *sound;
+    if (FMOD_System_CreateSound(systemSound,"metronome/bim.wav",FMOD_CREATESAMPLE,0, &sound) != FMOD_OK)
+    {
+      errx(3,"Couldn't create BIM.wav sound");
+    }
+    if (FMOD_System_PlaySound(systemSound,sound,NULL,0,&channel) != FMOD_OK)
+    {
+	    errx(3,"Couldn't play the metronome");
+    }
+    updateAudio();
+    if (FMOD_Channel_SetVolume(channel,8.5) != FMOD_OK)
+    {
+	    errx(3,"Couldn't set the volume"); 
+    }
+    updateAudio();
+    msleep(4000);
+    pthread_exit(NULL);
   }
-  if (FMOD_System_PlaySound(systemSound,sound,NULL,0,&channel) != FMOD_OK)
+  else
   {
-	  errx(3,"Couldn't play the metronome");
+    FMOD_CHANNEL *channel;
+    FMOD_SOUND *sound;
+    if (FMOD_System_CreateSound(systemSound,"metronome/bam.wav",FMOD_CREATESAMPLE,0, &sound) != FMOD_OK)
+    {
+      errx(3,"Couldn't create BIM.wav sound");
+    }
+    if (FMOD_System_PlaySound(systemSound,sound,NULL,0,&channel) != FMOD_OK)
+    {
+	    errx(3,"Couldn't play the metronome");
+    }
+    updateAudio();
+    if (FMOD_Channel_SetVolume(channel,8.5) != FMOD_OK)
+    {
+	    errx(3,"Couldn't set the volume"); 
+    }
+    updateAudio();
+    msleep(4000);
+    pthread_exit(NULL);
   }
-  updateAudio();
-  if (FMOD_Channel_SetVolume(channel,8.5) != FMOD_OK)
-  {
-	  errx(3,"Couldn't set the volume"); 
-  }
-  updateAudio();
-  msleep(4000);
-  pthread_exit(NULL);
 }
 
 // Algorithme de la main gauche
@@ -62,7 +90,7 @@ void* leftHand()
   return NULL;
 }
 
-// Algorithme de la main droite
+// Algorithme de la main droite (sans patterns)
 void* rightHand()
 {
   int inter = 60000/(song.bpm)*4;
@@ -74,28 +102,56 @@ void* rightHand()
   }
 
   srand(time(NULL));
-  int i = 0;
-  int pat = 0;
+  int crotchet = 0;
   while(1)
   {
     int note;
-
-    if (rand() % 2)
-    {
-      note = rand() % 5;
-      if (note >= 3)
-        note++;
-    }
-    else
-      note = rand() % 7;
+    
+    note = rand() % 5;
+    if (note >= 3)
+      note++;
 
     note = scaleNotes[scale][note] + 24;
-    if (i==0)
+    
+    int p = rand() % 100;
+    int length;
+    if (!crotchet)
     {
-      pat = rand() % 2;
+      if (p < 70)
+        length = 2;
+      else if (p < 80)
+        length = 1;
+      else if (p < 90)
+      {
+        length = 3;
+        crotchet = 2;
+      }
+      else if (p < 95)
+      {
+        length = 4;
+        crotchet = 3;
+      }
+      else
+        length = 0;
     }
-
-    int length = patterns[pat][i];
+    else if (crotchet >= 2)
+    {
+      if (rand() % 2)
+      {
+        length = 3;
+        crotchet-=2;
+      }
+      else
+      {
+        length = 4;
+        crotchet--;
+      }
+    }
+    else
+    {
+      length = 4;
+      crotchet--;
+    }
     
     float abs = (float)inter;
     abs *= powf(0.5, (double)length);
@@ -104,15 +160,11 @@ void* rightHand()
     playNote(note, abs);
     msleep(abs);
     gtk_widget_set_opacity(highlightsNotes[note], 0);
-    do
-    {
-      i++;
-      i = i%16;
-    } while (i < 16 && patterns[pat][i] == -1);
   }
   pthread_exit(NULL);
   return NULL;
 }
+
 
 // Fonction qui joue les différents accords de la main gauche
 void playChords(int usrChords[], int repet[], int bpm)
