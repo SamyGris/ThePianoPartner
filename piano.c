@@ -25,11 +25,11 @@ void *metronome()
         errx(1, "Failed to launch metronome");
       }
       msleep(inter);
-      metroPlaying+=1;
+      metroPlaying += 1;
     }
     else
     {
-      metroPlaying=0;
+      metroPlaying = 0;
     }
     
   }
@@ -82,6 +82,52 @@ void *metrofunction()
   }
 }
 
+// Choisit "aléatoirement" une durée pour la note
+int getLength(int *crotchet)
+{
+  int length;
+  if (!*crotchet)
+    {
+      int p = rand() % 100;
+      if (p < 70)
+        length = 2;
+      else if (p < 80)
+        length = 1;
+      else if (p < 90)
+      {
+        length = 3;
+        *crotchet = 2;
+      }
+      else if (p < 95)
+      {
+        length = 4;
+        *crotchet = 3;
+      }
+      else
+        length = 0;
+    }
+    else if (*crotchet >= 2)
+    {
+      if (rand() % 2)
+      {
+        length = 3;
+        *crotchet-=2;
+      }
+      else
+      {
+        length = 4;
+        *crotchet-=1;
+      }
+    }
+    else
+    {
+      length = 4;
+      *crotchet-=1;
+    }
+
+  return length;
+}
+
 // Algorithme de la main gauche
 void* leftHand()
 {
@@ -106,52 +152,14 @@ void* rightHand()
   while(1)
   {
     int note;
-    
+
     note = rand() % 5;
     if (note >= 3)
       note++;
 
     note = scaleNotes[scale][note] + 24;
-    
-    int p = rand() % 100;
-    int length;
-    if (!crotchet)
-    {
-      if (p < 70)
-        length = 2;
-      else if (p < 80)
-        length = 1;
-      else if (p < 90)
-      {
-        length = 3;
-        crotchet = 2;
-      }
-      else if (p < 95)
-      {
-        length = 4;
-        crotchet = 3;
-      }
-      else
-        length = 0;
-    }
-    else if (crotchet >= 2)
-    {
-      if (rand() % 2)
-      {
-        length = 3;
-        crotchet-=2;
-      }
-      else
-      {
-        length = 4;
-        crotchet--;
-      }
-    }
-    else
-    {
-      length = 4;
-      crotchet--;
-    }
+
+    int length = getLength(&crotchet);
     
     float abs = (float)inter;
     abs *= powf(0.5, (double)length);
@@ -165,7 +173,6 @@ void* rightHand()
   pthread_exit(NULL);
   return NULL;
 }
-
 
 // Fonction qui joue les différents accords de la main gauche
 void playChords(int usrChords[], int repet[], int bpm)

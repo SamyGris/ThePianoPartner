@@ -12,12 +12,6 @@ void getChords();
 void getReps();
 void initDefaultParameters(); 
 void on_closeAboutDialog_clicked(); 
-void on_saveImpro_clicked(); 
-
-void on_saveImpro_clicked()
-{
-}
-
 
 void initDefaultParameters()
 {
@@ -187,11 +181,12 @@ int main()
   repet8 = GTK_ENTRY(gtk_builder_get_object(builder,"repet8"));
   AboutWindow =GTK_ABOUT_DIALOG(gtk_builder_get_object(builder,"GtkAboutDialog"));
   MetronomeButton = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "MetronomeButton")); 
+  chooseInstrument = GTK_COMBO_BOX_TEXT(gtk_builder_get_object(builder, "chooseInstrument"));
+
   initDefaultParameters(); 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
   gtk_window_set_icon_from_file(GTK_WINDOW(window), "assets/icon.png", NULL);
-
   initConst();
   initAudio();
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
