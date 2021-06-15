@@ -11,7 +11,13 @@ void getScale();
 void getChords();
 void getReps();
 void initDefaultParameters(); 
-void on_closeAboutDialog_clicked();  
+void on_closeAboutDialog_clicked(); 
+void on_saveImpro_clicked(); 
+
+void on_saveImpro_clicked()
+{
+}
+
 
 void initDefaultParameters()
 {
@@ -198,7 +204,6 @@ int main()
     gtk_widget_set_opacity(highlightsNotes[i], 0); 
   }
   gtk_main();
-  fclose(fp); 
   quitAudio();
   return 0; 
 }
