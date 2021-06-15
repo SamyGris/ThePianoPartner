@@ -80,12 +80,12 @@ void stopButtonClicked()
       errx(1, "Failed to close right hand");
     }
     playing = 0;
+    fclose(fp); 
   }
   for (int i = 0; i < 48; i++)
   {
     gtk_widget_set_opacity(highlightsNotes[i], 0); 
   }
-  fclose(fp); 
 }
 
 
