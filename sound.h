@@ -15,6 +15,7 @@
 void getDemitone(int note, float* demitone, int* octave);
 void* playNoteSound(void* arguments);
 void playNoteSoundSec(int note, int inter);
+void *metrofunction();
 void initAudio(); 
 void updateAudio();
 void quitAudio();
@@ -26,6 +27,7 @@ int metroPlaying;
 FMOD_SYSTEM *systemSound;
 FMOD_DSP *dsp_effect;
 FMOD_SOUND *samples[4]; 
+FMOD_SOUND *metronomeSounds[2];
 FMOD_SOUND *son;
 
 struct songData song;
