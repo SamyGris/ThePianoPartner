@@ -11,7 +11,13 @@ void getScale();
 void getChords();
 void getReps();
 void initDefaultParameters(); 
-void on_closeAboutDialog_clicked();  
+void on_closeAboutDialog_clicked(); 
+void on_saveImpro_clicked(); 
+
+void on_saveImpro_clicked()
+{
+}
+
 
 void initDefaultParameters()
 {
@@ -34,6 +40,7 @@ void on_MetronomeButton_toggled()
   if (song.metronome == 1)
   {
     NewChordPlaying = 0; 
+    metroPlaying = 0; 
   }
   song.metronome*=-1;
 }
@@ -180,15 +187,11 @@ int main()
   repet8 = GTK_ENTRY(gtk_builder_get_object(builder,"repet8"));
   AboutWindow =GTK_ABOUT_DIALOG(gtk_builder_get_object(builder,"GtkAboutDialog"));
   MetronomeButton = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "MetronomeButton")); 
-  song.metronome = -1; 
-  NewChordPlaying = 0; 
-  metroPlaying=0;
   initDefaultParameters(); 
   // Personnalisation de la fenêtre
   gtk_window_set_title(GTK_WINDOW(window), "The Piano Partner");
   gtk_window_set_icon_from_file(GTK_WINDOW(window), "assets/icon.png", NULL);
 
-  playing = 0;
   initConst();
   initAudio();
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
@@ -199,7 +202,6 @@ int main()
     gtk_widget_set_opacity(highlightsNotes[i], 0); 
   }
   gtk_main();
-  fclose(fp); 
   quitAudio();
   return 0; 
 }

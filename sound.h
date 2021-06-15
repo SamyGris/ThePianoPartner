@@ -19,9 +19,15 @@ void initAudio();
 void updateAudio();
 void quitAudio();
 
+int playing;
+int NewChordPlaying; 
+int metroPlaying;
+
 FMOD_SYSTEM *systemSound;
 FMOD_DSP *dsp_effect;
 FMOD_SOUND *samples[4]; 
 FMOD_SOUND *son;
+
+struct songData song;
 
 #endif

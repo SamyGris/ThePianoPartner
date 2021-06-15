@@ -18,14 +18,12 @@ void* rightHand();
 void playChords(int usrChords[], int repet[], int bpm);
 void playChord(int chord, int inter);
 void playNote(int note, int inter);
-int playing;
-int NewChordPlaying; 
-int metroPlaying;
+
 
 pthread_t left;
 pthread_t right;
 pthread_t metro;
 
-struct songData song;
+
 
 #endif

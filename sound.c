@@ -98,6 +98,11 @@ void playNoteSoundSec(int note, int inter)
 // Fonction qui va initialiser le système et les variables nécessaires pour la lecture du son
 void initAudio()
 {
+  // Initialisation des valeurs pour le métronome et pour le début de jeu du piano
+  song.metronome = -1; 
+  NewChordPlaying = 0; 
+  metroPlaying=0;
+  playing=0;
   // Initialisation et création de notre système    
   if (FMOD_System_Create(&systemSound) != FMOD_OK)
   {
@@ -144,11 +149,15 @@ void updateAudio()
     errx(3,"error during system update");
   }
 }
+// Fonction qui quitte le système audio
 void quitAudio()
 {
-  if (FMOD_Sound_Release(son)!=FMOD_OK)
+  if (son !=NULL)
   {
-    errx(1,"Eroor while releasing sound");
+      if (FMOD_Sound_Release(son)!=FMOD_OK)
+    {
+      errx(1,"Eroor while releasing sound");
+    }
   }
   if (FMOD_System_Close(systemSound)!=FMOD_OK)
   {
