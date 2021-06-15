@@ -11,7 +11,13 @@ void getScale();
 void getChords();
 void getReps();
 void initDefaultParameters(); 
-void on_closeAboutDialog_clicked();  
+void on_closeAboutDialog_clicked(); 
+void on_saveImpro_clicked(); 
+
+void on_saveImpro_clicked()
+{
+}
+
 
 void initDefaultParameters()
 {
@@ -34,6 +40,7 @@ void on_MetronomeButton_toggled()
   if (song.metronome == 1)
   {
     NewChordPlaying = 0; 
+    metroPlaying = 0; 
   }
   song.metronome*=-1;
 }
@@ -43,11 +50,13 @@ void startButtonClicked()
   // VRAI ALGORITHME
   if (!playing)
   {
+    initFileText(); 
     getBpm();
     getChords();
     getScale();
     getReps();
     playing = 1;
+    metroPlaying=0;
     if (pthread_create(&metro, NULL, &metronome, NULL))
     {
       errx(1, "Failed to launch metronome");
@@ -79,6 +88,7 @@ void stopButtonClicked()
       errx(1, "Failed to close right hand");
     }
     playing = 0;
+    fclose(fp); 
   }
   for (int i = 0; i < 48; i++)
   {

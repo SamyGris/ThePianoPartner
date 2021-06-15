@@ -1,4 +1,7 @@
 #include "toolbox.h"
+#include <stdio.h>
+#include "constantes.h"
+#include <err.h>
 
 // Fonction sleep (en ms)
 int msleep(int tms)
@@ -20,4 +23,39 @@ int msleep(int tms)
     } while (ret && errno == EINTR);
 
     return ret;
+}
+
+void initFileText()
+{
+  fp = fopen("textFile.txt", "w");
+  if (fp == NULL)
+  {
+    errx(1, "Cannot open file"); 
+  }
+  fprintf(fp, "Les accords et les notes jouées: \n" );
+}
+
+char* getLengthNote(int l)
+{
+    switch (l)
+    {
+    case 0:
+        return "ronde"; 
+        break;
+    case 1:
+        return "blanche"; 
+        break; 
+    case 2:
+        return "noire"; 
+        break; 
+    case 3: 
+        return "croche"; 
+        break; 
+    case 4:
+        return "double croche"; 
+        break;     
+    default:
+        return "don't know"; 
+        break;
+    }
 }
