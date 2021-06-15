@@ -12,7 +12,6 @@
 #define PIANO_H
 
 void* metronome();
-void* metrofunction();
 void* leftHand();
 void* rightHand();
 void playChords(int usrChords[], int repet[], int bpm);
