@@ -42,12 +42,12 @@ void on_MetronomeButton_toggled()
     NewChordPlaying = 0; 
     metroPlaying = 0; 
   }
-  song.metronome*=-1;
+  song.metronome *= -1;
 }
+
 // Fonction du bouton start
 void startButtonClicked()
 {  
-  // VRAI ALGORITHME
   if (!playing)
   {
     initFileText(); 
