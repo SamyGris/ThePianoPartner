@@ -43,3 +43,4 @@ De plus, vous pouvez utiliser le métronome en cochant la case sous la liste des
 # Comment lire les partitions jouées par le piano
 
   - Ouvrez le ficher 'out.txt' dans le dossier de l'exécutable
+  
