@@ -9,7 +9,7 @@ void getDemitone(int note, float* demitone, int* octave)
   *demitone = powf(demitonevalue, note);
 }
 
-// Fonction executée qui joue le son en utilisant la bibliothèque FMOD sans prendre en compte le BPM
+// Fonction executée qui joue le son en fonction de la note
 void* playNoteSound(void* arguments)
 {
   struct noteData *args = arguments;
@@ -44,56 +44,7 @@ void* playNoteSound(void* arguments)
   free(args);
   pthread_exit(NULL);
 }
-
-// Fonction qui joue le son en utilisant la bibliothèque FMOD en prenant en compte le bpm
-void playNoteSoundSec(int note, int inter)
-{
-  float demiTone;
-  int octave;
-  getDemitone(note, &demiTone, &octave);
-  son =samples[octave];
-  float b = 2.321/inter;
-  float a = 1/b;
-  FMOD_CHANNEL *channel;
-  if (FMOD_System_PlaySound(systemSound,son,NULL,0,&channel) != FMOD_OK)
-  {
-	  errx(3,"Couldn't play the sound");
-  }
-  updateAudio();
-  
-  if (FMOD_Channel_SetVolume(channel,4) != FMOD_OK)
-  {
-	  errx(3,"Couldn't set the volume"); 
-  }
-  updateAudio();
-  if (FMOD_Channel_SetFrequency(channel,44100) != FMOD_OK)
-  {
-	  errx(3,"Couldn't set the frequency");
-  }
-  updateAudio();
-
-  if (FMOD_Channel_SetPitch(channel,b) != FMOD_OK)
-  {
-	  errx(3,"Couldn't set the frequency");
-  }
-  updateAudio();
-  if (FMOD_DSP_SetParameterFloat(dsp_effect,0,demiTone*a) != FMOD_OK)
-  {
-	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
-  }
-  updateAudio();
-  if (FMOD_DSP_SetParameterFloat(dsp_effect,1,4096) != FMOD_OK)
-  {
-	  errx(3,"Signal analyse : couldn't set the dsp float parametre");
-  }
-  updateAudio();
-  if (FMOD_Channel_AddDSP(channel,0,dsp_effect) != FMOD_OK)
-  {
-	  errx(3,"Couldn't add the DSP to the channel");
-  }
-  updateAudio();
-  msleep(4000);
-}
+//Fonction qui joue le son du metronome
 void *metrofunction()
 {
   FMOD_CHANNEL *channel;
@@ -162,23 +113,19 @@ void initAudio()
     errx(3,"Couldn't create DO4.wav sound");
   }
   samples[3] = sound; 
-  if (FMOD_System_CreateDSPByType(systemSound,FMOD_DSP_TYPE_PITCHSHIFT,&dsp_effect) != FMOD_OK)
-  {
-	  errx(3,"Signal analyse : couldn't create a dsp ");
-  }
   if (FMOD_System_CreateSound(systemSound,"metronome/bim.wav",FMOD_CREATESAMPLE,0, &sound) != FMOD_OK)
   {
-    errx(3,"Couldn't create BIM.wav sound");
+    errx(3,"Couldn't create bim.wav sound");
   }
   metronomeSounds[0]=sound;
   if (FMOD_System_CreateSound(systemSound,"metronome/bam.wav",FMOD_CREATESAMPLE,0, &sound) != FMOD_OK)
   {
-    errx(3,"Couldn't create BIM.wav sound");
+    errx(3,"Couldn't create bam.wav sound");
   }
   metronomeSounds[1]=sound;
 }
 
-// Fonction qui update le système sonore
+// Fonction qui actualise le système audio
 void updateAudio()
 {
   if (FMOD_System_Update(systemSound)!=FMOD_OK)
@@ -186,7 +133,7 @@ void updateAudio()
     errx(3,"error during system update");
   }
 }
-// Fonction qui quitte le système audio
+// Fonction qui libére les sons utilisé et le system et le quitte
 void quitAudio()
 {
   if (son !=NULL)
