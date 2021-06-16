@@ -9,7 +9,7 @@ void getDemitone(int note, float* demitone, int* octave)
   *demitone = powf(demitonevalue, note);
 }
 
-// Fonction executée qui joue le son en utilisant la bibliothèque FMOD 
+// Fonction executée qui joue le son en fonction de la note
 void* playNoteSound(void* arguments)
 {
   struct noteData *args = arguments;
@@ -44,6 +44,7 @@ void* playNoteSound(void* arguments)
   free(args);
   pthread_exit(NULL);
 }
+//Fonction qui joue le son du metronome
 void *metrofunction()
 {
   FMOD_CHANNEL *channel;
@@ -112,23 +113,19 @@ void initAudio()
     errx(3,"Couldn't create DO4.wav sound");
   }
   samples[3] = sound; 
-  if (FMOD_System_CreateDSPByType(systemSound,FMOD_DSP_TYPE_PITCHSHIFT,&dsp_effect) != FMOD_OK)
-  {
-	  errx(3,"Signal analyse : couldn't create a dsp ");
-  }
   if (FMOD_System_CreateSound(systemSound,"metronome/bim.wav",FMOD_CREATESAMPLE,0, &sound) != FMOD_OK)
   {
-    errx(3,"Couldn't create BIM.wav sound");
+    errx(3,"Couldn't create bim.wav sound");
   }
   metronomeSounds[0]=sound;
   if (FMOD_System_CreateSound(systemSound,"metronome/bam.wav",FMOD_CREATESAMPLE,0, &sound) != FMOD_OK)
   {
-    errx(3,"Couldn't create BIM.wav sound");
+    errx(3,"Couldn't create bam.wav sound");
   }
   metronomeSounds[1]=sound;
 }
 
-// Fonction qui actualise le système sonore
+// Fonction qui actualise le système audio
 void updateAudio()
 {
   if (FMOD_System_Update(systemSound)!=FMOD_OK)
@@ -136,7 +133,7 @@ void updateAudio()
     errx(3,"error during system update");
   }
 }
-// Fonction qui quitte le système audio
+// Fonction qui libére les sons utilisé et le system et le quitte
 void quitAudio()
 {
   if (son !=NULL)
