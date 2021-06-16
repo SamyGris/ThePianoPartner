@@ -1,7 +1,4 @@
 #include "../headers/toolbox.h"
-#include <stdio.h>
-#include "../headers/constantes.h"
-#include <err.h>
 
 // Fonction sleep (en ms)
 int msleep(int tms)

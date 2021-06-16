@@ -1,7 +1,4 @@
 #include "../headers/constantes.h"
-#include "../headers/widgets.h"
-#include "../headers/toolbox.h"
-#include <gtk/gtk.h>
 
 void initConst()
 {

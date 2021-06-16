@@ -1,6 +1,9 @@
-#include <gtk/gtk.h>
 #ifndef DEF_CONSTANTES
 #define DEF_CONSTANTES
+
+#include <gtk/gtk.h>
+#include "../headers/widgets.h"
+#include "../headers/toolbox.h"
 
 // Structure définissant une note
 struct noteData
