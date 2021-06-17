@@ -37,7 +37,7 @@ void* rightHand()
     abs *= powf(0.5, (double)length);
     gtk_widget_set_opacity(highlightsNotes[note], 1);
     char* noteLength = getLengthNote(length); 
-    fprintf(fp, "       Note = %s, Length = %s\n", notesString[note], noteLength); 
+    fprintf(fp, "       Note = %s, Durée = %s\n", notesString[note], noteLength); 
     playNote(note, abs);
     msleep(abs);
     gtk_widget_set_opacity(highlightsNotes[note], 0);
