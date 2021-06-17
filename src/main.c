@@ -12,6 +12,13 @@ void getChords();
 void getReps();
 void initDefaultParameters(); 
 void on_closeAboutDialog_clicked(); 
+void on_chooseInstrument_changed();
+
+void on_chooseInstrument_changed()
+{
+  actualInstrument = gtk_combo_box_get_active(GTK_COMBO_BOX(chooseInstrument));
+  initAudio(); 
+}
 
 void initDefaultParameters()
 {

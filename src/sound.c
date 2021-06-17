@@ -8,7 +8,7 @@ void getDemitone(int note, float* demitone, int* octave)
   note = note % 12;
   *demitone = powf(demitonevalue, note);
 }
-
+int volume = 4 ;
 // Fonction executée qui joue le son en fonction de la note
 void* playNoteSound(void* arguments)
 {
@@ -24,7 +24,7 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't play the sound");
   }
   updateAudio();
-  if (FMOD_Channel_SetVolume(channel,4) != FMOD_OK)
+  if (FMOD_Channel_SetVolume(channel,volume) != FMOD_OK)
   {
 	  errx(3,"Couldn't set the volume"); 
   }
@@ -40,7 +40,7 @@ void* playNoteSound(void* arguments)
 	  errx(3,"Couldn't set the frequency");
   }
   updateAudio();
-  msleep(4000);
+  msleep(7000);
   free(args);
   pthread_exit(NULL);
 }
@@ -81,7 +81,7 @@ void initAudio()
   NewChordPlaying = 0; 
   metroPlaying=0;
   playing=0;
-  // Initialisation et création de notre système    
+  
   if (FMOD_System_Create(&systemSound) != FMOD_OK)
   {
     errx(3,"Couldn't create a system");
@@ -93,26 +93,37 @@ void initAudio()
   }
   // Chargement de la banque sonore
   FMOD_SOUND *sound;
-  if (FMOD_System_CreateSound(systemSound,"notes/DO1.wav",FMOD_CREATESAMPLE,0, &sound) != FMOD_OK)
-  {
-    errx(3,"Couldn't create DO1.wav sound");
+
+  for (int i=0 ; i<4 ; i++ )
+  { 
+        char ret [200] = "" ;
+        char prefix[130] = "notes/" ;
+        char end[50] = ".wav" ; 
+
+        char x = actualInstrument + '0' ;
+
+        char temp = i + '0' ;
+
+        int res = 0 ; 
+        for (int j = 0 ; j < 6 ; j++)
+        {
+            ret[j] = prefix[j] ; 
+            res = j ; 
+        }
+
+        
+          ret[res+1] = x ; 
+          ret [res+2] = temp ; 
+        strcat(ret,end) ; 
+        if (ret[0] != 0 ) 
+        {
+            volume = 1 ;
+
+        } 
+        FMOD_System_CreateSound(systemSound,ret,FMOD_CREATESAMPLE,0,&sound) ;
+        samples[i] = sound;
   }
-  samples[0] = sound;
-  if (FMOD_System_CreateSound(systemSound,"notes/DO2.wav",FMOD_CREATESAMPLE,0,&sound) != FMOD_OK)
-  {
-    errx(3,"Couldn't create DO2.wav sound");
-  }
-  samples[1] = sound;
-  if (FMOD_System_CreateSound(systemSound,"notes/DO3.wav",FMOD_CREATESAMPLE,0,&sound) != FMOD_OK)
-  {
-    errx(3,"Couldn't create DO3.wav sound");
-  }
-  samples[2] = sound; 
-  if (FMOD_System_CreateSound(systemSound,"notes/DO4.wav",FMOD_CREATESAMPLE,0,&sound) != FMOD_OK)
-  {
-    errx(3,"Couldn't create DO4.wav sound");
-  }
-  samples[3] = sound; 
+
   if (FMOD_System_CreateSound(systemSound,"metronome/bim.wav",FMOD_CREATESAMPLE,0, &sound) != FMOD_OK)
   {
     errx(3,"Couldn't create bim.wav sound");

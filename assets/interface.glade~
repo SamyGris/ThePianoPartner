@@ -125,7 +125,6 @@
   </object>
   <object class="GtkWindow" id="interface">
     <property name="can_focus">False</property>
-    <property name="border_width">4</property>
     <property name="resizable">False</property>
     <property name="icon">icon.png</property>
     <child type="titlebar">
@@ -199,14 +198,16 @@
                 <property name="has_entry">True</property>
                 <property name="active_id">0</property>
                 <items>
-                  <item translatable="yes">Piano</item>
-                  <item translatable="yes">Guitare</item>
-                  <item translatable="yes">Violon</item>
+                  <item id="0" translatable="yes">Piano</item>
+                  <item id="1" translatable="yes">Guitare</item>
+                  <item id="2" translatable="yes">Flute à pan </item>
+                  <item id="3" translatable="yes">Xylophone</item>
                 </items>
+                <signal name="changed" handler="on_chooseInstrument_changed" swapped="no"/>
                 <child internal-child="entry">
                   <object class="GtkEntry">
                     <property name="can_focus">False</property>
-                    <property name="text" translatable="yes">Piano</property>
+                    <property name="text" translatable="yes">Xylophone</property>
                   </object>
                 </child>
               </object>
@@ -279,7 +280,6 @@
                       <object class="GtkEntry" id="bpmEntry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="placeholder_text" translatable="yes">50-150 (100 par défaut)</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -645,7 +645,7 @@
     <property name="copyright" translatable="yes">(c)2021 - A.W.A Techs Limited </property>
     <property name="comments" translatable="yes">En manque d'inspiration ? Bienvenue sur The Piano Partner !
 Choisissez quelques accords, une gamme pour la main droite et laissez la magie opérer...</property>
-    <property name="website">https://fr.pornhub.com/</property>
+    <property name="website">file:///home/maruecos/Bureau/Dossier/ThePianoPartner/website/one.html</property>
     <property name="website_label" translatable="yes">Visiter notre site</property>
     <property name="authors">GRIS Samy
 ABOU Thomas 

@@ -20,6 +20,7 @@ void initAudio();
 void updateAudio();
 void quitAudio();
 
+int actualInstrument; 
 int playing;
 int NewChordPlaying; 
 int metroPlaying;
