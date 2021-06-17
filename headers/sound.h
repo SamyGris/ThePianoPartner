@@ -24,6 +24,7 @@ int actualInstrument;
 int playing;
 int NewChordPlaying; 
 int metroPlaying;
+float volume;
 
 FMOD_SYSTEM *systemSound;
 FMOD_DSP *dsp_effect;

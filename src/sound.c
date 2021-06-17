@@ -8,7 +8,6 @@ void getDemitone(int note, float* demitone, int* octave)
   note = note % 12;
   *demitone = powf(demitonevalue, note);
 }
-int volume = 4 ;
 // Fonction executée qui joue le son en fonction de la note
 void* playNoteSound(void* arguments)
 {
@@ -81,12 +80,13 @@ void initAudio()
   NewChordPlaying = 0; 
   metroPlaying=0;
   playing=0;
+  volume=4;
   
   if (FMOD_System_Create(&systemSound) != FMOD_OK)
   {
     errx(3,"Couldn't create a system");
   }
-  // Initialisation du système en mode lecture normale de son et à 32 channels
+  // Initialisation du système en mode lecture normale de son et à 64 channels en mode thread
   if (FMOD_System_Init(systemSound,64,FMOD_INIT_THREAD_UNSAFE,NULL) != FMOD_OK)
   {
     errx(3,"Couldn't init a system");
@@ -115,10 +115,9 @@ void initAudio()
           ret[res+1] = x ; 
           ret [res+2] = temp ; 
         strcat(ret,end) ; 
-        if (ret[0] != 0 ) 
+        if (ret[6] == '1'||ret[6]=='2'||ret[6]=='3' ) 
         {
-            volume = 1 ;
-
+            volume =0.5 ;
         } 
         FMOD_System_CreateSound(systemSound,ret,FMOD_CREATESAMPLE,0,&sound) ;
         samples[i] = sound;
